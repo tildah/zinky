@@ -25,6 +25,7 @@
   "dependencies": {
     "foola": "0.0.*",
     "fooll-callaction": "0.0.*",
+    "fooll-errors": "0.0.1",
     "fooll-isrequestingfile": "0.0.*",
     "fooll-logrequest": "0.0.*",
     "fooll-parseurl": "0.0.*",

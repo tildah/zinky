@@ -70,4 +70,4 @@ class Fooll {
 
 }
 
-module.exports = Full;
+module.exports = Fooll;

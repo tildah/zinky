@@ -1,0 +1,14 @@
+- routes
+  - first block is for module
+  - second block for method - if left blank root method will be called
+  - all remaining blocks are parameters
+- prefixes
+- hooks
+- params:
+- settings
+- views
+  - can change views folder name
+- serving files
+  - file method
+  - static module
+- session

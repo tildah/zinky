@@ -1,0 +1,25 @@
+{
+  "name": "fooll",
+  "version": "0.0.1",
+  "description": "modular fullstack nodejs framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fooll/fooll.git"
+  },
+  "keywords": [
+    "fullstack",
+    "modular",
+    "framework",
+    "nodejs"
+  ],
+  "author": "Abu Rawi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fooll/fooll/issues"
+  },
+  "homepage": "https://github.com/fooll/fooll#readme"
+}

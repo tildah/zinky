@@ -29,6 +29,7 @@
     "fooll-isrequestingfile": "0.0.*",
     "fooll-logrequest": "0.0.*",
     "fooll-parseurl": "0.0.*",
+    "fooll-redirect": "0.0.1",
     "fooll-session": "0.0.*",
     "fooll-setupresponse": "0.0.*",
     "fooll-validaterequest": "0.0.*"

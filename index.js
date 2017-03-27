@@ -2,9 +2,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
-const errors = require('full-errors');
+const errors = require('fooll-errors');
 
-class Full {
+class Fooll {
 
   constructor(settings) {
     // Declaring default values

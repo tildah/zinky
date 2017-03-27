@@ -9,6 +9,7 @@ const callAction = require(prefix + 'callaction');
 
 module.exports = [
   session,
+  parseUrl,
   logRequest,
   setupResponse,
   isRequestingFile,

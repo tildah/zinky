@@ -1,5 +1,6 @@
 const prefix = "fooll-";
 const session = require(prefix + 'session');
+const redirect = require(prefix + 'redirect');
 const parseUrl = require(prefix + 'parseurl');
 const logRequest = require(prefix + 'logrequest');
 const setupResponse = require(prefix + 'setupresponse');
@@ -9,6 +10,7 @@ const callAction = require(prefix + 'callaction');
 
 module.exports = [
   session,
+  redirect,
   parseUrl,
   logRequest,
   setupResponse,

@@ -15,8 +15,9 @@ class Fooll {
     this.prefixes = settings.prefixes || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
-    this.hooks = hooks;
     this.extra = settings.extra || {};
+    this.env = settings.env || 'development';
+    this.hooks = hooks;
 
     this.errors = errors;
 
@@ -29,13 +30,14 @@ class Fooll {
 
   loadModules() {
     var modules = {};
+    var server = this;
     var dir = fs.readdirSync('./app_modules');
     dir.forEach(function (moduleName) {
       var modulePath = path.resolve('.', 'app_modules', moduleName);
       var stat = fs.lstatSync(modulePath);
       if (stat.isDirectory()) {
         var importedClass = require(modulePath);
-        modules[moduleName] = new importedClass(modulePath);
+        modules[moduleName] = new importedClass(modulePath, server);
       }
     });
     this.modules = modules;

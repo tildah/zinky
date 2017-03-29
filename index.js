@@ -13,7 +13,7 @@ class Fooll {
     this.sessionSecret = settings.sessionSecret || 'secret';
     this.notFoundView = settings.notFoundView || '<h1>404 Not Found</h1>';
     this.prefixes = settings.prefixes || {};
-    this.staticModuleName = settings.staticModuleName || 'static';
+    this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
     this.hooks = hooks;
     this.extra = settings.extra || {};

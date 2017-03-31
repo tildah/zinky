@@ -28,6 +28,7 @@
     "fooll-callaction": "0.0.x",
     "fooll-errors": "0.0.x",
     "fooll-isrequestingfile": "0.0.x",
+    "fooll-json": "0.0.1",
     "fooll-logrequest": "0.0.x",
     "fooll-parseurl": "0.0.x",
     "fooll-redirect": "0.0.x",

@@ -1,6 +1,7 @@
 const prefix = "fooll-";
 const session = require(prefix + 'session');
 const redirect = require(prefix + 'redirect');
+const json = require(prefix + 'json');
 const parseUrl = require(prefix + 'parseurl');
 const logRequest = require(prefix + 'logrequest');
 const setupResponse = require(prefix + 'setupresponse');
@@ -12,6 +13,7 @@ const bodyParser = require('body-parser');
 module.exports = [
   session,
   redirect,
+  json,
   parseUrl,
   logRequest,
   setupResponse,

@@ -57,9 +57,18 @@ class Fooll {
   }
 
   handleRequest(req, res) {
-    for (var i = 0; i < this.hooks.length && !res.finished; i++) {
-      this.hooks[i](req, res, this);
+    req.server = this;
+    var hooks = this.hooks;
+    function step(i) {
+      if (i < hooks.length && !res.finished) {
+        hooks[i](req, res, function () {
+          if (hooks[i + 1]) {
+            step(i + 1);
+          }
+        });
+      }
     }
+    step(0);
   }
 
   listen(port) {

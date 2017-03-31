@@ -7,6 +7,7 @@ const setupResponse = require(prefix + 'setupresponse');
 const isRequestingFile = require(prefix + 'isrequestingfile');
 const validateRequest = require(prefix + 'validaterequest');
 const callAction = require(prefix + 'callaction');
+const bodyParser = require('body-parser');
 
 module.exports = [
   session,
@@ -16,5 +17,6 @@ module.exports = [
   setupResponse,
   isRequestingFile,
   validateRequest,
+  bodyParser.urlencoded({ extended: false }),
   callAction
 ];

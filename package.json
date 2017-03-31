@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/fooll/fooll#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "foola": "0.0.x",
     "fooll-callaction": "0.0.x",
     "fooll-errors": "0.0.1",

@@ -12,7 +12,7 @@ class Fooll {
     this.port = settings.port || 3000;
     this.sessionSecret = settings.sessionSecret || 'secret';
     this.notFoundView = settings.notFoundView || '<h1>404 Not Found</h1>';
-    this.prefixes = settings.prefixes || {};
+    this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
     this.extra = settings.extra || {};
@@ -44,8 +44,8 @@ class Fooll {
   }
 
   correctModuleName(string) {
-    var prefixedModule = this.prefixes[string];
-    return (prefixedModule !== undefined) ? prefixedModule : string;
+    var aliasedModule = this.aliases[string];
+    return (aliasedModule !== undefined) ? aliasedModule : string;
   }
 
   correctActionName(string) {

@@ -231,23 +231,121 @@ var server = new Fooll({
   port: 8080
 });
 ```
-### Public
-### Views
-### Settings
-### Hooks
-### req & res api
 
-- routes
-  - first block is for module
-  - second block for method - if left blank root method will be called
-  - all remaining blocks are parameters
-- prefixes
-- hooks
-- params:
-- settings
-- views
-  - can change views folder name
-- serving files
-  - file method
-  - static module
-- session
+Now, the server will listen on port `8080`.
+### Env
+`env` is for project environment. By default it is set to 'development'
+### Aliases
+Aliases gives you the possiblity to edit module names in route.
+
+For instance, imagine you want to replace your `auth` module by `sign` in route, you do:
+```javascript
+var server = new Fooll({
+  aliases: {
+    'sign': 'auth'
+  }
+});
+```
+Now when you request: get `/sign/doit`, Fooll will look for `GET_doit(req, res)` in **`auth`** module.
+
+#### Project root routes
+Aliases are helpful for setting up a module to run in project root routes. For instances, you want to run the module `home` when the user requests `www.mysite.com`, you just have to do:
+```javascript
+var server = new Fooll({
+  aliases: {
+    '': 'home'
+  }
+});
+``` 
+Now when you request: get `www.mysite.com`, Fooll will look for `GET_root(req, res)` in **`home`** module.
+### Serving global static files
+In every project you have certain files that are global such as css style, website logo... 
+It's not handy to copy each one of them in every module's client folder. Instead you can put them in a folder in your project's root and request them through a unified route style.
+To make this we have two attributes:
+```javascript
+var server = new Fooll({
+  staticModuleName: 'file',
+  staticFolder: 'public'
+  // These are their default values
+});
+```
+Now when you request: get `www.mysite.com/file/logo.png`, Fooll will return `public/logo.png` file.
+
+### Session Secret
+`sessionSecret` sets the session encryption secret. By default it is 'secret'
+*(We'll see sessions in req & res respectives apis)*
+
+### Not Found View
+
+`notFoundView` is the html returned when the route returns an error **404**. By default it is '<h1>404 Not Found</h1>'
+
+### Extra
+
+In `extra` you can put anything you want.
+
+## Fooll methods
+
+### addHook
+Fooll's hooks are like middlewares in express with one difference, they are called in every request.
+
+Ex:
+```javascript
+server.addHook(function(req, res, next){
+  console.log("I'm a hooooooooooooook");
+  next();
+});
+```
+Now in every request you'll see this line in the console.
+
+#### Express middlewares as hooks
+
+As you can guess, existing express midllewares can be used as hooks.
+> Keep In Mind: They are called on every request.
+
+### listen
+This is finally the method that will make your app available on browser. 
+
+Ex:
+```javascript
+server.listen(#port);
+```
+
+port is an optional integer, if provided it will overwrite the existing `server.port` value.
+
+## req API
+
+These are additional attributes created by Fooll in both req and res objects.
+
+- req.moduleName:
+  The requested module name.
+- req.action:
+  The requested action name.
+- req.operation:
+  The function name that will be called on this request.
+- req.params:
+  The request params.
+
+  Ex:
+  ```javascript
+  GET /auth/login/omar/123456
+  // req.moduleName = 'auth'
+  ```
+- req.session:
+  Object containing session values with their names.
+
+## res API
+
+- res.setSession('name', 'value'):
+  Create new session attribute. Ex:
+  ```javascript
+  res.setSession('userId', 50);
+  ```
+- res.redirect('location'):
+  Redirects to given url. Ex:
+  ```javascript
+  res.redirect('/');
+  ```
+- res.json({obj}):
+  Responds with json object. Ex:
+  ```javascript
+  res.json({id: 50, username: 'omar'});

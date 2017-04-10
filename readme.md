@@ -110,6 +110,7 @@ GET_root(req, res) {
 }
 ```
 You can, even use `POST_root`, `PUT_root`...
+
 ### Views
 `Foola` uses [pug-layout](https://www.npmjs.com/package/pug-layout) to handle its views.
 

@@ -329,6 +329,9 @@ These are additional attributes created by Fooll in both req and res objects.
   ```javascript
   GET /auth/login/omar/123456
   // req.moduleName = 'auth'
+  // req.action = 'login'
+  // req.operation = 'GET_login'
+  // req.params = ['omar', '123456']
   ```
 - req.session:
   Object containing session values with their names.

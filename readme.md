@@ -337,6 +337,9 @@ These are additional attributes created by Fooll in both req and res objects.
 - req.session:
   Object containing session values with their names.
 
+- req.server:
+  Server
+
 ## res API
 
 - res.setSession('name', 'value'):

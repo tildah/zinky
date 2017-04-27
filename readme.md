@@ -1,5 +1,7 @@
 Fooll is a fullstack modular framework for nodejs.
 
+<a href='https://pledgie.com/campaigns/33769'><img alt='Click here to lend your support to: Fooll Framework and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/33769.png?skin_name=chrome' border='0' ></a>
+
 # Installation
 ```
 npm i --save fooll

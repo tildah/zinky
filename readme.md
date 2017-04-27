@@ -111,6 +111,18 @@ GET_root(req, res) {
 ```
 You can, even use `POST_root`, `PUT_root`...
 
+##### After Hooks
+Imagine you want to run something after an action in another module has been sent. You can use the after hooks.
+
+Eg:
+
+You have a module named *comment* in which you have `POST_root`, so you add this method to `app_modules/auth/index.js`:
+```javascript
+AFTER_comment_POST_root(req, res) {
+  res.end("The post request to /comment/ has received a response, now it's me who's running")
+}
+```
+
 ### Views
 `Foola` uses [pug-layout](https://www.npmjs.com/package/pug-layout) to handle its views.
 

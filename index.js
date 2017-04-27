@@ -56,6 +56,9 @@ class Fooll {
 
   handleRequest(req, res) {
     req.server = this;
+    res.on('finish', () => {
+      this.onFinishRequest(req, res);
+    })
     var step = i => {
       if (i < this.hooks.length && !res.finished) {
         this.hooks[i](req, res, () => {
@@ -66,6 +69,15 @@ class Fooll {
       }
     }
     step(0);
+  }
+
+  onFinishRequest(req, res) {
+    var hookName = 'AFTER_' + req.moduleName + '_' + req.operation;
+    for (var moduleName in req.server.modules) {
+      if (req.server.modules[moduleName][hookName]) {
+        req.server.modules[moduleName][hookName](req, res);
+      }
+    }
   }
 
   listen(port) {

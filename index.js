@@ -34,8 +34,10 @@ class Fooll {
       var modulePath = path.resolve('.', 'app_modules', moduleName);
       var stat = fs.lstatSync(modulePath);
       if (stat.isDirectory()) {
-        var importedClass = require(modulePath);
-        modules[moduleName] = new importedClass(modulePath, this);
+        try {
+          var importedClass = require(modulePath);
+          modules[moduleName] = new importedClass(modulePath, this);
+        } catch (error) { }
       }
     });
     this.modules = modules;

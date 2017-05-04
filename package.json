@@ -1,6 +1,6 @@
 {
   "name": "fooll",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "modular fullstack nodejs framework",
   "main": "index.js",
   "scripts": {

@@ -19,6 +19,7 @@ module.exports = [
   setupResponse,
   isRequestingFile,
   validateRequest,
+  bodyParser.json(),
   bodyParser.urlencoded({ extended: false }),
   callAction
 ];

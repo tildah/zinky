@@ -348,14 +348,17 @@ These are additional attributes created by Fooll in both req and res objects.
   The function name that will be called on this request.
 - req.params:
   The request params.
+- req.query:
+  The request GET params.
 
   Ex:
   ```javascript
-  GET /auth/login/omar/123456
+  GET /auth/login/omar/123456?remember=1
   // req.moduleName = 'auth'
   // req.action = 'login'
   // req.operation = 'GET_login'
   // req.params = ['omar', '123456']
+  // req.query = {remember: 1}
   ```
 - req.session:
   Object containing session values with their names.

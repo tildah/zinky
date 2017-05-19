@@ -37,7 +37,9 @@ class Fooll {
         try {
           var importedClass = require(modulePath);
           modules[moduleName] = new importedClass(modulePath, this);
-        } catch (error) { }
+        } catch (error) {
+          console.warn(error);
+        }
       }
     });
     this.modules = modules;

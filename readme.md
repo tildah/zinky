@@ -360,18 +360,16 @@ These are additional attributes created by Fooll in both req and res objects.
   // req.params = ['omar', '123456']
   // req.query = {remember: 1}
   ```
-- req.session:
-  Object containing session values with their names.
 
 - req.server:
   Server
 
 ## res API
 
-- res.setSession('name', 'value'):
-  Create new session attribute. Ex:
+- res.render(pugLayout.Page view, {locals}, pugLayout.Layout layout*):
+  Responds with rendered view. Ex:
   ```javascript
-  res.setSession('userId', 50);
+  res.setSession(this.views.index, {title:'Home Page'}, this.views.L_layout);
   ```
 - res.redirect('location'):
   Redirects to given url. Ex:
@@ -382,3 +380,4 @@ These are additional attributes created by Fooll in both req and res objects.
   Responds with json object. Ex:
   ```javascript
   res.json({id: 50, username: 'omar'});
+  ```

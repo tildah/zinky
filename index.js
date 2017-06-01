@@ -10,7 +10,6 @@ class Fooll {
     // Declaring default values
     settings = settings || {};
     this.port = settings.port || 3000;
-    this.sessionSecret = settings.sessionSecret || 'secret';
     this.notFoundView = settings.notFoundView || '<h1>404 Not Found</h1>';
     this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';

@@ -1,0 +1,362 @@
+doctype html
+//if IE 8
+  html.ie8(lang='en')  
+//if IE 9
+  html.ie9(lang='en')  
+// [if !IE] <!
+html(lang='en')
+  // <![endif]
+  head
+    title FoollJS: Tutorial
+    // Meta
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='shortcut icon', href='assets/images/logo.png')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
+    // Global CSS
+    link(rel='stylesheet', href='assets/plugins/bootstrap/css/bootstrap.min.css')
+    // Plugins CSS
+    link(rel='stylesheet', href='assets/plugins/font-awesome/css/font-awesome.css')
+    link(rel='stylesheet', href='assets/plugins/prism/prism.css')
+    link(rel='stylesheet', href='assets/plugins/elegant_font/css/style.css')
+    // Theme CSS
+    link#theme-style(rel='stylesheet', href='assets/css/styles.css')
+    link#theme-style(rel='stylesheet', href='assets/css/my-style.css')
+    // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+      script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+  body.body-green
+    .page-wrapper
+      // ******Header******
+      header#header.header
+        .container
+          .branding
+            h1.logo
+              a(href='index.html')
+                span.icon_documents_alt.icon(aria-hidden='true')
+                span.text-highlight Fooll
+                span.text-bold Docs
+          // //branding
+          ol.breadcrumb
+            li
+              a(href='index.html') Home
+            li.active Tutorial
+        // //container
+      // //header
+      .doc-wrapper
+        .container
+          #doc-header.doc-header.text-center
+            h1.doc-title
+              i.icon.fa.fa-paper-plane
+              |  Tutorial
+            .meta
+              i.fa.fa-clock-o
+              |  Last updated: #{new Date().getDate()} - #{new Date().getMonth()+1} - #{new Date().getFullYear()} 
+          // //doc-header
+          .doc-body
+            .doc-content
+              .content-inner
+                section#download-section.doc-section
+                  h2.section-title Introduction
+                  .section-block
+                    |In this tutorial, we'll get you through a quick tour in which we'll demonstrate the 
+                    | main features of Fooll framework and to help you understand its main concepts.
+                section#installation-section.doc-section
+                  h2.section-title Installation
+                  .section-block 
+                    | We'll be using fooll-cli to generate the app and its modules through the command line.
+                    h6 Open CLI and run:
+                    code npm install fooll fooll-cli
+                section#generate-section.doc-section
+                  h2.section-title Generate Application
+                  .section-block 
+                    | Now open the CLI in the directory in which you want to store the app.
+                    h6 And run:
+                    code fooll -a myApp
+                    p A new folder containing your app is now created.
+                    h6 Run:
+                    code cd myApp
+                    h6 Then:
+                    code npm install
+                  .section-block
+                    | Here's how the app directory looks like:
+                    pre
+                      code.language-markup 
+                        | myApp
+                        |   |_ public
+                        |   |_ app.js
+                        |   |_ package.json
+                section#generate-module.doc-section
+                  h2.section-title Application Module
+                  .section-block 
+                    | The app has not yet any module, so we'll generate one called #[i.ht home] that will handle our application home page.
+                    h6 Run:
+                    code fooll -M home
+                    p A module called #[i.ht home] has been generated in #[i.ht app_modules], the directory now looks like this:
+                    pre
+                      code.language-markup 
+                        | myApp
+                        |   |_ app_modules
+                        |     |_ home
+                        |       |_ client
+                        |       |_ views
+                        |       |_ index.js
+                        |   |_ public
+                        |   |_ app.js
+                        |   |_ package.json
+                  .section-block 
+                    | Open #[i.ht app_modules/home/index.js] and add 
+                    code res.end('This is home Page');
+                    |  to #[i.ht GET_root] method.
+                    p So the file will look like:
+                    pre
+                      code.language-javascript 
+                        | const Foola = require('foola');
+                        | class Home extends Foola {
+                        |
+                        |   GET_root(req, res) {
+                        |     res.end('This is home Page');
+                        |   }
+                        |
+                        | }
+                        |
+                        | module.exports = Home;
+                    h6 Run the app with:
+                    code node app.js
+                    p Now, if you visite #[i.ht localhost:3000/home/], you'll get something like this:
+                    p
+                      img(src="assets/images/screens/home1.png")
+                    | Create the file #[i.ht app_modules/home/views/index.pug] with this content:
+                    pre
+                      code.language-jade
+                        | html
+                        |   head
+                        |     title My App Fooll
+                        |   body
+                        |     #header myApp
+                        |     #content This is super clean
+                    p And replace the code in #[i.ht app_modules/home/index.js] by this:
+                    pre
+                      code.language-javascript 
+                        | const Foola = require('foola');
+                        | class Home extends Foola {
+                        |
+                        |   GET_root(req, res) {
+                        |     res.render(this.views.index);
+                        |   }
+                        |
+                        | }
+                        |
+                        | module.exports = Home;
+                    p Now, if you visite #[i.ht localhost:3000/home/], you'll get something like this:
+                    p
+                      img(src="assets/images/screens/home2.png")
+                    p Let's make some style to this page.
+                    p Create a file #[i.ht style.css] in #[i.ht /public/] with this content:
+                    pre
+                      code.language-css 
+                        | #header {
+                        |   background-color: #4588ce;
+                        |   color: #FFF;
+                        |   padding: 20px;
+                        |   font-size: 30px;
+                        | }
+                        |
+                        | #content {
+                        |   padding: 20px;
+                        |   color: #282828;
+                        | }
+                    p And add this line of code to #[i.ht head] tag in #[i.ht app_modules/home/views/index.pug]:
+                    pre
+                      code.language-jade 
+                        | link(rel="stylesheet", href="/file/style.css")
+                    p Now, if you visite #[i.ht localhost:3000/home/], you'll get something like this:
+                    p
+                      img(src="assets/images/screens/home3.png")
+                    p Now, We want to call some javascript that's specific to our #[i.ht home] module.
+                    p So we create a file #[i.ht app_modules/home/client/main.js] in #[i.ht /public/] with this content:
+                    pre
+                      code.language-javascript
+                        | document.getElementById('content').innerHTML += 'This text is added by Javascript';
+                    p And add this line of code to the end of #[i.ht body] tag in #[i.ht app_modules/home/views/index.pug]:
+                    pre
+                      code.language-jade 
+                        | script(src="/home/file/main.js")
+                    p Now, if you visite #[i.ht localhost:3000/home/], you'll get something like this:
+                    p
+                      img(src="assets/images/screens/home4.png")
+                  .section-block
+                    | You probably noticed that a home page in a website should be accessible from the domain's root instead of having its own route.
+                    P In our case we should access #[i.ht home] from #[i.ht localhost:3000] instead of #[i.ht localhost:3000/home/].
+                    p Fooll makes it easy to achieve that. Just set #[i.ht aliases] options to server in #[i.ht /app.js]:
+                    pre 
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        |
+                        | var server = new Fooll({
+                        |  aliases: {
+                        |     '': 'home'
+                        |   }
+                        | });
+                        |
+                        | server.listen();
+                    p Now, from #[i.ht localhost:3000], you can access what we used to get from #[i.ht localhost:3000/home/]. Try it!
+                section#routing.doc-section
+                  h2.section-title Routing
+                  .section-block
+                    | We'll now, learn how to route with #[i.ht FoollJS].
+                    p But before we start, let's make a new module called #[i.ht login]. by running:
+                    code fooll -M login
+                    p Now create a file #[i.ht app_modules/login/views/index.pug] with this content:
+                    pre
+                      code.language-jade
+                        | html
+                        |   head
+                        |     title My App Fooll: Login
+                        |   body
+                        |     #header myApp
+                        |     #content
+                        |       form(method="post",action="/login/signin")
+                        |         input(name="username")
+                        |         input(name="password",type="password")
+                        |         button Submit
+                    p And render the view when the module's root is resquested. So make the file #[i.ht app_modules/login/index.js] look like this: 
+                    pre
+                      code.language-javascript
+                        | const Foola = require('foola');
+                        | class Login extends Foola {
+                        |
+                        |   GET_root(req, res) {
+                        |     res.render(this.views.index);
+                        |   }
+                        |
+                        | }
+                        |
+                        | module.exports = Login;
+                    p Now, if #[i.ht localhost:3000/login/] you'll find the form that sends a #[i.ht POST] request to #[i.ht /login/signin].
+                    p #[i.ht /login/signin] means that the request will call the function #[i.ht signin] in the named #[i.ht login] module.
+                    p But wait! it's a a #[i.ht POST] request, so it will look for #[i.ht POST_signin] in #[i.ht login] module.
+                    p So let's write this function. Add this code to #[i.ht Login] class:
+                    pre
+                      code.language-javascript
+                        |   POST_signin(req, res) {
+                        |     console.log(req.body);
+                        |     res.end('the form data has been received');
+                        |   }
+                    p You should know how to try it! So don't hesitate to do.
+                    p
+                      .callout-block.callout-info
+                        .icon-holder
+                          i.fa.fa-info-circle
+                        .content
+                          h4.callout-title Other methods (PUT,DELETE...)
+                          p Of course you can use the other methods. For instance, if you have a #[i.ht PUT] request, it will call #[i.ht PUT_actionName].
+                section#inheritance.doc-section
+                  h2.section-title Inheritance
+                  .section-block
+                    p Now, we'll discover another great feature in #[i.ht FoollJS]. We'll make a module that extends from another one.
+                    p Imagine we want to make a module that adds a register function to #[i.ht login] module, but without changing it.
+                    p We'll make a new module called #[i.ht authentication] that extends from #[i.ht login]. Run:
+                    p 
+                      code fooll -M authentication
+                    p And write this code in its #[i.ht index.js]:
+                    pre
+                      code.language-javascript
+                        | const Login = require('./../login');
+                        | class Authentication extends Login {
+                        |
+                        |   GET_register(req, res) {
+                        |     res.render(this.views.register);
+                        |   }
+                        |
+                        |   POST_register(req, res) {
+                        |     console.log(req.body);
+                        |     res.end('the register form data has been received');
+                        |   }
+                        |
+                        | }
+                        |
+                        | module.exports = Authentication;
+                    p
+                      .callout-block.callout-warning
+                        .icon-holder
+                          i.fa.fa-exclamation-triangle
+                        .content
+                          h4.callout-title Views Are not inherited
+                          p You should know that views are not inherited. So you have to create #[i.ht /authentication/views/index.pug] which sends the login form to #[i.ht /authentication/signin].
+                          p And create #[i.ht /authentication/views/register.pug] that contains the register form with #[i.ht POST] as method and #[i.ht /authentication/register] as action.
+                section#middlewares.doc-section
+                  h2.section-title Express middlewares
+                  .section-block
+                    p #[i.ht FoollJS] supports ExpressJS middlewares. But #[i.ht FoollJS] has its proper way to implement them.
+                    p While in #[i.ht ExpressJS] you write #[code app.use(middleware)], in #[i.ht FoollJS] you write #[code server.addHook(middleware)].
+                    p We'll take the example of #[i.ht express-session] middleware:
+                    h6 In Express you would do this:
+                    pre
+                      code.language-javascript
+                        | const session = require('express-session');
+                        | app.use(session({
+                        |   secret: 'keyboard cat',
+                        |   resave: false,
+                        |   saveUninitialized: true,
+                        |   cookie: { secure: true }
+                        | }))
+                    h6 In Fooll you write:
+                    pre
+                      code.language-javascript
+                        | const session = require('express-session');
+                        | server.addHook(session({
+                        |   secret: 'keyboard cat',
+                        |   resave: false,
+                        |   saveUninitialized: true,
+                        |   cookie: { secure: true }
+                        | }))
+                    p So #[i.ht app.js] will look this:
+                    pre 
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | const session = require('express-session');
+                        |
+                        | var server = new Fooll({
+                        |  aliases: {
+                        |     '': 'home'
+                        |   }
+                        | });
+                        |
+                        | server.addHook(session({
+                        |   secret: 'keyboard cat',
+                        |   resave: false,
+                        |   saveUninitialized: true,
+                        |   cookie: { secure: true }
+                        | }))
+                        |
+                        | server.listen();
+                section#more.doc-section
+                  h2.section-title Learn More
+                  .section-block
+                    p We are currently making our best to write good API documentations, and we promise you that it will be done very soon!
+                    p At this time, you can learn everything about #[i.ht FoollJS] from its repo readme #[a(href="https://github.com/fooll/fooll") here]
+
+            .doc-sidebar.hidden-xs
+              nav#doc-nav
+                ul#doc-menu.nav.doc-menu(data-spy="affix")
+                  li #[a.scrollto(href="#installation-section") Installation]
+                  li #[a.scrollto(href="#generate-section") Generate Application]
+                  li #[a.scrollto(href="#generate-module") Application Module]
+                  li #[a.scrollto(href="#routing") Routing]
+                  li #[a.scrollto(href="#inheritance") Inheritance]
+                  li #[a.scrollto(href="#middlewares") Express Middlewares]
+                  li #[a.scrollto(href="#more") Learn More]
+      // //container
+    // //footer
+    // Main Javascript
+    script(type='text/javascript', src='assets/plugins/jquery-1.12.3.min.js')
+    script(type='text/javascript', src='assets/plugins/bootstrap/js/bootstrap.min.js')
+    script(type='text/javascript', src='assets/plugins/prism/prism.js')
+    script(type='text/javascript', src='assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js')
+    script(type='text/javascript', src='assets/plugins/jquery-match-height/jquery.matchHeight-min.js')
+    script(type='text/javascript', src='assets/js/main.js')

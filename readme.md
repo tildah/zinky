@@ -295,10 +295,6 @@ var server = new Fooll({
 ```
 Now when you request: get `www.mysite.com/file/logo.png`, Fooll will return `public/logo.png` file.
 
-### Session Secret
-`sessionSecret` sets the session encryption secret. By default it is 'secret'
-*(We'll see sessions in req & res respectives apis)*
-
 ### Not Found View
 
 `notFoundView` is the html returned when the route returns an error **404**. By default it is '<h1>404 Not Found</h1>'
@@ -369,7 +365,7 @@ These are additional attributes created by Fooll in both req and res objects.
 - res.render(pugLayout.Page view, {locals}, pugLayout.Layout layout*):
   Responds with rendered view. Ex:
   ```javascript
-  res.setSession(this.views.index, {title:'Home Page'}, this.views.L_layout);
+  res.render(this.views.index, {title:'Home Page'}, this.views.L_layout);
   ```
 - res.redirect('location'):
   Redirects to given url. Ex:

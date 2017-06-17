@@ -1,0 +1,124 @@
+<!DOCTYPE html><!--if IE 8html.ie8(lang='en')  --><!--if IE 9html.ie9(lang='en')  --><!-- [if !IE] <!--><html lang="en"><!-- <![endif]--><head><title>FoollJS: Tutorial</title><!-- Meta--><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content=""><meta name="author" content=""><link rel="shortcut icon" href="assets/images/logo.png"><link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"><!-- Global CSS--><link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css"><!-- Plugins CSS--><link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="assets/plugins/prism/prism.css"><link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css"><!-- Theme CSS--><link id="theme-style" rel="stylesheet" href="assets/css/styles.css"><link id="theme-style" rel="stylesheet" href="assets/css/my-style.css"><!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries--><!--if lt IE 9script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')--></head><body class="body-pink"><div class="page-wrapper"><!-- ******Header******--><header class="header" id="header"><div class="container"><div class="branding"><h1 class="logo"><a href="index.html"><span class="icon_documents_alt icon" aria-hidden="true"></span><span class="text-highlight">Fooll</span><span class="text-bold">Docs</span></a></h1></div><!-- //branding--><ol class="breadcrumb"><li><a href="index.html">Home</a></li><li class="active">Tutorial</li></ol></div><!-- //container--></header><!-- //header--><div class="doc-wrapper"><div class="container"><div class="doc-header text-center" id="doc-header"><h1 class="doc-title"><i class="icon fa fa-book"></i> Documentations</h1><div class="meta"><i class="fa fa-clock-o"></i> Last updated: 17 - 6 - 2017 </div></div><!-- //doc-header--><div class="doc-body"><div class="doc-content"><div class="content-inner"><section class="doc-section" id="intro-section"><div class="section-block">It's recommanded to check this <a href="/tutorial1.html">quick tutorial</a>, in order to get an idea on <FoollJS></FoollJS> basics.</div></section><section class="doc-section" id="server-section"><h2 class="section-title">Fooll class (server) API</h2><div class="section-block" id="server-constructor"><h3>Constructor</h3><p>The simplest way to create a <i class="ht">Fooll</i> instance is this:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll();</code></pre><p>This will use the default option values of <i class="ht">Fooll</i>, however you can customize the server configuration by passing an object argument with this options:</p><h4>Constructor Options</h4><h5>port</h5><p>The port on which the server will listen. <i>Default: 3000</i></p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  port: 8080 // The sever will listen on port 8080
+});</code></pre><h5>env</h5><p>The project environment. <i>Default: 'development'</i></p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  env: 'production'
+});</code></pre><h5>aliases</h5><p>Aliases gives you the possiblity to edit module names in route. <i>Default: {}</i></p><p>For example, imagine you have a module <i class="ht">auth</i> in which you have <i class="ht">GET_dosomething</i>, normally this function is called when a you request <i class="ht">get</i> to <i class="ht">/auth/dosomething</i>.</p><p>Now, if you want to change the word <i class="ht">auth</i> only in route without changing the module name so you can call the same function with a request to <i class="ht">/sign/dosomething</i>, you'll have to write this simple line:</p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  aliases: {
+    'sign': 'auth' // Now, everytime you request 'sign' module, fooll will understand that you mean 'auth'
+  }
+});</code></pre><p>The <i class="ht">aliases</i> option is especially useful when you want to attach a module to the app root.</p><p id="root-aliases">For example, you want to run the module home when the user requests www.mysite.com, you just have to do:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  aliases: {
+    '': 'home' // Now when you request: get www.mysite.com, Fooll will look for GET_root(req, res) in home module.
+  }
+});</code></pre><h5>notFoundView</h5><p>The html returned when the requested action does not exist. <i>Default: '&lt;h1&gt;404 Not Found&lt;/h1&gt;'</i></p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  notFoundView: '&lt;div class=&quot;myclass&quot;&gt; This page does not exist in this website&lt;/div&gt;'
+});</code></pre><h5>staticFolder</h5><p>The path to folder that contains served static files. <i>Default: 'public'</i></p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  staticFolder: 'assets' // Fooll will serve the files in 'assets' folder.
+});</code></pre><h5>staticModuleName</h5><p>By default, when you want to get a file from the static folder, you request <i class="ht">/file/example.ext</i>. If you want to change <i class="ht">file</i> by something else you'll have to have to mention it in this option. <i>Default: 'file'</i></p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  staticModuleName: 'statics' // Now if you request '/statics/example.ext' Fooll will look for it in 'public' folder.
+});</code></pre><h5>extra</h5><p>Here you can put anything you want.<i>Default: {}</i></p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  extra: {
+    message: 'My extra data'
+  }
+});</code></pre></div><div class="section-block" id="server-listen"> <h3>listen(#port*)</h3><p>Start to listen on #port*.</p><p>If #port* is provided it will overwrite the existing <i class="ht">server.port</i>.</p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll();
+server.listen() // server will listen on port 3000</code></pre><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll();
+server.listen(8080) // server will listen on port 8080</code></pre><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  port: 2000
+});
+server.listen() // server will listen on port 2000</code></pre><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll({
+  port: 2000
+});
+server.listen(4000) // server will listen on port 4000</code></pre></div><div class="section-block" id="server-addhook"> <h3>addHook(hook())</h3><p>Hooks are a serie of successive functions that run before any request action.</p><p>Eg:</p><pre><code class="language-javascript">const Fooll = require('fooll');
+var server = new Fooll();
+server.addHook((req, res, next) => {
+  console.log('I am a hoooooook');
+  next();
+}) // Now, everytime you have a request you'll see 'I am a hoooooook' in the console.</code></pre><p>Of course, you can use <i class="ht">Express</i> middlewares as hooks without any problem.</p></div><div class="section-block" id="server-modules"> <h3>modules</h3><p><i class="ht">server.modules</i> contains all the application modules with their methods and views...</p></div></section><section class="doc-section" id="foola-section"><h2 class="section-title">Foola (app module) API</h2><div class="section-block" id="foola-tree"> <p>This is how a basic module looks like:</p><pre><code class="language-markup">module
+  |_ client
+  |_ views
+  |_ index.js</code></pre></div><div class="section-block" id="foola-index"><h3>index.js</h3><p>This is the simplest index.js of a module.</p><pre><code class="language-javascript">const Foola = require('foola');
+ 
+class ModuleName extends Foola {
+ 
+  GET_root(req, res) {
+    res.end('You are in module home page');
+  }
+ 
+}
+ 
+module.exports = ModuleName;</code></pre><p>Let's explain it:</p><h4>Inheritance</h4><pre><code class="language-javascript">const Foola = require('foola');
+ 
+class ModuleName extends Foola</code></pre><p>Here we extended our module to <i class="ht">Foola</i> class.</p><p>Of course, you can extend your class to some other class but keep in mind that <i class="ht">Foola</i> should be the top most one.</p><p>Eg:</p><pre><code class="language-javascript">class Auth extends Foola</code></pre><p>Then you can do:</p><pre><code class="language-javascript">class SocialAuth extends Auth</code></pre><h4>Routing</h4><p>Using <i class="ht">Fooll</i> framework, you don't need routes configuration. However it follows a convention that makes it easy to know what action is done for any given route.</p><p>The convention is:</p><pre><code class="language-markup">/moduleName/action/params[0]/params[1]/params[2]/...</code></pre><p>Eg:</p><p><i class="ht">POST</i> to: <i class="ht">/auth/login/omar/123456</i></p><p>And to handle this request add this method to <i class="ht">app_modules/auth/index.js</i>:</p><pre><code class="language-javascript">POST_login(req, res) {
+  req.params[0] // omar
+  req.params[1] // 123456
+}</code></pre><h5>Module's root</h5><p>Imagine now you want to GET a module's root, you'll request this: <i class="ht">/auth/</i></p><p>And to handle this request add this method to <i class="ht">app_modules/auth/index.js</i>:</p><pre><code class="language-javascript">GET_root(req, res) {
+  res.end("This is the auth's root")
+}</code></pre><p>You can do the same thing with <i class="ht">POST</i>, <i class="ht">PUT</i>, <i class="ht">PATCH</i>...</p><h5>After Hooks</h5><p>Imagine you want to run something after an action, in another module, has been sent. You can use the after hooks.</p><p>Eg:</p><p>You have a module named <i class="ht">comment</i> in which you have <i class="ht">POST_root</i>, so you add this method to <i class="ht">app_modules/auth/index.js</i>:</p><pre><code class="language-javascript">AFTER_comment_POST_root(req, res) {
+  console.log("The post request to /comment/ has received a response, now it's me who's running")
+}</code></pre></div><div class="section-block" id="foola-views"><h3>Views</h3><p><i class="ht">Foola</i> uses <a href="https://www.npmjs.com/package/pug-layout">pug-layout</a> to handle its views.</p><p>Module's views are stored in views folder.</p><p>Then you'll find the views in <i class="ht">views</i> object in module class.</p><p>Eg:</p><pre><code class="language-markup">app_modules
+  |_ auth
+    |_ views
+      |_ main.pug
+    |_ index.js</code></pre><h6>main.pug</h6><pre><code class="language-jade">h1 Auth module main page</code></pre><h6>index.js</h6><pre><code class="language-javascript">const Foola = require('foola');
+ 
+class Auth extends Foola {
+ 
+  GET_root(req, res) {
+    var html = this.views.main.render();
+    res.end(html);
+  }
+ 
+}
+ 
+module.exports = Auth;</code></pre><p>Now, if you visit <i class="ht">/auth/</i> you'll get <i class="ht">main.pug</i>'s content.</p><h4>Pages & Layouts</h4><p>Views are by default read as Pages(see <a href="https://www.npmjs.com/package/pug-layout">pug-layout docs</a>), If you want them to be considered layouts, just start the view file name with <i class="ht">L_</i>.</p><p>Eg:</p><pre><code class="language-markup">app_modules
+  |_ auth
+    |_ views
+      |_ main.pug
+      |_ L_layout.pug
+    |_ index.js</code></pre><h6>L_layout.pug</h6><pre><code class="language-jade">html
+  body
+    header
+      My Awesome Website
+    block content</code></pre><h6>main.pug</h6><pre><code class="language-jade">block content
+  h1 Auth module main page</code></pre><h6>index.js</h6><pre><code class="language-javascript">const Foola = require('foola');
+ 
+class Auth extends Foola {
+ 
+  GET_root(req, res) {
+    var layout = this.views.L_layout;
+    this.views.main.extends(layout);
+    var html = this.views.main.render();
+    res.end(html);
+    // Or a better way to do all what you saw above is:
+    // res.render(this.views.main, {}, this.views.L_layout);
+  }
+ 
+}
+ 
+module.exports = Auth;</code></pre></div><div class="section-block" id="foola-client"><h3>client (static files)</h3><p><i class="ht">client</i> folder contains all the served static files of your module, They are accessed from <i class="ht">file</i> action.</p><p>Eg:</p><pre><code class="language-markup">app_modules
+  |_ auth
+    |_ client
+      |_ img
+         |_ logo.png
+    |_ views
+      |_ main.pug
+    |_ index.js</code></pre><p>In order to get <i class="ht">logo.png</i> use this route: <i class="ht">/auth/file/img/logo.png</i>.</p><h6>maing.pug</h6><pre><code class="language-jade">img(src="/auth/file/img/logo.png")</code></pre><p><div class="callout-block callout-warning"><div class="icon-holder"><i class="fa fa-exclamation-triangle"></i></div><div class="content"><h4 class="callout-title">About root aliased module's files</h4><p>If the module is aliased to app root (see <a href="#root-aliases">this</a>), you'll still have to write the module's name in order to get its files, so you write <i class="ht">/modulename/file/myfile.ext</i>, instead of <i class="ht">/file/myfile.ext</i>.</p></div></div></p></div></section><section class="doc-section" id="req-section"><h2 class="section-title">req API</h2><div class="section-block" id="req-modulename"><h3>req.moduleName</h3><p>The requested module name.</p><pre><code class="language-javascript">GET /auth/login/omar/123456?remember=1
+// req.moduleName = 'auth'</code></pre></div><div class="section-block" id="req-action"><h3>req.action</h3><p>The requested action name.</p><pre><code class="language-javascript">GET /auth/login/omar/123456?remember=1
+// req.action = 'login'</code></pre></div><div class="section-block" id="req-operation"><h3>req.operation</h3><p>The function name that will be called on this request.</p><pre><code class="language-javascript">GET /auth/login/omar/123456?remember=1
+// req.operation = 'GET_login'</code></pre></div><div class="section-block" id="req-params"><h3>req.params</h3><p>The request params.</p><pre><code class="language-javascript">GET /auth/login/omar/123456?remember=1
+// req.params = ['omar', '123456']</code></pre></div><div class="section-block" id="req-query"><h3>req.query</h3><p>The request GET params.</p><pre><code class="language-javascript">GET /auth/login/omar/123456?remember=1
+// req.query = {remember: 1}</code></pre></div><div class="section-block" id="req-server"><h3>req.server</h3><p>the server object</p></div></section><section class="doc-section" id="res-section"><h2 class="section-title">res API</h2><div class="section-block" id="res-render"><h3>res.render(pugLayout.Page view, {locals}, pugLayout.Layout layout*)</h3><p>Responds with rendered view.</p><pre><code class="language-javascript">res.render(this.views.index, {title:'Home Page'}, this.views.L_layout);</code></pre></div><div class="section-block" id="res-redirect"><h3>res.redirect('location')</h3><p> Redirects to given url.</p><pre><code class="language-javascript">res.redirect('/');</code></pre></div><div class="section-block" id="res-json"><h3>res.json({obj})</h3><p> Responds with json object.</p><pre><code class="language-javascript">res.json({id: 50, username: 'omar'});</code></pre></div></section></div></div><div class="doc-sidebar hidden-xs"><nav id="doc-nav"><ul class="nav doc-menu" id="doc-menu" data-spy="affix"><li><a class="scrollto" href="#server-section">Fooll (server) API</a><ul class="nav doc-sub-menu"><li><a class="scrollto" href="#server-constructor">constructor</a></li><li><a class="scrollto" href="#server-listen">listen</a></li><li><a class="scrollto" href="#server-addhook">addHook</a></li><li><a class="scrollto" href="#server-modules">modules</a></li></ul></li><li><a class="scrollto" href="#foola-section">Foola (module) API</a><ul class="nav doc-sub-menu"><li><a class="scrollto" href="#foola-tree">tree</a></li><li><a class="scrollto" href="#foola-index">index.js</a></li><li><a class="scrollto" href="#foola-views">views</a></li><li><a class="scrollto" href="#foola-client">client (static files)</a></li></ul></li><li><a class="scrollto" href="#req-section">req API</a><ul class="nav doc-sub-menu"><li><a class="scrollto" href="#req-modulename">moduleName</a></li><li><a class="scrollto" href="#req-action">action</a></li><li><a class="scrollto" href="#req-operation">operation</a></li><li><a class="scrollto" href="#req-params">params</a></li><li><a class="scrollto" href="#req-query">query</a></li><li><a class="scrollto" href="#req-server">server</a></li></ul></li><li><a class="scrollto" href="#res-section">res API</a><ul class="nav doc-sub-menu"><li><a class="scrollto" href="#res-render">render</a></li><li><a class="scrollto" href="#req-redirect">redirect</a></li><li><a class="scrollto" href="#req-json">json</a></li></ul></li></ul></nav></div></div></div></div><!-- //container--></div><!-- //footer--><!-- Main Javascript--><script type="text/javascript" src="assets/plugins/jquery-1.12.3.min.js"></script><script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script><script type="text/javascript" src="assets/plugins/prism/prism.js"></script><script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script><script type="text/javascript" src="assets/plugins/jquery-match-height/jquery.matchHeight-min.js"></script><script type="text/javascript" src="assets/js/main.js"></script></body></html>

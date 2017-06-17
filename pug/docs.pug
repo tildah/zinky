@@ -1,0 +1,475 @@
+doctype html
+//if IE 8
+  html.ie8(lang='en')  
+//if IE 9
+  html.ie9(lang='en')  
+// [if !IE] <!
+html(lang='en')
+  // <![endif]
+  head
+    title FoollJS: Tutorial
+    // Meta
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='shortcut icon', href='assets/images/logo.png')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
+    // Global CSS
+    link(rel='stylesheet', href='assets/plugins/bootstrap/css/bootstrap.min.css')
+    // Plugins CSS
+    link(rel='stylesheet', href='assets/plugins/font-awesome/css/font-awesome.css')
+    link(rel='stylesheet', href='assets/plugins/prism/prism.css')
+    link(rel='stylesheet', href='assets/plugins/elegant_font/css/style.css')
+    // Theme CSS
+    link#theme-style(rel='stylesheet', href='assets/css/styles.css')
+    link#theme-style(rel='stylesheet', href='assets/css/my-style.css')
+    // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+      script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+  body.body-pink
+    .page-wrapper
+      // ******Header******
+      header#header.header
+        .container
+          .branding
+            h1.logo
+              a(href='index.html')
+                span.icon_documents_alt.icon(aria-hidden='true')
+                span.text-highlight Fooll
+                span.text-bold Docs
+          // //branding
+          ol.breadcrumb
+            li
+              a(href='index.html') Home
+            li.active Tutorial
+        // //container
+      // //header
+      .doc-wrapper
+        .container
+          #doc-header.doc-header.text-center
+            h1.doc-title
+              i.icon.fa.fa-book
+              |  Documentations
+            .meta
+              i.fa.fa-clock-o
+              |  Last updated: #{new Date().getDate()} - #{new Date().getMonth()+1} - #{new Date().getFullYear()} 
+          // //doc-header
+          .doc-body
+            .doc-content
+              .content-inner
+                section#intro-section.doc-section
+                  .section-block
+                    | It's recommanded to check this #[a(href="/tutorial1.html") quick tutorial], in order to get an idea on #[FoollJS] basics.
+                section#server-section.doc-section
+                  h2.section-title Fooll class (server) API
+                  #server-constructor.section-block
+                    h3 Constructor
+                    p The simplest way to create a #[i.ht Fooll] instance is this:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll();
+                    p This will use the default option values of #[i.ht Fooll], however you can customize the server configuration by passing an object argument with this options:
+                    h4 Constructor Options
+                    h5 port
+                    p The port on which the server will listen. #[i Default: 3000]
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   port: 8080 // The sever will listen on port 8080
+                        | });
+                    h5 env
+                    p The project environment. #[i Default: 'development']
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   env: 'production'
+                        | });
+                    h5 aliases
+                    p Aliases gives you the possiblity to edit module names in route. #[i Default: {}]
+                    p For example, imagine you have a module #[i.ht auth] in which you have #[i.ht GET_dosomething], normally this function is called when a you request #[i.ht get] to #[i.ht /auth/dosomething].
+                    p Now, if you want to change the word #[i.ht auth] only in route without changing the module name so you can call the same function with a request to #[i.ht /sign/dosomething], you'll have to write this simple line:
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   aliases: {
+                        |     'sign': 'auth' // Now, everytime you request 'sign' module, fooll will understand that you mean 'auth'
+                        |   }
+                        | });
+                    p The #[i.ht aliases] option is especially useful when you want to attach a module to the app root.
+                    p#root-aliases For example, you want to run the module home when the user requests www.mysite.com, you just have to do:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   aliases: {
+                        |     '': 'home' // Now when you request: get www.mysite.com, Fooll will look for GET_root(req, res) in home module.
+                        |   }
+                        | });
+                    h5 notFoundView
+                    p The html returned when the requested action does not exist. #[i Default: '&lt;h1&gt;404 Not Found&lt;/h1&gt;']
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   notFoundView: '&lt;div class=&quot;myclass&quot;&gt; This page does not exist in this website&lt;/div&gt;'
+                        | });
+                    h5 staticFolder
+                    p The path to folder that contains served static files. #[i Default: 'public']
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   staticFolder: 'assets' // Fooll will serve the files in 'assets' folder.
+                        | });
+                    h5 staticModuleName
+                    p By default, when you want to get a file from the static folder, you request #[i.ht /file/example.ext]. If you want to change #[i.ht file] by something else you'll have to have to mention it in this option. #[i Default: 'file']
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   staticModuleName: 'statics' // Now if you request '/statics/example.ext' Fooll will look for it in 'public' folder.
+                        | });
+                    h5 extra
+                    p Here you can put anything you want.#[i Default: {}]
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   extra: {
+                        |     message: 'My extra data'
+                        |   }
+                        | });
+                  #server-listen.section-block 
+                    h3 listen(#port*)
+                    p Start to listen on #port*.
+                    p If #port* is provided it will overwrite the existing #[i.ht server.port].
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll();
+                        | server.listen() // server will listen on port 3000
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll();
+                        | server.listen(8080) // server will listen on port 8080
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   port: 2000
+                        | });
+                        | server.listen() // server will listen on port 2000
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   port: 2000
+                        | });
+                        | server.listen(4000) // server will listen on port 4000
+                  #server-addhook.section-block 
+                    h3 addHook(hook())
+                    p Hooks are a serie of successive functions that run before any request action.
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll();
+                        | server.addHook((req, res, next) => {
+                        |   console.log('I am a hoooooook');
+                        |   next();
+                        | }) // Now, everytime you have a request you'll see 'I am a hoooooook' in the console.
+                    p Of course, you can use #[i.ht Express] middlewares as hooks without any problem.
+                  #server-modules.section-block 
+                    h3 modules
+                    p #[i.ht server.modules] contains all the application modules with their methods and views...
+                section#foola-section.doc-section
+                  h2.section-title Foola (app module) API
+                  #foola-tree.section-block 
+                    p This is how a basic module looks like:
+                    pre
+                      code.language-markup
+                        | module
+                        |   |_ client
+                        |   |_ views
+                        |   |_ index.js
+                  #foola-index.section-block
+                    h3 index.js
+                    p This is the simplest index.js of a module.
+                    pre
+                      code.language-javascript
+                        | const Foola = require('foola');
+                        | 
+                        | class ModuleName extends Foola {
+                        | 
+                        |   GET_root(req, res) {
+                        |     res.end('You are in module home page');
+                        |   }
+                        | 
+                        | }
+                        | 
+                        | module.exports = ModuleName;
+                    p Let's explain it:
+                    h4 Inheritance
+                    pre
+                      code.language-javascript
+                        | const Foola = require('foola');
+                        | 
+                        | class ModuleName extends Foola
+                    p Here we extended our module to #[i.ht Foola] class.
+                    p Of course, you can extend your class to some other class but keep in mind that #[i.ht Foola] should be the top most one.
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | class Auth extends Foola
+                    p Then you can do:
+                    pre
+                      code.language-javascript
+                        | class SocialAuth extends Auth
+                    h4 Routing
+                    p Using #[i.ht Fooll] framework, you don't need routes configuration. However it follows a convention that makes it easy to know what action is done for any given route.
+                    p The convention is:
+                    pre
+                      code.language-markup
+                        | /moduleName/action/params[0]/params[1]/params[2]/...
+                    p Eg:
+                    p #[i.ht POST] to: #[i.ht /auth/login/omar/123456]
+                    p And to handle this request add this method to #[i.ht app_modules/auth/index.js]:
+                    pre
+                      code.language-javascript
+                        | POST_login(req, res) {
+                        |   req.params[0] // omar
+                        |   req.params[1] // 123456
+                        | }
+                    h5 Module's root
+                    p Imagine now you want to GET a module's root, you'll request this: #[i.ht /auth/]
+                    p And to handle this request add this method to #[i.ht app_modules/auth/index.js]:
+                    pre
+                      code.language-javascript
+                        | GET_root(req, res) {
+                        |   res.end("This is the auth's root")
+                        | }
+                    p You can do the same thing with #[i.ht POST], #[i.ht PUT], #[i.ht PATCH]...
+                    h5 After Hooks
+                    p Imagine you want to run something after an action, in another module, has been sent. You can use the after hooks.
+                    p Eg:
+                    p You have a module named #[i.ht comment] in which you have #[i.ht POST_root], so you add this method to #[i.ht app_modules/auth/index.js]:
+                    pre
+                      code.language-javascript
+                        | AFTER_comment_POST_root(req, res) {
+                        |   console.log("The post request to /comment/ has received a response, now it's me who's running")
+                        | }
+                  #foola-views.section-block
+                    h3 Views
+                    p #[i.ht Foola] uses #[a(href="https://www.npmjs.com/package/pug-layout") pug-layout] to handle its views.
+                    p Module's views are stored in views folder.
+                    p Then you'll find the views in #[i.ht views] object in module class.
+                    p Eg:
+                    pre
+                      code.language-markup
+                        | app_modules
+                        |   |_ auth
+                        |     |_ views
+                        |       |_ main.pug
+                        |     |_ index.js
+                    h6 main.pug
+                    pre
+                      code.language-jade
+                        | h1 Auth module main page
+                    h6 index.js
+                    pre
+                      code.language-javascript
+                        | const Foola = require('foola');
+                        | 
+                        | class Auth extends Foola {
+                        | 
+                        |   GET_root(req, res) {
+                        |     var html = this.views.main.render();
+                        |     res.end(html);
+                        |   }
+                        | 
+                        | }
+                        | 
+                        | module.exports = Auth;
+                    p Now, if you visit #[i.ht /auth/] you'll get #[i.ht main.pug]'s content.
+                    h4 Pages & Layouts
+                    p Views are by default read as Pages(see #[a(href="https://www.npmjs.com/package/pug-layout") pug-layout docs]), If you want them to be considered layouts, just start the view file name with #[i.ht L_].
+                    p Eg:
+                    pre
+                      code.language-markup
+                        | app_modules
+                        |   |_ auth
+                        |     |_ views
+                        |       |_ main.pug
+                        |       |_ L_layout.pug
+                        |     |_ index.js
+                    h6 L_layout.pug
+                    pre
+                      code.language-jade
+                        | html
+                        |   body
+                        |     header
+                        |       My Awesome Website
+                        |     block content
+                    h6 main.pug
+                    pre
+                      code.language-jade
+                        | block content
+                        |   h1 Auth module main page
+                    h6 index.js
+                    pre
+                      code.language-javascript
+                        | const Foola = require('foola');
+                        | 
+                        | class Auth extends Foola {
+                        | 
+                        |   GET_root(req, res) {
+                        |     var layout = this.views.L_layout;
+                        |     this.views.main.extends(layout);
+                        |     var html = this.views.main.render();
+                        |     res.end(html);
+                        |     // Or a better way to do all what you saw above is:
+                        |     // res.render(this.views.main, {}, this.views.L_layout);
+                        |   }
+                        | 
+                        | }
+                        | 
+                        | module.exports = Auth;
+                  #foola-client.section-block
+                    h3 client (static files)
+                    p #[i.ht client] folder contains all the served static files of your module, They are accessed from #[i.ht file] action.
+                    p Eg:
+                    pre
+                      code.language-markup
+                        | app_modules
+                        |   |_ auth
+                        |     |_ client
+                        |       |_ img
+                        |          |_ logo.png
+                        |     |_ views
+                        |       |_ main.pug
+                        |     |_ index.js
+                    p In order to get #[i.ht logo.png] use this route: #[i.ht /auth/file/img/logo.png].
+                    h6 maing.pug
+                    pre
+                      code.language-jade
+                        | img(src="/auth/file/img/logo.png")
+                    p
+                      .callout-block.callout-warning
+                        .icon-holder
+                          i.fa.fa-exclamation-triangle
+                        .content
+                          h4.callout-title About root aliased module's files
+                          p If the module is aliased to app root (see #[a(href="#root-aliases") this]), you'll still have to write the module's name in order to get its files, so you write #[i.ht /modulename/file/myfile.ext], instead of #[i.ht /file/myfile.ext].
+                section#req-section.doc-section
+                  h2.section-title req API
+                  #req-modulename.section-block
+                    h3 req.moduleName
+                    p The requested module name.
+                    pre
+                      code.language-javascript
+                        | GET /auth/login/omar/123456?remember=1
+                        | // req.moduleName = 'auth'
+                  #req-action.section-block
+                    h3 req.action
+                    p The requested action name.
+                    pre
+                      code.language-javascript
+                        | GET /auth/login/omar/123456?remember=1
+                        | // req.action = 'login'
+                  #req-operation.section-block
+                    h3 req.operation
+                    p The function name that will be called on this request.
+                    pre
+                      code.language-javascript
+                        | GET /auth/login/omar/123456?remember=1
+                        | // req.operation = 'GET_login'
+                  #req-params.section-block
+                    h3 req.params
+                    p The request params.
+                    pre
+                      code.language-javascript
+                        | GET /auth/login/omar/123456?remember=1
+                        | // req.params = ['omar', '123456']
+                  #req-query.section-block
+                    h3 req.query
+                    p The request GET params.
+                    pre
+                      code.language-javascript
+                        | GET /auth/login/omar/123456?remember=1
+                        | // req.query = {remember: 1}
+                  #req-server.section-block
+                    h3 req.server
+                    p the server object
+                section#res-section.doc-section
+                  h2.section-title res API
+                  #res-render.section-block
+                    h3 res.render(pugLayout.Page view, {locals}, pugLayout.Layout layout*)
+                    p Responds with rendered view.
+                    pre
+                      code.language-javascript
+                        | res.render(this.views.index, {title:'Home Page'}, this.views.L_layout);
+                  #res-redirect.section-block
+                    h3 res.redirect('location')
+                    p  Redirects to given url.
+                    pre
+                      code.language-javascript
+                        | res.redirect('/');
+                  #res-json.section-block
+                    h3 res.json({obj})
+                    p  Responds with json object.
+                    pre
+                      code.language-javascript
+                        | res.json({id: 50, username: 'omar'});
+            .doc-sidebar.hidden-xs
+              nav#doc-nav
+                ul#doc-menu.nav.doc-menu(data-spy="affix")
+                  li #[a.scrollto(href="#server-section") Fooll (server) API]
+                    ul.nav.doc-sub-menu
+                      li #[a.scrollto(href="#server-constructor") constructor]
+                      li #[a.scrollto(href="#server-listen") listen]
+                      li #[a.scrollto(href="#server-addhook") addHook]
+                      li #[a.scrollto(href="#server-modules") modules]
+                  li #[a.scrollto(href="#foola-section") Foola (module) API]
+                    ul.nav.doc-sub-menu
+                      li #[a.scrollto(href="#foola-tree") tree]
+                      li #[a.scrollto(href="#foola-index") index.js]
+                      li #[a.scrollto(href="#foola-views") views]
+                      li #[a.scrollto(href="#foola-client") client (static files)]
+                  li #[a.scrollto(href="#req-section") req API]
+                    ul.nav.doc-sub-menu
+                      li #[a.scrollto(href="#req-modulename") moduleName]
+                      li #[a.scrollto(href="#req-action") action]
+                      li #[a.scrollto(href="#req-operation") operation]
+                      li #[a.scrollto(href="#req-params") params]
+                      li #[a.scrollto(href="#req-query") query]
+                      li #[a.scrollto(href="#req-server") server]
+                  li #[a.scrollto(href="#res-section") res API]
+                    ul.nav.doc-sub-menu
+                      li #[a.scrollto(href="#res-render") render]
+                      li #[a.scrollto(href="#req-redirect") redirect]
+                      li #[a.scrollto(href="#req-json") json]
+      // //container
+    // //footer
+    // Main Javascript
+    script(type='text/javascript', src='assets/plugins/jquery-1.12.3.min.js')
+    script(type='text/javascript', src='assets/plugins/bootstrap/js/bootstrap.min.js')
+    script(type='text/javascript', src='assets/plugins/prism/prism.js')
+    script(type='text/javascript', src='assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js')
+    script(type='text/javascript', src='assets/plugins/jquery-match-height/jquery.matchHeight-min.js')
+    script(type='text/javascript', src='assets/js/main.js')

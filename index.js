@@ -53,7 +53,7 @@ class Fooll {
   }
 
   addHook(fn) {
-    this.hooks.splice(-1, 0, fn);
+    this.hooks.splice(-2, 0, fn);
   }
 
   handleRequest(req, res) {
@@ -62,6 +62,7 @@ class Fooll {
       this.onFinishRequest(req, res);
     })
     var step = i => {
+      console.log(i);
       if (i < this.hooks.length && !res.finished) {
         this.hooks[i](req, res, () => {
           if (this.hooks[i + 1]) {

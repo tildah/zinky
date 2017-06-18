@@ -8,6 +8,7 @@ const errors = require(prefix + 'errors');
 const isRequestingFile = require(prefix + 'isrequestingfile');
 const validateRequest = require(prefix + 'validaterequest');
 const callAction = require(prefix + 'callaction');
+const beforeaction = require(prefix + 'beforeaction');
 const render = require(prefix + 'render');
 const bodyParser = require('body-parser');
 
@@ -23,5 +24,6 @@ module.exports = [
   render,
   bodyParser.json(),
   bodyParser.urlencoded({ extended: false }),
+  beforeaction,
   callAction
 ];

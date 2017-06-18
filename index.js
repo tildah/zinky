@@ -11,14 +11,13 @@ class Fooll {
     settings = settings || {};
     this.port = settings.port || 3000;
     this.notFoundView = settings.notFoundView || '<h1>404 Not Found</h1>';
+    this.internalErrorMsg = settings.internalErrorMsg || 'Internal Server Error';
     this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
     this.extra = settings.extra || {};
     this.env = settings.env || 'development';
     this.hooks = hooks;
-
-    this.errors = errors;
 
     this.server = http.createServer((req, res) => {
       this.handleRequest(req, res)

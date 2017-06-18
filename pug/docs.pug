@@ -436,6 +436,29 @@ html(lang='en')
                     pre
                       code.language-javascript
                         | res.json({id: 50, username: 'omar'});
+                section#cli-section.doc-section
+                  h2.section-title fooll-cli
+                  .section-block
+                    p #[i.ht fooll-cli] is a cli tool for #[i.ht FoollJS]
+                  #cli-install.section-block
+                    h3 Installation
+                    p
+                      code npm i -g fooll-cli
+                  #cli-gen_app.section-block
+                    h3 Generate application boilerplate
+                    p
+                      code fooll -a appName
+                    p Or:
+                    p
+                      code fooll --create_app appName
+                  #cli-gen_module.section-block
+                    h3 Generate application module
+                    p
+                      code fooll -M moduleName
+                    p Or:
+                    p
+                      code fooll --app_module moduleName
+
             .doc-sidebar.hidden-xs
               nav#doc-nav
                 ul#doc-menu.nav.doc-menu(data-spy="affix")
@@ -464,6 +487,11 @@ html(lang='en')
                       li #[a.scrollto(href="#res-render") render]
                       li #[a.scrollto(href="#req-redirect") redirect]
                       li #[a.scrollto(href="#req-json") json]
+                  li #[a.scrollto(href="#cli-section") fooll-cli]
+                    ul.nav.doc-sub-menu
+                      li #[a.scrollto(href="#cli-install") Installation]
+                      li #[a.scrollto(href="#cli-gen_app") Generate App]
+                      li #[a.scrollto(href="#cli-gen_module") Generate Module]
       // //container
     // //footer
     // Main Javascript

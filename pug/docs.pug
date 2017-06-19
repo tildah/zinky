@@ -124,6 +124,15 @@ html(lang='en')
                         | var server = new Fooll({
                         |   notFoundView: '&lt;div class=&quot;myclass&quot;&gt; This page does not exist in this website&lt;/div&gt;'
                         | });
+                    h5 internalErrorMsg
+                    p The message to return when an internal server error occurs. #[i Default: 'Internal Server Error']
+                    p Eg:
+                    pre
+                      code.language-javascript
+                        | const Fooll = require('fooll');
+                        | var server = new Fooll({
+                        |   internalErrorMsg: 'Ooops an error has occured in server'
+                        | });
                     h5 staticFolder
                     p The path to folder that contains served static files. #[i Default: 'public']
                     p Eg:
@@ -265,6 +274,16 @@ html(lang='en')
                         |   res.end("This is the auth's root")
                         | }
                     p You can do the same thing with #[i.ht POST], #[i.ht PUT], #[i.ht PATCH]...
+                    h5 Before Hooks
+                    p It is possible to attach hooks to a single action (route) by using #[i.ht BEFORE_].
+                    p Eg:
+                    p You have a module named #[i.ht comment] in which you have #[i.ht POST_root], so you add this method to #[i.ht app_modules/auth/index.js]:
+                    pre
+                      code.language-javascript
+                        | BEFORE_comment_POST_root(req, res) {
+                        |   console.log("You posted a request to /comment/ but i'm running before it")
+                        | }
+                    p It is possible to attach many before hooks to one single action.
                     h5 After Hooks
                     p Imagine you want to run something after an action, in another module, has been sent. You can use the after hooks.
                     p Eg:
@@ -436,6 +455,25 @@ html(lang='en')
                     pre
                       code.language-javascript
                         | res.json({id: 50, username: 'omar'});
+                  #res-status.section-block
+                    h3 res.status(#code)
+                    p  Sets the HTTP status for the response.
+                    pre
+                      code.language-javascript
+                        | res.status(400);
+                  #res-contenttype.section-block
+                    h3 res.contentType('contentType')
+                    p  Sets the HTTP content-type for the response.
+                    pre
+                      code.language-javascript
+                        | res.contentType('text/html');
+                        | // equivalent to res.setHeader('Content-Type', 'text/html');
+                  #res-deliver.section-block
+                    h3 res.deliver(#status, 'response')
+                    p  Sends the response with the given HTTP status.
+                    pre
+                      code.language-javascript
+                        | res.deliver(401, 'Sorry! you are not authorized to do that');
                 section#cli-section.doc-section
                   h2.section-title fooll-cli
                   .section-block
@@ -487,6 +525,9 @@ html(lang='en')
                       li #[a.scrollto(href="#res-render") render]
                       li #[a.scrollto(href="#req-redirect") redirect]
                       li #[a.scrollto(href="#req-json") json]
+                      li #[a.scrollto(href="#req-status") status]
+                      li #[a.scrollto(href="#req-contenttype") contentType]
+                      li #[a.scrollto(href="#req-deliver") deliver]
                   li #[a.scrollto(href="#cli-section") fooll-cli]
                     ul.nav.doc-sub-menu
                       li #[a.scrollto(href="#cli-install") Installation]

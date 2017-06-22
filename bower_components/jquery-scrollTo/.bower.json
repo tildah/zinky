@@ -1,0 +1,43 @@
+{
+  "name": "jquery-scrollTo",
+  "version": "0.2.1",
+  "description": "A jquery plugin that click on the button to jump to the specified location.",
+  "main": "dist/jquery-scrollTo.js",
+  "copyright": "amazingSurge",
+  "license": "LGPL-3.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "demo",
+    "gulp",
+    "CONTRIBUTING.md",
+    "manifest.json",
+    "karma.conf.js",
+    "config.js",
+    "package.json",
+    "gulpfile.babel.js",
+    "tests"
+  ],
+  "homepage": "https://github.com/amazingSurge/jquery-scrollTo",
+  "authors": [
+    "amazingSurge <amazingSurge@gmail.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "dependencies": {
+    "jquery": ">=2.2.0"
+  },
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.1",
+    "commit": "410eef38665b7a470bb0ef5fad5e8a14e85f76f3"
+  },
+  "_source": "https://github.com/amazingSurge/jquery-scrollTo.git",
+  "_target": "^0.2.1",
+  "_originalSource": "jquery-scrollTo",
+  "_direct": true
+}

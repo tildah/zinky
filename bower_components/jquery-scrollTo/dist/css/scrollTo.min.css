@@ -1,0 +1,8 @@
+/**
+* jQuery scrollTo v0.2.1
+* https://github.com/amazingSurge/jquery-scrollTo
+*
+* Copyright (c) amazingSurge
+* Released under the LGPL-3.0 license
+*/
+.scrollTo_animating,.scrollTo_animating *{pointer-events:none!important}

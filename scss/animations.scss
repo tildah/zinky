@@ -1,0 +1,12 @@
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
+.blinking {
+  animation: blinker 1s linear infinite;
+}
+
+.smooth-transition {
+  -webkit-transition: all 0.8s; /* Safari */
+  transition: all width 0.8s;
+}

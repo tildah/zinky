@@ -1,0 +1,47 @@
+doctype html
+html(lang="en")
+  head
+    title FoollJS
+    include ./common-head.pug
+  body
+    #home-header
+      include ./nav.pug
+      #website-presentation
+        img#website-logo(src="images/logo-white.png")
+        #website-name Fooll
+          span.js JS
+        #start
+          #start-text ~$ start-learn --framework fooll
+            span.blinking _
+          a#start-button(href="tutorial1.html")
+            i.fa.fa-chevron-right
+  .home-section#about-section
+    .home-section-title What is FoollJS ?
+    .home-section-content
+      | ‘FoollJS’ is a #[span.ht minimalist fullstack modular] framework.
+      br
+      | The idea behind it was to make every feature in the application separated from the others so developers can #[span.ht easily maintain] their code and #[span.ht reuse] it over applications.
+      br
+      | In Addition to that, the separation of features makes #[span.ht team work smoother] and #[span.ht reduces conflicts].
+      br
+      | The features are organized into folders with every feature containing its fullstack code, from routes to client controller through views.
+      br
+      | We took advantages of #[span.ht EcmaScript 6] to build a framework that makes module’s #[span.ht inheritance] possible, and rethinking the way we attach routes to controller by making new #[span.ht conventions].
+      br
+      | But wait! All of that doesn’t mean that we lose the work built by the NodeJS community since its creation. FoollJS supports all ExpressJS middlewares so developers don’t have to reinvent the wheel, they just #[span.ht evoluate]!
+  .home-section#features-section
+    .home-section-title Features
+    .home-section-content.pure-g
+      .pure-u-1.pure-u-md-1-4.feature-item
+        img.feature-img(src="images/app_modules.png")
+        .feature-title Modular Fullstack
+      .pure-u-1.pure-u-md-1-4.feature-item
+        img.feature-img(src="images/routes.png")
+        .feature-title Conventional Routing
+      .pure-u-1.pure-u-md-1-4.feature-item
+        img.feature-img(src="images/inheritance.png")
+        .feature-title Inheritance
+      .pure-u-1.pure-u-md-1-4.feature-item
+        img.feature-img(src="images/express.png")
+        .feature-title Express Friendly
+  include ./footer.pug

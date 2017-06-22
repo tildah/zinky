@@ -1,0 +1,27 @@
+doctype html
+html(lang='en')
+  head
+    title FoollJS:
+      block page-title
+    include ./common-head.pug
+  body
+    .lateral-page
+      .header
+        a.header-logo(href="/fooll/")
+          img.header-logo-img(src="images/logo-white.png")
+          .header-logo-title FoollJS
+        .flex
+        include ./nav.pug
+      .doc-wrapper
+        .doc-header
+          .doc-title
+            block header-title
+          .meta
+            i.fa.fa-clock-o
+            |  Last updated: #{new Date().getDate()} - #{new Date().getMonth()+1} - #{new Date().getFullYear()} 
+        ul.doc-menu.absolute-menu.menu#content-menu
+          block menu
+        .doc-content
+          block content
+    include ./import-foot.pug
+        

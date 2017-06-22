@@ -1,0 +1,336 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="../dist/css/easing.css">
+  <link rel="stylesheet" href="../dist/css/scrollTo.css">
+</head>
+<body>
+  <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <header role="banner">
+    <div class="container">
+      <ul class="nav nav-main">
+        <li data-scrollto="whyuseit">#whyuseit</li>
+        <li data-scrollto="basic">#basic</li>
+        <li data-scrollto="tiles">#tiles</li>
+        <li data-scrollto="phrase">#phrase</li>
+        <li data-scrollto="semantic">#semantic</li>
+        <li data-scrollto="howuseit">#howuseit</li>
+      </ul>
+    </div>
+  </header>
+  <section class="shaded">
+    <div class="container" id="whyuseit">
+      <h2>Why Use it?</h2>
+      <div class="row has-3 tablet-has-2 mobile-has-1">
+        <div class="column">
+          <h3>Css3/html5</h3>
+          <p>Built-on CSS3 and HTML5 semantics to allow you to start captializing on a next generation standard.</p>
+        </div>
+        <div class="column">
+          <h3>Quick Start</h3>
+          <p>First, clone the AdaptGrid from Github. Then add the grid and class in your web. Lastly, compile the Less and view the awesome changes in your browser</p>
+        </div>
+        <div class="column">
+          <h3>Semantic</h3>
+          <p>Everything is now semantic. Now you can have the cleanest markup without sacrificing the utility and speed of AdaptGrid.</p>
+        </div>
+        <div class="column">
+          <h3>Mobile Fisrt</h3>
+          <p>Now you can build for small devices first. Then, as devices get larger and larger, layer in more complexity.</p>
+        </div>
+        <div class="column">
+          <h3>Responsive</h3>
+          <p>Make Responsive Theme part of your website design, or upgrade your current one to a mobile friendly Theme that automatically adapts to any screen resolution or device.</p>
+        </div>
+        <div class="column">
+          <h3>Less</h3>
+          <p>You don't have to know a ton about Less to take this class. The first hour covers an introduction, with the second hour focused on implementing it. You'll be writing Less in no time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container" id="basic">
+      <h2>Basic Grid</h2>
+      <p>For a simple two column layout, create a <code>row</code> and add the appropriate number of <code>span-</code> columns. As this is a 12-column grid, each <code>span-</code> spans a number of those 12 columns, and should always add up to 12 for each row (or the number of columns in the parent).</p>
+      <div class="example">
+        <div class="row">
+          <div class="span-1">1</div>
+          <div class="span-11">11</div>
+        </div>
+        <div class="row">
+          <div class="span-2">2</div>
+          <div class="span-10">10</div>
+        </div>
+        <div class="row">
+          <div class="span-3">3</div>
+          <div class="span-9">9</div>
+        </div>
+        <div class="row">
+          <div class="span-4">4</div>
+          <div class="span-8">8</div>
+        </div>
+        <div class="row">
+          <div class="span-5">5</div>
+          <div class="span-7">7</div>
+        </div>
+        <div class="row">
+          <div class="span-6">6</div>
+          <div class="span-6">6</div>
+        </div>
+        <div class="row">
+          <div class="span-7">7</div>
+          <div class="span-5">5</div>
+        </div>
+        <div class="row">
+          <div class="span-8">8</div>
+          <div class="span-4">4</div>
+        </div>
+        <div class="row">
+          <div class="span-9">9</div>
+          <div class="span-3">3</div>
+        </div>
+        <div class="row">
+          <div class="span-10">10</div>
+          <div class="span-2">2</div>
+        </div>
+        <div class="row">
+          <div class="span-11">11</div>
+          <div class="span-1">1</div>
+        </div>
+      </div>
+      <h3>Offsetting columns</h3>
+      <p>Offsets allow you to create additional space between columns in a row. Like the rest of the grid, they're nestable. You can use classes like <code>prefix-4</code> and <code>suffix-8</code> to manipulate your column positions in different ways. You can offset up to 11 since you wouldn't ever offset a full-width column. Also you can add <code>no-gutter</code> class to eliminate the gutter.</p>
+      <div class="example">
+        <div class="row no-gutter">
+          <div class="span-6 prefix-6">pre-6 span-6</div>
+        </div>
+        <div class="row no-gutter">
+          <div class="span-6 suffix-6">span-6 suf-6</div>
+        </div>
+        <div class="row no-gutter">
+          <div class="span-4 prefix-1 suffix-1">pre-1 span-4 suf-1</div>
+          <div class="span-4 prefix-1 suffix-1">pre-1 span-4 suf-1</div>
+        </div>
+        <div class="row no-gutter">
+          <div class="span-8 prefix-2 suffix-2">pre-2 span-8 suf-2</div>
+        </div>
+      </div>
+      <h3>Centered columns</h3>
+      <p>Centered columns are placed in the middle of the row. This is accomplished by adding a class of <code>center</code> depending on which breakpoint you want the row to center on. </p>
+      <div class="example">
+        <div class="row center">
+          <div class="span-7">span-7 center</div>
+        </div>
+        <div class="row center">
+          <div class="span-9">span-9 center</div>
+        </div>
+        <div class="row center">
+          <div class="span-11">span-11 center</div>
+        </div>
+      </div>
+      <h3>Infinitely Nest columns</h3>
+      <div class="example">
+        <div class="row">
+          <div class="span-8">8
+            <div class="row">
+              <div class="span-8">8 Nested
+                <div class="row">
+                  <div class="span-8">8 Nested Again</div>
+                  <div class="span-4">4</div>
+                </div>
+              </div>
+              <div class="span-4">4</div>
+            </div>
+          </div>
+          <div class="span-4">4</div>
+        </div>
+      </div>
+      <h3>Responsive</h3>
+      <p>Resize the browser to see the example layouts change. There is two breakpoints currently.</p>
+      <p>For tablet device, you can add <code>tablet-</code> prefix to the previous classes. e.g: <code>tablet-span-x</code>, <code>tablet-prefix-x</code>, <code>tablet-suffix-x</code>.</p>
+      <p>The mobile is the same: <code>mobile-span-x</code>, <code>mobile-prefix-x</code>, <code>mobile-suffix-x</code>.</p>
+      <div class="example">
+        <div class="row">
+          <div class="span-4 prefix-1 suffix-1 tablet-span-10 tablet-prefix-0 tablet-suffix-0">s-4 pre-1 suf-1 t-s-10 t-pre-0 t-suf-0</div>
+          <div class="span-3 tablet-span-5 mobile-span-2">s-3 t-s-5 m-s-2</div>
+          <div class="span-3 tablet-span-5 mobile-span-4">s-3 t-s-5 m-s-4</div>
+        </div>
+        <div class="row">
+          <div class="span-4 tablet-span-8 tablet-prefix-2 mobile-span-6 mobile-prefix-0">s-4 t-s-8 t-pre-2 m-s-6 m-pre-0</div>
+          <div class="span-4 tablet-span-6 mobile-span-3">s-4 t-s-6 m-s-3</div>
+          <div class="span-4 tablet-span-4 mobile-span-3">s-4 t-s-4 m-s-3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="shaded">
+    <div class="container" id="tiles">
+      <h2>Tiles Grid</h2>
+      <p>Tiles are an awesome new way to lay out elements on a page that you want to maintain their “grid" style layout. This allows you to preserve the look and feel of things like a grid of profile images in a friends list, or other block-style content generated by your application across devices. Tiles are invoked using the <code>has-</code> class in association with a <code>columns</code> class to determine the layout. </p>
+      <p>Also, it support differenet device with the prefix <code>tablet-</code> and <code>mobile-</code>.
+        <p>
+          <div class="example">
+            <div class="row has-8 tablet-has-4 mobile-has-2">
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+              <div class="column">eq</div>
+            </div>
+            <ul class="row has-4 tablet-has-2 mobile-has-1">
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+              <li class="column">eq</li>
+            </ul>
+          </div>
+    </div>
+  </section>
+  <section>
+    <div class="container" id="phrase">
+      <h2>Phrase Grid</h2>
+      <p>Phrase Grid use fraction phrase to define the column width instead of number. It's easier to read and understand.</p>
+      <div class="example">
+        <div class="row">
+          <div class="column full">full</div>
+          <div class="column half">half</div>
+          <div class="column half">half</div>
+          <div class="column two-third">two-third</div>
+          <div class="column third">third</div>
+          <div class="column three-fourth">three-fourth</div>
+          <div class="column fourth">fourth</div>
+        </div>
+      </div>
+      <p>The classes are: <code>full</code>, <code>half</code>, <code>two-fourth</code>, <code>three-sixth</code>, <code>third</code>, <code>two-sixth</code>, <code>two-third</code>, <code>fourth</code>, <code>three-fourth</code>, <code>fifth</code>,
+        <code>two-fifth</code>, <code>three-fifth</code>, <code>four-fifth</code>, <code>sixth</code>, <code>five-sixth</code>.</p>
+      <h3>Infinitely Nest columns</h3>
+      <div class="example">
+        <div class="row">
+          <div class="column two-third">two-third
+            <div class="row">
+              <div class="column two-third">two-third
+                <div class="row">
+                  <div class="column half">half</div>
+                  <div class="column half">half</div>
+                </div>
+              </div>
+              <div class="column third">third</div>
+            </div>
+          </div>
+          <div class="column third">third</div>
+        </div>
+      </div>
+      <h3>Responsive</h3>
+      <p>You can add <code>table-</code> and <code>mobile-</code> prefix to make them adapt different viewports.</p>
+      <div class="example">
+        <div class="row">
+          <div class="column fourth tablet-half mobile-full">fourth tablet-half mobile-full</div>
+          <div class="column fourth tablet-half mobile-half">fourth tablet-half mobile-half</div>
+          <div class="column fourth tablet-half mobile-half">fourth tablet-half mobile-half</div>
+          <div class="column fourth tablet-half mobile-full">fourth tablet-half mobile-full</div>
+        </div>
+      </div>
+      <p>Adapt grid system uses fluid item widths and fixed gutters.</p>
+      <p>The column widths have percentage values, and the gutters have px values.</p>
+    </div>
+  </section>
+  <section class="shaded">
+    <div class="container" id="semantic">
+      <h2>Semantic Grid</h2>
+      <p>Set span and gutter widths, choose the number of spans, and switch between pixels and percentages. All without any <code>span-x</code> classes in your markup.</p>
+      <div class="example">
+        <h3>Your Markup</h3>
+        <pre><code data-language="html">&lt;section&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;article&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;I’m&nbsp;using&nbsp;Semantic&nbsp;Grid.&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/article&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;aside&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Good&nbsp;Good&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/aside&gt;
+&lt;/section&gt;</code></pre>
+        <h3>The Less</h3>
+        <pre><code data-language="css">section {
+&nbsp;&nbsp;&nbsp;&nbsp;#semantic&nbsp;&gt;&nbsp;.row();
+}
+article {
+&nbsp;&nbsp;&nbsp;&nbsp;#semantic&nbsp;&gt;&nbsp;.span(8);
+}
+aside {
+&nbsp;&nbsp;&nbsp;&nbsp;#semantic&nbsp;&gt;&nbsp;.span(4);
+}</code></pre>
+        <h3>Prefix and Suffix</h3>
+        <p>The <code>.prefix()</code> and <code>.suffix()</code> mixins allow you apply left and right indents to your columns.</p>
+        <pre><code data-language="css">// LESS
+article {
+&nbsp;&nbsp;&nbsp;.prefix(2);
+}
+// Compiled CSS
+article {
+&nbsp;&nbsp;&nbsp;margin-left:&nbsp;170px;
+}</code></pre>
+        <pre><code data-language="css">// LESS
+article {
+&nbsp;&nbsp;&nbsp;.suffix(2);
+}
+// Compiled CSS
+article {
+&nbsp;&nbsp;&nbsp;margin-right:&nbsp;170px;
+}</code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container" id="howuseit">
+      <h2>How Use It?</h2>
+      <p>First, you should <a href="https://github.com/amazingSurge/adaptGrid/archive/master.zip">download</a> the latest version.</p>
+      <p>Then, you have to do is include the grid file: use CSS or LESS.</p>
+      <div class="example">
+        <p>If you are using the CSS:</p>
+        <pre><code data-language="html">//&nbsp;CSS
+&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;css/grid-full.css&quot;&gt;</code></pre>
+        <p>But if you are using the LESS:</p>
+        <p>You should import the mixins file</p>
+        <pre><code data-language="css">// import
+@import&nbsp;&quot;adaptGrid/mixins.less&quot;;</code></pre>
+        <p>And link the grid</p>
+        <pre><code data-language="html">//&nbsp;LESS
+&lt;link&nbsp;rel=&quot;stylesheet/less&quot;&nbsp;type=&quot;text/css&quot;&nbsp;href=&quot;adaptGrid/grid.less&quot;&gt;</code></pre>
+      </div>
+      <p>Do this all, you can use the grid system in you site. Just like that introduced before.</p>
+      <h4><a href="https://github.com/amazingSurge/adaptGrid"> Clone or fork via GitHub</a></h4>
+      <p>Clone the entire project or fork your own version of Bootstrap to make it your own by visiting us on GitHub.</p>
+    </div>
+  </section>
+
+  <script src="js/jquery.js"></script>
+  <script type="text/javascript" src="../dist/jquery-scrollTo.js"></script>
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <script>
+    $(document).ready(function($) {
+      $(".nav-main").scrollTo();
+    });
+  </script>
+</body>
+</html>

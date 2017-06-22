@@ -1,0 +1,23 @@
+.menu-hor {
+  display: flex;
+  flex-direction: row;
+  .menu-item {
+    padding: 15px 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.8s; /* Safari */
+    transition: all width 0.8s;
+
+    &:hover {
+      background: fade-out(white, .8)
+    }
+  }
+}
+
+.menu {
+  @extend .camoufled-link;
+}
+
+ul ul {
+  list-style: none;
+  padding-left: 10px;
+}

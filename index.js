@@ -62,7 +62,6 @@ class Fooll {
       this.onFinishRequest(req, res);
     })
     var step = i => {
-      console.log(i);
       if (i < this.hooks.length && !res.finished) {
         this.hooks[i](req, res, () => {
           if (this.hooks[i + 1]) {

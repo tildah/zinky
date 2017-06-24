@@ -1,6 +1,6 @@
 var win = window,
   docEl = document.documentElement,
-  menu = document.getElementById('content-menu');
+  menu = document.getElementById('menu-wrapper');
 
 win.onscroll = function () {
   updateHeaderColor();
@@ -19,13 +19,17 @@ function updateHeaderColor() {
 
 updateHeaderColor();
 
-jQuery(function ($) {
-  $("#content-menu").scrollTo();
-});
+// TODO: use a pure js library  
+// jQuery(function ($) {
+//   $("#content-menu").scrollTo();
+// });
+smoothScroll.init();
 
-$(document).ready(function () {
-  $("#content-menu").niceScroll({
-    cursorcolor: "#00e676",
-    cursorborder: "0px solid #fff",
-  });
-});
+var customScroll = new scrollbot(".scrollable", 8);
+customScroll.setStyle({
+  'background': '#00e676',
+  'border-radius': '20px'
+}, {
+    'background': '#fff',
+    'opacity': '1'
+  })

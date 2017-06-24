@@ -38,6 +38,7 @@ body {
   color: $text-color;
   @extend .camoufled-link;
 }
+
 #nav {
   display: flex;
   justify-content: center;
@@ -209,12 +210,17 @@ body {
   position: absolute;
 }
 
-.doc-menu {
+#menu-wrapper {
   width: $sidebar-width;
   height: 100%;
-  padding-right: 10px;
-  padding-left: 0;
   border-right: 2px solid lighten($gray, 50%);
+}
+
+#content-menu {
+  // width: $sidebar-width;
+  // height: 100%;
+  position: relative;
+  padding-left: 0;
   list-style: none;
 
   li {

@@ -19,8 +19,9 @@ html(lang='en')
           .meta
             i.fa.fa-clock-o
             |  Last updated: #{new Date().getDate()} - #{new Date().getMonth()+1} - #{new Date().getFullYear()} 
-        ul.doc-menu.absolute-menu.menu#content-menu
-          block menu
+        #menu-wrapper.scrollable.absolute-menu
+          ul#content-menu.menu
+            block menu
         .doc-content
           block content
     include ./import-foot.pug

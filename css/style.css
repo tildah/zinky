@@ -18,7 +18,7 @@
 .blinking {
   animation: blinker 1s linear infinite; }
 
-.smooth-transition, .doc-menu li {
+.smooth-transition, #content-menu li {
   -webkit-transition: all 0.8s;
   /* Safari */
   transition: all width 0.8s; }
@@ -194,22 +194,24 @@ body {
 .absolute-menu {
   position: absolute; }
 
-.doc-menu {
+#menu-wrapper {
   width: 250px;
   height: 100%;
-  padding-right: 10px;
+  border-right: 2px solid #bababa; }
+
+#content-menu {
+  position: relative;
   padding-left: 0;
-  border-right: 2px solid #bababa;
   list-style: none; }
-  .doc-menu li {
+  #content-menu li {
     cursor: pointer;
     font-size: 22px;
     padding: 10px 0px;
     margin-left: 20px;
     color: #10336d; }
-    .doc-menu li:hover {
+    #content-menu li:hover {
       color: #2bb1ad; }
-  .doc-menu > li:before {
+  #content-menu > li:before {
     content: ">";
     font-weight: bold;
     position: absolute;

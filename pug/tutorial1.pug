@@ -217,7 +217,7 @@ block content
           .icon-holder
             i.fa.fa-info-circle
           .content
-            h4.callout-title Other methods (PUT,DELETE...)
+            .callout-title Other methods (PUT,DELETE...)
             p Of course you can use the other methods. For instance, if you have a #[span.ht PUT] request, it will call #[span.ht PUT_actionName].
   section#inheritance.doc-section
     h2.section-title Inheritance
@@ -250,7 +250,7 @@ block content
           .icon-holder
             i.fa.fa-exclamation-triangle
           .content
-            h4.callout-title Views Are not inherited
+            .callout-title Views Are not inherited
             p You should know that views are not inherited. So you have to create #[span.ht /authentication/views/index.pug] which sends the login form to #[span.ht /authentication/signin].
             p And create #[span.ht /authentication/views/register.pug] that contains the register form with #[span.ht POST] as method and #[span.ht /authentication/register] as action.
   section#middlewares.doc-section

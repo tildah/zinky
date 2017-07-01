@@ -24,9 +24,10 @@
   "homepage": "https://github.com/fooll/fooll#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "colors": "^1.1.2",
     "foola": "0.0.x",
-    "fooll-callaction": "0.0.x",
     "fooll-beforeaction": "0.0.x",
+    "fooll-callaction": "0.0.x",
     "fooll-errors": "0.0.x",
     "fooll-isrequestingfile": "0.0.x",
     "fooll-json": "0.0.x",

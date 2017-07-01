@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
 const errors = require('fooll-errors');
+const emitter = new (require('events').EventEmitter)();
+const C = require('colors');
 
 class Fooll {
 
@@ -18,6 +20,8 @@ class Fooll {
     this.extra = settings.extra || {};
     this.env = settings.env || 'development';
     this.hooks = hooks;
+    this.emitter = emitter;
+
 
     this.server = http.createServer((req, res) => {
       this.handleRequest(req, res)
@@ -86,6 +90,15 @@ class Fooll {
     if (port) this.port = port;
     this.server.listen(this.port, () => {
       console.log("Server listening on: http://localhost:%s", this.port);
+    });
+
+    this.emitter.on('error', (err) => {
+      var msg = C.red('An error ?') + ' ' + C.green('We will help you!');
+      msg += ' Create an issue here: ' +
+        C.underline('https://github.com/fooll/fooll/issues') +
+        ' and we will try our best to find a ' +
+        C.bold('solution to your problem!');
+      console.log(msg);
     });
   }
 

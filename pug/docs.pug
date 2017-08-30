@@ -468,7 +468,7 @@ block content
       p  Redirects back to the URL specified in the Referer header.
       pre
         code.language-javascript
-          | res.deliver(401, 'Sorry! you are not authorized to do that');
+          | res.reload();
     #res-cookie.section-block
       h3 res.cookie('name', val, {options})
       p  Sets a cookie.

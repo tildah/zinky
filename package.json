@@ -28,6 +28,7 @@
     "foola": "0.0.x",
     "fooll-beforeaction": "0.0.x",
     "fooll-callaction": "0.0.x",
+    "fooll-cookies": "0.0.x",
     "fooll-errors": "0.0.x",
     "fooll-isrequestingfile": "0.0.x",
     "fooll-json": "0.0.x",

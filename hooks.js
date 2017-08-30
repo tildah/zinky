@@ -11,6 +11,7 @@ const callAction = require(prefix + 'callaction');
 const beforeaction = require(prefix + 'beforeaction');
 const render = require(prefix + 'render');
 const bodyParser = require('body-parser');
+const cookies = require(prefix + 'cookies');
 
 module.exports = [
   setupResponse,
@@ -22,6 +23,7 @@ module.exports = [
   isRequestingFile,
   validateRequest,
   render,
+  cookies,
   bodyParser.json(),
   bodyParser.urlencoded({ extended: false }),
   beforeaction,

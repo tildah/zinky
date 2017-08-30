@@ -31,11 +31,14 @@ block menu
   li #[a(data-scroll, href="#res-section") res API]
     ul.nav.doc-sub-menu
       li #[a(data-scroll, href="#res-render") render]
-      li #[a(data-scroll, href="#req-redirect") redirect]
-      li #[a(data-scroll, href="#req-json") json]
-      li #[a(data-scroll, href="#req-status") status]
-      li #[a(data-scroll, href="#req-contenttype") contentType]
-      li #[a(data-scroll, href="#req-deliver") deliver]
+      li #[a(data-scroll, href="#res-redirect") redirect]
+      li #[a(data-scroll, href="#res-json") json]
+      li #[a(data-scroll, href="#res-status") status]
+      li #[a(data-scroll, href="#res-contenttype") contentType]
+      li #[a(data-scroll, href="#res-deliver") deliver]
+      li #[a(data-scroll, href="#res-reload") reload]
+      li #[a(data-scroll, href="#res-cookie") cookie]
+      li #[a(data-scroll, href="#res-clearcookies") clearCookies]
   li #[a(data-scroll, href="#cli-section") fooll-cli]
     ul
       li #[a(data-scroll, href="#cli-install") Installation]
@@ -460,6 +463,27 @@ block content
       pre
         code.language-javascript
           | res.deliver(401, 'Sorry! you are not authorized to do that');
+    #res-reload.section-block
+      h3 res.reload()
+      p  Redirects back to the URL specified in the Referer header.
+      pre
+        code.language-javascript
+          | res.deliver(401, 'Sorry! you are not authorized to do that');
+    #res-cookie.section-block
+      h3 res.cookie('name', val, {options})
+      p  Sets a cookie.
+      pre
+        code.language-javascript
+          | res.cookie('lang', 'ar', { maxAge: 30758400000, httpOnly: true });
+    #res-clearcookies.section-block
+      h3 res.clearCookies()
+      p  Clears all cookies.
+      pre
+        code.language-javascript
+          | GET_logout(req, res) {
+          |   res.clearCookies();
+          |   res.redirect('/');
+          | }
   section#cli-section.doc-section
     h2.section-title fooll-cli
     .section-block

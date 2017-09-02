@@ -475,6 +475,12 @@ block content
       pre
         code.language-javascript
           | res.cookie('lang', 'ar', { maxAge: 30758400000, httpOnly: true });
+    #res-clearOneCookie.section-block
+      h3 res.clearOneCookie('name')
+      p  Clears a cookie.
+      pre
+        code.language-javascript
+          | res.clearOneCookie('session');
     #res-clearcookies.section-block
       h3 res.clearCookies()
       p  Clears all cookies.

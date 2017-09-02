@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
 const errors = require('fooll-errors');
-const emitter = new (require('events').EventEmitter)();
+const emitter = new(require('events').EventEmitter)();
 const C = require('colors');
 
 class Fooll {
@@ -17,10 +17,14 @@ class Fooll {
     this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
-    this.extra = settings.extra || {};
     this.env = settings.env || 'development';
     this.hooks = hooks;
     this.emitter = emitter;
+    for (var key in settings) {
+      if (settings.hasOwnProperty(key) && !this.hasOwnProperty(key)) {
+        this[key] = settings[key];
+      }
+    }
 
 
     this.server = http.createServer((req, res) => {

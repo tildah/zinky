@@ -61,7 +61,7 @@ class Fooll {
   }
 
   addHook(fn) {
-    this.hooks.splice(-2, 0, fn);
+    this.hooks.splice(-3, 0, fn);
   }
 
   handleRequest(req, res) {

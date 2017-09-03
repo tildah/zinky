@@ -9,6 +9,7 @@ const isRequestingFile = require(prefix + 'isrequestingfile');
 const validateRequest = require(prefix + 'validaterequest');
 const callAction = require(prefix + 'callaction');
 const beforeaction = require(prefix + 'beforeaction');
+const moduleentry = require(prefix + 'moduleentry');
 const render = require(prefix + 'render');
 const bodyParser = require('body-parser');
 const cookies = require(prefix + 'cookies');
@@ -28,6 +29,7 @@ module.exports = [
   cookieParser(),
   bodyParser.json(),
   bodyParser.urlencoded({ extended: false }),
+  moduleentry,
   beforeaction,
   callAction
 ];

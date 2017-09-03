@@ -34,6 +34,7 @@
     "fooll-isrequestingfile": "0.0.x",
     "fooll-json": "0.0.x",
     "fooll-logrequest": "0.0.x",
+    "fooll-moduleentry": "0.0.1",
     "fooll-parseurl": "0.0.x",
     "fooll-redirect": "0.0.x",
     "fooll-render": "0.0.x",

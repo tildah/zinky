@@ -14,12 +14,12 @@ block menu
       li #[a(data-scroll, href="#server-listen") listen]
       li #[a(data-scroll, href="#server-addhook") addHook]
       li #[a(data-scroll, href="#server-modules") modules]
-  li #[a(data-scroll, href="#foola-section") Foola (module) API]
+  li #[a(data-scroll, href="#zinko-section") Zinko (module) API]
     ul.nav.doc-sub-menu
-      li #[a(data-scroll, href="#foola-tree") tree]
-      li #[a(data-scroll, href="#foola-index") index.js]
-      li #[a(data-scroll, href="#foola-views") views]
-      li #[a(data-scroll, href="#foola-client") client (static files)]
+      li #[a(data-scroll, href="#zinko-tree") tree]
+      li #[a(data-scroll, href="#zinko-index") index.js]
+      li #[a(data-scroll, href="#zinko-views") views]
+      li #[a(data-scroll, href="#zinko-client") client (static files)]
   li #[a(data-scroll, href="#req-section") req API]
     ul.nav.doc-sub-menu
       li #[a(data-scroll, href="#req-modulename") moduleName]
@@ -196,9 +196,9 @@ block content
     #server-modules.section-block 
       h3 modules
       p #[span.ht server.modules] contains all the application modules with their methods and views...
-  section#foola-section.doc-section
-    h2.section-title Foola (app module) API
-    #foola-tree.section-block 
+  section#zinko-section.doc-section
+    h2.section-title Zinko (app module) API
+    #zinko-tree.section-block 
       p This is how a basic module looks like:
       pre
         code.language-markup
@@ -206,14 +206,14 @@ block content
           |   |_ client
           |   |_ views
           |   |_ index.js
-    #foola-index.section-block
+    #zinko-index.section-block
       h3 index.js
       p This is the simplest index.js of a module.
       pre
         code.language-javascript
-          | const Foola = require('foola');
+          | const Zinko = require('zinko');
           | 
-          | class ModuleName extends Foola {
+          | class ModuleName extends Zinko {
           | 
           |   GET_root(req, res) {
           |     res.end('You are in module home page');
@@ -226,15 +226,15 @@ block content
       h4 Inheritance
       pre
         code.language-javascript
-          | const Foola = require('foola');
+          | const Zinko = require('zinko');
           | 
-          | class ModuleName extends Foola
-      p Here we extended our module to #[span.ht Foola] class.
-      p Of course, you can extend your class to some other class but keep in mind that #[span.ht Foola] should be the top most one.
+          | class ModuleName extends Zinko
+      p Here we extended our module to #[span.ht Zinko] class.
+      p Of course, you can extend your class to some other class but keep in mind that #[span.ht Zinko] should be the top most one.
       p Eg:
       pre
         code.language-javascript
-          | class Auth extends Foola
+          | class Auth extends Zinko
       p Then you can do:
       pre
         code.language-javascript
@@ -282,9 +282,9 @@ block content
           | AFTER_comment_POST_root(req, res) {
           |   console.log("The post request to /comment/ has received a response, now it's me who's running")
           | }
-    #foola-views.section-block
+    #zinko-views.section-block
       h3 Views
-      p #[span.ht Foola] uses #[a(href="https://www.npmjs.com/package/pug-layout") pug-layout] to handle its views.
+      p #[span.ht Zinko] uses #[a(href="https://www.npmjs.com/package/pug-layout") pug-layout] to handle its views.
       p Module's views are stored in views folder.
       p Then you'll find the views in #[span.ht views] object in module class.
       p Eg:
@@ -302,9 +302,9 @@ block content
       h6 index.js
       pre
         code.language-javascript
-          | const Foola = require('foola');
+          | const Zinko = require('zinko');
           | 
-          | class Auth extends Foola {
+          | class Auth extends Zinko {
           | 
           |   GET_root(req, res) {
           |     var html = this.views.main.render();
@@ -342,9 +342,9 @@ block content
       h6 index.js
       pre
         code.language-javascript
-          | const Foola = require('foola');
+          | const Zinko = require('zinko');
           | 
-          | class Auth extends Foola {
+          | class Auth extends Zinko {
           | 
           |   GET_root(req, res) {
           |     var layout = this.views.L_layout;
@@ -358,7 +358,7 @@ block content
           | }
           | 
           | module.exports = Auth;
-    #foola-client.section-block
+    #zinko-client.section-block
       h3 client (static files)
       p #[span.ht client] folder contains all the served static files of your module, They are accessed from #[span.ht file] action.
       p Eg:

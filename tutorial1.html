@@ -10,8 +10,8 @@ main features of Zinky framework and to help you understand its main concepts.</
       |_ index.js
   |_ public
   |_ app.js
-  |_ package.json</code></pre></div><div class="section-block"> Open <span class="ht">app_modules/home/index.js</span> and add <code>res.end('This is home Page');</code> to <span class="ht">GET_root</span> method.<p>So the file will look like:</p><pre><code class="language-javascript"> const Foola = require('foola');
-class Home extends Foola {
+  |_ package.json</code></pre></div><div class="section-block"> Open <span class="ht">app_modules/home/index.js</span> and add <code>res.end('This is home Page');</code> to <span class="ht">GET_root</span> method.<p>So the file will look like:</p><pre><code class="language-javascript"> const Zinko = require('zinko');
+class Home extends Zinko {
 
   GET_root(req, res) {
     res.end('This is home Page');
@@ -24,8 +24,8 @@ module.exports = Home;</code></pre><p>Run the app with:</p><pre><code class="cod
     title My App Zinky
   body
     #header myApp
-    #content This is super clean</code></pre><p>And replace the code in <span class="ht">app_modules/home/index.js</span> by this:</p><pre><code class="language-javascript"> const Foola = require('foola');
-class Home extends Foola {
+    #content This is super clean</code></pre><p>And replace the code in <span class="ht">app_modules/home/index.js</span> by this:</p><pre><code class="language-javascript"> const Zinko = require('zinko');
+class Home extends Zinko {
 
   GET_root(req, res) {
     res.render(this.views.index);
@@ -60,8 +60,8 @@ server.listen();</code></pre><p>Now, from <span class="ht">localhost:3000</span>
       form(method="post",action="/login/signin")
         input(name="username")
         input(name="password",type="password")
-        button Submit</code></pre><p>And render the view when the module's root is resquested. So make the file <span class="ht">app_modules/login/index.js</span> look like this: </p><pre><code class="language-javascript">const Foola = require('foola');
-class Login extends Foola {
+        button Submit</code></pre><p>And render the view when the module's root is resquested. So make the file <span class="ht">app_modules/login/index.js</span> look like this: </p><pre><code class="language-javascript">const Zinko = require('zinko');
+class Login extends Zinko {
 
   GET_root(req, res) {
     res.render(this.views.index);

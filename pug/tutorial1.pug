@@ -77,8 +77,8 @@ block content
       p So the file will look like:
       pre
         code.language-javascript 
-          | const Foola = require('foola');
-          | class Home extends Foola {
+          | const Zinko = require('zinko');
+          | class Home extends Zinko {
           |
           |   GET_root(req, res) {
           |     res.end('This is home Page');
@@ -105,8 +105,8 @@ block content
       p And replace the code in #[span.ht app_modules/home/index.js] by this:
       pre
         code.language-javascript 
-          | const Foola = require('foola');
-          | class Home extends Foola {
+          | const Zinko = require('zinko');
+          | class Home extends Zinko {
           |
           |   GET_root(req, res) {
           |     res.render(this.views.index);
@@ -191,8 +191,8 @@ block content
       p And render the view when the module's root is resquested. So make the file #[span.ht app_modules/login/index.js] look like this: 
       pre
         code.language-javascript
-          | const Foola = require('foola');
-          | class Login extends Foola {
+          | const Zinko = require('zinko');
+          | class Login extends Zinko {
           |
           |   GET_root(req, res) {
           |     res.render(this.views.index);

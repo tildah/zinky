@@ -21,21 +21,21 @@ block content
     h2.section-title Introduction
     .section-block
       |In this tutorial, we'll get you through a quick tour in which we'll demonstrate the 
-      | main features of Fooll framework and to help you understand its main concepts.
+      | main features of Zinky framework and to help you understand its main concepts.
   section#installation-section.doc-section
     h2.section-title Installation
     .section-block 
-      | We'll be using fooll-cli to generate the app and its modules through the command line.
+      | We'll be using zinky-cli to generate the app and its modules through the command line.
       p Open CLI and run:
       pre
-        code.code-cli npm install -g fooll-cli
+        code.code-cli npm install -g zinky-cli
   section#generate-section.doc-section
     h2.section-title Generate Application
     .section-block 
       | Now open the CLI in the directory in which you want to store the app.
       p And run:
       pre
-        code.code-cli fooll -a myApp
+        code.code-cli zinky -a myApp
       p A new folder containing your app is now created.
       p Run:
       pre
@@ -57,7 +57,7 @@ block content
       | The app has not yet any module, so we'll generate one called #[span.ht home] that will handle our application home page.
       p Run:
       pre
-        code.code-cli fooll -M home
+        code.code-cli zinky -M home
       p A module called #[span.ht home] has been generated in #[span.ht app_modules], the directory now looks like this:
       pre
         code.language-markup 
@@ -98,7 +98,7 @@ block content
         code.language-jade
           | html
           |   head
-          |     title My App Fooll
+          |     title My App Zinky
           |   body
           |     #header myApp
           |     #content This is super clean
@@ -155,12 +155,12 @@ block content
     .section-block
       | You probably noticed that a home page in a website should be accessible from the domain's root instead of having its own route.
       P In our case we should access #[span.ht home] from #[span.ht localhost:3000] instead of #[span.ht localhost:3000/home/].
-      p Fooll makes it easy to achieve that. Just set #[span.ht aliases] options to server in #[span.ht /app.js]:
+      p Zinky makes it easy to achieve that. Just set #[span.ht aliases] options to server in #[span.ht /app.js]:
       pre 
         code.language-javascript
-          | const Fooll = require('fooll');
+          | const Zinky = require('zinky');
           |
-          | var server = new Fooll({
+          | var server = new Zinky({
           |  aliases: {
           |     '': 'home'
           |   }
@@ -171,16 +171,16 @@ block content
   section#routing.doc-section
     h2.section-title Routing
     .section-block
-      | We'll now, learn how to route with #[span.ht FoollJS].
+      | We'll now, learn how to route with #[span.ht ZinkyJS].
       p But before we start, let's make a new module called #[span.ht login]. by running:
       pre
-        code.code-cli fooll -M login
+        code.code-cli zinky -M login
       p Now create a file #[span.ht app_modules/login/views/index.pug] with this content:
       pre
         code.language-jade
           | html
           |   head
-          |     title My App Fooll: Login
+          |     title My App Zinky: Login
           |   body
           |     #header myApp
           |     #content
@@ -222,11 +222,11 @@ block content
   section#inheritance.doc-section
     h2.section-title Inheritance
     .section-block
-      p Now, we'll discover another great feature in #[span.ht FoollJS]. We'll make a module that extends from another one.
+      p Now, we'll discover another great feature in #[span.ht ZinkyJS]. We'll make a module that extends from another one.
       p Imagine we want to make a module that adds a register function to #[span.ht login] module, but without changing it.
       p We'll make a new module called #[span.ht authentication] that extends from #[span.ht login]. Run:
       pre
-        code.code-cli fooll -M authentication
+        code.code-cli zinky -M authentication
       p And write this code in its #[span.ht index.js]:
       pre
         code.language-javascript
@@ -256,8 +256,8 @@ block content
   section#middlewares.doc-section
     h2.section-title Express middlewares
     .section-block
-      p #[span.ht FoollJS] supports ExpressJS middlewares. But #[span.ht FoollJS] has its proper way to implement them.
-      p While in #[span.ht ExpressJS] you write #[code app.use(middleware)], in #[span.ht FoollJS] you write #[code server.addHook(middleware)].
+      p #[span.ht ZinkyJS] supports ExpressJS middlewares. But #[span.ht ZinkyJS] has its proper way to implement them.
+      p While in #[span.ht ExpressJS] you write #[code app.use(middleware)], in #[span.ht ZinkyJS] you write #[code server.addHook(middleware)].
       p We'll take the example of #[span.ht express-session] middleware:
       p In Express you would do this:
       pre
@@ -269,7 +269,7 @@ block content
           |   saveUninitialized: true,
           |   cookie: { secure: true }
           | }))
-      p In Fooll you write:
+      p In Zinky you write:
       pre
         code.language-javascript
           | const session = require('express-session');
@@ -282,10 +282,10 @@ block content
       p So #[span.ht app.js] will look this:
       pre 
         code.language-javascript
-          | const Fooll = require('fooll');
+          | const Zinky = require('zinky');
           | const session = require('express-session');
           |
-          | var server = new Fooll({
+          | var server = new Zinky({
           |  aliases: {
           |     '': 'home'
           |   }
@@ -302,4 +302,4 @@ block content
   section#more.doc-section
     h2.section-title Learn More
     .section-block
-      p Now that you have learned the basics of #[span.ht FoollJS], we recommend you to check the documentations #[a(href="/fooll/docs.html") here], which contains all that you need to know about #[span.ht FoollJS].
+      p Now that you have learned the basics of #[span.ht ZinkyJS], we recommend you to check the documentations #[a(href="/zinky/docs.html") here], which contains all that you need to know about #[span.ht ZinkyJS].

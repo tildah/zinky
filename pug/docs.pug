@@ -8,7 +8,7 @@ block header-title
   |  Documentations
 
 block menu
-  li #[a(data-scroll, href="#server-section") Fooll (server) API]
+  li #[a(data-scroll, href="#server-section") Zinky (server) API]
     ul.nav.doc-sub-menu
       li #[a(data-scroll, href="#server-constructor") constructor]
       li #[a(data-scroll, href="#server-listen") listen]
@@ -39,7 +39,7 @@ block menu
       li #[a(data-scroll, href="#res-reload") reload]
       li #[a(data-scroll, href="#res-cookie") cookie]
       li #[a(data-scroll, href="#res-clearcookies") clearCookies]
-  li #[a(data-scroll, href="#cli-section") fooll-cli]
+  li #[a(data-scroll, href="#cli-section") zinky-cli]
     ul
       li #[a(data-scroll, href="#cli-install") Installation]
       li #[a(data-scroll, href="#cli-gen_app") Generate App]
@@ -50,17 +50,17 @@ block content
   br
   section#intro-section.doc-section
     .section-block
-      | It's recommanded to check this #[a(href="/fooll/tutorial1.html") quick tutorial], in order to get an idea on #[FoollJS] basics.
+      | It's recommanded to check this #[a(href="/zinky/tutorial1.html") quick tutorial], in order to get an idea on #[ZinkyJS] basics.
   section#server-section.doc-section
-    h2.section-title Fooll class (server) API
+    h2.section-title Zinky class (server) API
     #server-constructor.section-block
       h3 Constructor
-      p The simplest way to create a #[span.ht Fooll] instance is this:
+      p The simplest way to create a #[span.ht Zinky] instance is this:
       pre
         code.language-javascript
-          | const Fooll = require('fooll');
-          | var server = new Fooll();
-      p This will use the default option values of #[span.ht Fooll], however you can customize the server configuration by passing an object argument with this options:
+          | const Zinky = require('zinky');
+          | var server = new Zinky();
+      p This will use the default option values of #[span.ht Zinky], however you can customize the server configuration by passing an object argument with this options:
       h4 Constructor Options
       .sub-section
         h5 port
@@ -68,8 +68,8 @@ block content
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   port: 8080 // The sever will listen on port 8080
             | });
         h5 env
@@ -77,8 +77,8 @@ block content
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   env: 'production'
             | });
         h5 aliases
@@ -88,20 +88,20 @@ block content
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   aliases: {
-            |     'sign': 'auth' // Now, everytime you request 'sign' module, fooll will understand that you mean 'auth'
+            |     'sign': 'auth' // Now, everytime you request 'sign' module, zinky will understand that you mean 'auth'
             |   }
             | });
         p The #[span.ht aliases] option is especially useful when you want to attach a module to the app root.
         p#root-aliases For example, you want to run the module home when the user requests www.mysite.com, you just have to do:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   aliases: {
-            |     '': 'home' // Now when you request: get www.mysite.com, Fooll will look for GET_root(req, res) in home module.
+            |     '': 'home' // Now when you request: get www.mysite.com, Zinky will look for GET_root(req, res) in home module.
             |   }
             | });
         h5 notFoundView
@@ -109,8 +109,8 @@ block content
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   notFoundView: '&lt;div class=&quot;myclass&quot;&gt; This page does not exist in this website&lt;/div&gt;'
             | });
         h5 internalErrorMsg
@@ -118,8 +118,8 @@ block content
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   internalErrorMsg: 'Ooops an error has occured in server'
             | });
         h5 staticFolder
@@ -127,26 +127,26 @@ block content
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
-            |   staticFolder: 'assets' // Fooll will serve the files in 'assets' folder.
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
+            |   staticFolder: 'assets' // Zinky will serve the files in 'assets' folder.
             | });
         h5 staticModuleName
         p By default, when you want to get a file from the static folder, you request #[span.ht /file/example.ext]. If you want to change #[span.ht file] by something else you'll have to have to mention it in this option. #[i Default: 'file']
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
-            |   staticModuleName: 'statics' // Now if you request '/statics/example.ext' Fooll will look for it in 'public' folder.
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
+            |   staticModuleName: 'statics' // Now if you request '/statics/example.ext' Zinky will look for it in 'public' folder.
             | });
         h5 extra
         p Here you can put anything you want.#[i Default: {}]
         p Eg:
         pre
           code.language-javascript
-            | const Fooll = require('fooll');
-            | var server = new Fooll({
+            | const Zinky = require('zinky');
+            | var server = new Zinky({
             |   extra: {
             |     message: 'My extra data'
             |   }
@@ -158,25 +158,25 @@ block content
       p Eg:
       pre
         code.language-javascript
-          | const Fooll = require('fooll');
-          | var server = new Fooll();
+          | const Zinky = require('zinky');
+          | var server = new Zinky();
           | server.listen() // server will listen on port 3000
       pre
         code.language-javascript
-          | const Fooll = require('fooll');
-          | var server = new Fooll();
+          | const Zinky = require('zinky');
+          | var server = new Zinky();
           | server.listen(8080) // server will listen on port 8080
       pre
         code.language-javascript
-          | const Fooll = require('fooll');
-          | var server = new Fooll({
+          | const Zinky = require('zinky');
+          | var server = new Zinky({
           |   port: 2000
           | });
           | server.listen() // server will listen on port 2000
       pre
         code.language-javascript
-          | const Fooll = require('fooll');
-          | var server = new Fooll({
+          | const Zinky = require('zinky');
+          | var server = new Zinky({
           |   port: 2000
           | });
           | server.listen(4000) // server will listen on port 4000
@@ -186,8 +186,8 @@ block content
       p Eg:
       pre
         code.language-javascript
-          | const Fooll = require('fooll');
-          | var server = new Fooll();
+          | const Zinky = require('zinky');
+          | var server = new Zinky();
           | server.addHook((req, res, next) => {
           |   console.log('I am a hoooooook');
           |   next();
@@ -240,7 +240,7 @@ block content
         code.language-javascript
           | class SocialAuth extends Auth
       h4 Routing
-      p Using #[span.ht Fooll] framework, you don't need routes configuration. However it follows a convention that makes it easy to know what action is done for any given route.
+      p Using #[span.ht Zinky] framework, you don't need routes configuration. However it follows a convention that makes it easy to know what action is done for any given route.
       p The convention is:
       pre
         code.language-markup
@@ -491,24 +491,24 @@ block content
           |   res.redirect('/');
           | }
   section#cli-section.doc-section
-    h2.section-title fooll-cli
+    h2.section-title zinky-cli
     .section-block
-      p #[span.ht fooll-cli] is a cli tool for #[span.ht FoollJS]
+      p #[span.ht zinky-cli] is a cli tool for #[span.ht ZinkyJS]
     #cli-install.section-block
       h3 Installation
       pre
-        code.code-cli npm i -g fooll-cli
+        code.code-cli npm i -g zinky-cli
     #cli-gen_app.section-block
       h3 Generate application boilerplate
       pre
-        code.code-cli fooll -a appName
+        code.code-cli zinky -a appName
       p Or:
       pre
-        code.code-cli fooll --create_app appName
+        code.code-cli zinky --create_app appName
     #cli-gen_module.section-block
       h3 Generate application module
       pre
-        code.code-cli fooll -M moduleName
+        code.code-cli zinky -M moduleName
       p Or:
       pre
-        code.code-cli fooll --app_module moduleName
+        code.code-cli zinky --app_module moduleName

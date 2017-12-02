@@ -6,7 +6,7 @@ const errors = require('fooll-errors');
 const emitter = new(require('events').EventEmitter)();
 const C = require('colors');
 
-class Fooll {
+class Zinky {
 
   constructor(settings) {
     // Declaring default values
@@ -99,7 +99,7 @@ class Fooll {
     this.emitter.on('error', (err) => {
       var msg = C.red('An error ?') + ' ' + C.green('We will help you!');
       msg += ' Create an issue here: ' +
-        C.underline('https://github.com/fooll/fooll/issues') +
+        C.underline('https://github.com/zinkyjs/zinky/issues') +
         ' and we will try our best to find a ' +
         C.bold('solution to your problem!');
       console.log(msg);
@@ -108,4 +108,4 @@ class Fooll {
 
 }
 
-module.exports = Fooll;
+module.exports = Zinky;

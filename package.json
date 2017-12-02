@@ -1,5 +1,5 @@
 {
-  "name": "fooll",
+  "name": "zinky",
   "version": "0.1.2",
   "description": "modular fullstack nodejs framework",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fooll/fooll.git"
+    "url": "git+https://github.com/zinkyJS/zinky"
   },
   "keywords": [
     "fullstack",
@@ -19,9 +19,9 @@
   "author": "Abu Rawi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fooll/fooll/issues"
+    "url": "https://github.com/zinkyJS/zinky/issues"
   },
-  "homepage": "https://github.com/fooll/fooll#readme",
+  "homepage": "https://github.com/zinkyJS/zinky#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
     "colors": "^1.1.2",

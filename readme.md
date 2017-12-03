@@ -1,6 +1,6 @@
-Fooll is a fullstack modular framework for nodejs.
+Zinky is a fullstack modular framework for nodejs.
 
-<a href='https://pledgie.com/campaigns/33769'><img alt='Click here to lend your support to: Fooll Framework and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/33769.png?skin_name=chrome' border='0' ></a>
+<a href='https://pledgie.com/campaigns/33769'><img alt='Click here to lend your support to: Zinky Framework and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/33769.png?skin_name=chrome' border='0' ></a>
 
 # Support us!
 This project is new! and we believe it will succeed. However coding requires time and effort.
@@ -12,4 +12,4 @@ So it would be amazing if you participate with at least **1$** to encourage us t
 If you can't help us with donations, star the project in github to show us you like the project.
 
 # Docs & tutorials
-Check the official tutorial and documentations [here](https://fooll.github.io/fooll/)
+Check the official tutorial and documentations [here](https://zinkyjs.github.io/zinky/)

@@ -49,6 +49,7 @@ class Zinky {
       }
     });
     this.modules = modules;
+    this.mds = this.modules;
   }
 
   correctModuleName(string) {
@@ -66,6 +67,7 @@ class Zinky {
 
   handleRequest(req, res) {
     req.server = this;
+    req.S = req.server;
     res.on('finish', () => {
       this.onFinishRequest(req, res);
     })

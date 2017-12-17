@@ -155,18 +155,18 @@ block content
     .section-block
       | You probably noticed that a home page in a website should be accessible from the domain's root instead of having its own route.
       P In our case we should access #[span.ht home] from #[span.ht localhost:3000] instead of #[span.ht localhost:3000/home/].
-      p Zinky makes it easy to achieve that. Just set #[span.ht aliases] options to server in #[span.ht /app.js]:
+      p Zinky makes it easy to achieve that. Just set #[span.ht aliases] options to app in #[span.ht /app.js]:
       pre 
         code.language-javascript
           | const Zinky = require('zinky');
           |
-          | var server = new Zinky({
+          | var app = new Zinky({
           |  aliases: {
           |     '': 'home'
           |   }
           | });
           |
-          | server.listen();
+          | app.listen();
       p Now, from #[span.ht localhost:3000], you can access what we used to get from #[span.ht localhost:3000/home/]. Try it!
   section#routing.doc-section
     h2.section-title Routing
@@ -257,7 +257,7 @@ block content
     h2.section-title Express middlewares
     .section-block
       p #[span.ht ZinkyJS] supports ExpressJS middlewares. But #[span.ht ZinkyJS] has its proper way to implement them.
-      p While in #[span.ht ExpressJS] you write #[code app.use(middleware)], in #[span.ht ZinkyJS] you write #[code server.addHook(middleware)].
+      p While in #[span.ht ExpressJS] you write #[code app.use(middleware)], in #[span.ht ZinkyJS] you write #[code app.addHook(middleware)].
       p We'll take the example of #[span.ht express-session] middleware:
       p In Express you would do this:
       pre
@@ -273,7 +273,7 @@ block content
       pre
         code.language-javascript
           | const session = require('express-session');
-          | server.addHook(session({
+          | app.addHook(session({
           |   secret: 'keyboard cat',
           |   resave: false,
           |   saveUninitialized: true,
@@ -285,20 +285,20 @@ block content
           | const Zinky = require('zinky');
           | const session = require('express-session');
           |
-          | var server = new Zinky({
+          | var app = new Zinky({
           |  aliases: {
           |     '': 'home'
           |   }
           | });
           |
-          | server.addHook(session({
+          | app.addHook(session({
           |   secret: 'keyboard cat',
           |   resave: false,
           |   saveUninitialized: true,
           |   cookie: { secure: true }
           | }))
           |
-          | server.listen();
+          | app.listen();
   section#more.doc-section
     h2.section-title Learn More
     .section-block

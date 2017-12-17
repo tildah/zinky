@@ -27,7 +27,7 @@ block menu
       li #[a(data-scroll, href="#req-operation") operation]
       li #[a(data-scroll, href="#req-params") params]
       li #[a(data-scroll, href="#req-query") query]
-      li #[a(data-scroll, href="#req-server") server]
+      li #[a(data-scroll, href="#req-app") app]
   li #[a(data-scroll, href="#res-section") res API]
     ul.nav.doc-sub-menu
       li #[a(data-scroll, href="#res-render") render]
@@ -59,17 +59,17 @@ block content
       pre
         code.language-javascript
           | const Zinky = require('zinky');
-          | var server = new Zinky();
-      p This will use the default option values of #[span.ht Zinky], however you can customize the server configuration by passing an object argument with this options:
+          | var app = new Zinky();
+      p This will use the default option values of #[span.ht Zinky], however you can customize the app configuration by passing an object argument with this options:
       h4 Constructor Options
       .sub-section
         h5 port
-        p The port on which the server will listen. #[i Default: 3000]
+        p The port on which the app will listen. #[i Default: 3000]
         p Eg:
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   port: 8080 // The sever will listen on port 8080
             | });
         h5 env
@@ -78,7 +78,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   env: 'production'
             | });
         h5 aliases
@@ -89,7 +89,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   aliases: {
             |     'sign': 'auth' // Now, everytime you request 'sign' module, zinky will understand that you mean 'auth'
             |   }
@@ -99,7 +99,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   aliases: {
             |     '': 'home' // Now when you request: get www.mysite.com, Zinky will look for GET_root(req, res) in home module.
             |   }
@@ -110,7 +110,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   notFoundView: '&lt;div class=&quot;myclass&quot;&gt; This page does not exist in this website&lt;/div&gt;'
             | });
         h5 internalErrorMsg
@@ -119,7 +119,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   internalErrorMsg: 'Ooops an error has occured in server'
             | });
         h5 staticFolder
@@ -128,7 +128,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   staticFolder: 'assets' // Zinky will serve the files in 'assets' folder.
             | });
         h5 staticModuleName
@@ -137,7 +137,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   staticModuleName: 'statics' // Now if you request '/statics/example.ext' Zinky will look for it in 'public' folder.
             | });
         h5 extra
@@ -146,7 +146,7 @@ block content
         pre
           code.language-javascript
             | const Zinky = require('zinky');
-            | var server = new Zinky({
+            | var app = new Zinky({
             |   extra: {
             |     message: 'My extra data'
             |   }
@@ -154,32 +154,32 @@ block content
     #server-listen.section-block 
       h3 listen(#port*)
       p Start to listen on #port*.
-      p If #port* is provided it will overwrite the existing #[span.ht server.port].
+      p If #port* is provided it will overwrite the existing #[span.ht app.port].
       p Eg:
       pre
         code.language-javascript
           | const Zinky = require('zinky');
-          | var server = new Zinky();
-          | server.listen() // server will listen on port 3000
+          | var app = new Zinky();
+          | app.listen() // app will listen on port 3000
       pre
         code.language-javascript
           | const Zinky = require('zinky');
-          | var server = new Zinky();
-          | server.listen(8080) // server will listen on port 8080
+          | var app = new Zinky();
+          | app.listen(8080) // app will listen on port 8080
       pre
         code.language-javascript
           | const Zinky = require('zinky');
-          | var server = new Zinky({
+          | var app = new Zinky({
           |   port: 2000
           | });
-          | server.listen() // server will listen on port 2000
+          | app.listen() // app will listen on port 2000
       pre
         code.language-javascript
           | const Zinky = require('zinky');
-          | var server = new Zinky({
+          | var app = new Zinky({
           |   port: 2000
           | });
-          | server.listen(4000) // server will listen on port 4000
+          | app.listen(4000) // app will listen on port 4000
     #server-addhook.section-block 
       h3 addHook(hook())
       p Hooks are a serie of successive functions that run before any request action.
@@ -187,15 +187,15 @@ block content
       pre
         code.language-javascript
           | const Zinky = require('zinky');
-          | var server = new Zinky();
-          | server.addHook((req, res, next) => {
+          | var app = new Zinky();
+          | app.addHook((req, res, next) => {
           |   console.log('I am a hoooooook');
           |   next();
           | }) // Now, everytime you have a request you'll see 'I am a hoooooook' in the console.
       p Of course, you can use #[span.ht Express] middlewares as hooks without any problem.
     #server-modules.section-block 
       h3 modules
-      p #[span.ht server.modules] contains all the application modules with their methods and views...
+      p #[span.ht app.modules] contains all the application modules with their methods and views...
   section#zinko-section.doc-section
     h2.section-title Zinko (app module) API
     #zinko-tree.section-block 
@@ -421,9 +421,9 @@ block content
         code.language-javascript
           | GET /auth/login/omar/123456?remember=1
           | // req.query = {remember: 1}
-    #req-server.section-block
-      h3 req.server
-      p the server object
+    #req-app.section-block
+      h3 req.app
+      p the app object
   section#res-section.doc-section
     h2.section-title res API
     #res-render.section-block

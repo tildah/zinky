@@ -1,4 +1,4 @@
-const prefix = "fooll-";
+const prefix = "zinky-";
 const redirect = require(prefix + 'redirect');
 const json = require(prefix + 'json');
 const parseUrl = require(prefix + 'parseurl');

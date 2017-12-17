@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
-const errors = require('fooll-errors');
+const errors = require('zinky-errors');
 const emitter = new(require('events').EventEmitter)();
 const C = require('colors');
 

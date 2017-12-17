@@ -66,8 +66,8 @@ class Zinky {
   }
 
   handleRequest(req, res) {
-    req.server = this;
-    req.S = req.server;
+    req.app = this;
+    req.A = req.app;
     res.on('finish', () => {
       this.onFinishRequest(req, res);
     })
@@ -85,9 +85,9 @@ class Zinky {
 
   onFinishRequest(req, res) {
     var hookName = 'AFTER_' + req.moduleName + '_' + req.operation;
-    for (var moduleName in req.server.modules) {
-      if (req.server.modules[moduleName][hookName]) {
-        req.server.modules[moduleName][hookName](req, res);
+    for (var moduleName in req.A.modules) {
+      if (req.A.modules[moduleName][hookName]) {
+        req.A.modules[moduleName][hookName](req, res);
       }
     }
   }

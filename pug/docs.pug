@@ -28,6 +28,7 @@ block menu
       li #[a(data-scroll, href="#req-params") params]
       li #[a(data-scroll, href="#req-query") query]
       li #[a(data-scroll, href="#req-app") app]
+      li #[a(data-scroll, href="#req-modules") modules]
   li #[a(data-scroll, href="#res-section") res API]
     ul.nav.doc-sub-menu
       li #[a(data-scroll, href="#res-render") render]
@@ -269,8 +270,9 @@ block content
       p You have a module named #[span.ht comment] in which you have #[span.ht POST_root], so you add this method to #[span.ht app_modules/auth/index.js]:
       pre
         code.language-javascript
-          | BEFORE_comment_POST_root(req, res) {
-          |   console.log("You posted a request to /comment/ but i'm running before it")
+          | BEFORE_comment_POST_root(req, res, next) {
+          |   console.log("You posted a request to /comment/ but i'm running before it");
+          |   next();
           | }
       p It is possible to attach many before hooks to one single action.
       h5 After Hooks
@@ -280,8 +282,31 @@ block content
       pre
         code.language-javascript
           | AFTER_comment_POST_root(req, res) {
-          |   console.log("The post request to /comment/ has received a response, now it's me who's running")
+          |   console.log("The post request to /comment/ has received a response, now it's me who's running");
           | }
+      h5 Module Hook
+      p This type of hook is called before every action of the module.
+      p Eg:
+      pre
+        code.language-javascript
+          | const Zinko = require('zinko');
+          |
+          | class Admin extends Zinko {
+          | 
+          |   hook(req, res, next) {
+          |     if(req.user.role == "admin") next();
+          |     else res.deliver(403, 'action forbidden');
+          |   }
+          |
+          |   GET_root(req, res) {
+          |     // hook is called before this;
+          |   }
+          |
+          |   POST_root(req, res) {
+          |     // hook is called before this too;
+          |   }
+          |
+          | }      
     #zinko-views.section-block
       h3 Views
       p #[span.ht Zinko] uses #[a(href="https://www.npmjs.com/package/pug-layout") pug-layout] to handle its views.
@@ -423,7 +448,17 @@ block content
           | // req.query = {remember: 1}
     #req-app.section-block
       h3 req.app
+        span.title-comment // or req.A
       p the app object
+    #req-modules.section-block
+      h3 req.modules
+        span.title-comment // or req.mds
+      p The app modules.
+      pre
+        code.language-javascript
+          | GET_root(req, res) {
+          |   req.mds.theOtherModuleName.someMethod(args);
+          | }
   section#res-section.doc-section
     h2.section-title res API
     #res-render.section-block

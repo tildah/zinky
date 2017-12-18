@@ -136,6 +136,9 @@ body {
     margin: 20px;
     text-align: center; }
 
+.home-section:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.19); }
+
 #about-section .home-section-content {
   line-height: 25px;
   width: 75%; }
@@ -143,16 +146,25 @@ body {
     color: #10336d;
     border-bottom: 2px solid #00e676; }
 
-#features-section .feature-item {
+.grid-section .section-item, #features-section .section-item, #features-section .feature-item {
   display: flex;
   flex-direction: column;
   align-items: center; }
-  #features-section .feature-item .feature-img {
-    border-radius: 50%;
+  .grid-section .section-item .section-item-img, #features-section .section-item .section-item-img, #features-section .feature-item .section-item-img, #features-section .feature-item .feature-img {
     width: 220px;
     margin: 10px 0; }
-  #features-section .feature-item .feature-title {
+  .grid-section .section-item .section-item-title, #features-section .section-item .section-item-title, #features-section .feature-item .section-item-title, #features-section .feature-item .feature-title {
     font-size: 35px; }
+
+#features-section .feature-item .feature-img {
+  border-radius: 50%; }
+
+#howto-section .section-item .section-item-title, #howto-section #features-section .feature-item .section-item-title, #features-section #howto-section .feature-item .section-item-title, #features-section .feature-item #howto-section .section-item .feature-title, #howto-section #features-section .feature-item .feature-title, #features-section #howto-section .feature-item .feature-title {
+  font-size: 20px; }
+
+#howto-section .section-item:hover .section-item-title, #howto-section #features-section .feature-item:hover .section-item-title, #features-section #howto-section .feature-item:hover .section-item-title, #howto-section .section-item:hover #features-section .feature-item .feature-title, #features-section .feature-item #howto-section .section-item:hover .feature-title, #howto-section #features-section .feature-item:hover .feature-title, #features-section #howto-section .feature-item:hover .feature-title {
+  color: #2bb1ad;
+  text-decoration: underline; }
 
 #footer {
   position: fixed;
@@ -192,7 +204,8 @@ body {
   justify-content: center; }
   .doc-header .doc-title {
     font-size: 60px;
-    color: #10336d; }
+    color: #10336d;
+    text-align: center; }
   .doc-header .meta {
     color: #2bb1ad; }
 
@@ -242,6 +255,12 @@ body {
       margin-left: 20px; }
     .doc-content .doc-section .section-block h3, .doc-content .doc-section .section-block h4, .doc-content .doc-section .section-block h5, .doc-content .doc-section .section-block h6 {
       color: #10336d; }
+      .doc-content .doc-section .section-block h3 .title-comment, .doc-content .doc-section .section-block h4 .title-comment, .doc-content .doc-section .section-block h5 .title-comment, .doc-content .doc-section .section-block h6 .title-comment {
+        margin-left: 20px;
+        font-size: 64%;
+        display: block;
+        margin-top: 9px;
+        color: rgba(0, 0, 0, 0.5); }
     .doc-content .doc-section .section-block h3 {
       font-size: 30px; }
     .doc-content .doc-section .section-block h4 {

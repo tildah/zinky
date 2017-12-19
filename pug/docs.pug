@@ -451,13 +451,13 @@ block content
         span.title-comment // or req.A
       p the app object
     #req-modules.section-block
-      h3 req.modules
-        span.title-comment // or req.mds
+      h3 req.app.modules
+        span.title-comment // or req.app.mds
       p The app modules.
       pre
         code.language-javascript
           | GET_root(req, res) {
-          |   req.mds.theOtherModuleName.someMethod(args);
+          |   req.app.mds.theOtherModuleName.someMethod(args);
           | }
   section#res-section.doc-section
     h2.section-title res API

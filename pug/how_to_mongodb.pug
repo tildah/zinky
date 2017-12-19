@@ -81,6 +81,24 @@ block content
           |   }
           |
           | }
+      p This will lead to an error saying: #[i db is not defined]. To solve this we have to add #[span.ht app.loadModules()] after attaching #[span.ht db] object to app.
+      p So the server file (app.js) will look like this:
+      pre
+        code.language-javascript
+          | const Zinky = require('zinky');
+          | const mongoClient = require('mongodb').MongoClient;
+          |
+          | var url = 'mongodb://username:password@host:port/dbName';
+          | var app = new Zinky();
+          |
+          | mongoClient.connect(url, function(err, db) {
+          |   if (err) throw err;
+          |   console.log("Connected successfully to database");
+          |   app.db = db;
+          |   app.loadModules();
+          |   app.listen();
+          | });
+      
   section.doc-section
     .section-block
       p Hope this helped you! If you need any help don't hesitate to ask for it here:

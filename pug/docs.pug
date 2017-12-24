@@ -105,23 +105,18 @@ block content
             |     '': 'home' // Now when you request: get www.mysite.com, Zinky will look for GET_root(req, res) in home module.
             |   }
             | });
-        h5 notFoundView
-        p The html returned when the requested action does not exist. #[i Default: '&lt;h1&gt;404 Not Found&lt;/h1&gt;']
+        h5 catcher
+        p Error handler(takes req and res as arguments). #[i Default: logs the error and sends 500 'internal server error' to client.]
         p Eg:
         pre
           code.language-javascript
             | const Zinky = require('zinky');
             | var app = new Zinky({
-            |   notFoundView: '&lt;div class=&quot;myclass&quot;&gt; This page does not exist in this website&lt;/div&gt;'
-            | });
-        h5 internalErrorMsg
-        p The message to return when an internal server error occurs. #[i Default: 'Internal Server Error']
-        p Eg:
-        pre
-          code.language-javascript
-            | const Zinky = require('zinky');
-            | var app = new Zinky({
-            |   internalErrorMsg: 'Ooops an error has occured in server'
+            |   catcher: function(req, res) {
+            |     // req.error contains the error message
+            |     // if route not found req.error will contain 404
+            |     res.deliver(500, 'ooops I have an error')
+            |   }
             | });
         h5 staticFolder
         p The path to folder that contains served static files. #[i Default: 'public']

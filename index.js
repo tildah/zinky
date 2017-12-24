@@ -12,14 +12,12 @@ class Zinky {
     // Declaring default values
     settings = settings || {};
     this.port = settings.port || 3000;
-    this.notFoundView = settings.notFoundView || '<h1>404 Not Found</h1>';
-    this.internalErrorMsg = settings.internalErrorMsg || 'Internal Server Error';
     this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
     this.env = settings.env || 'development';
+    if (typeof settings.catcher === "function") this.catcher = settings.catcher;
     this.hooks = hooks;
-    this.emitter = emitter;
     for (var key in settings) {
       if (settings.hasOwnProperty(key) && !this.hasOwnProperty(key)) {
         this[key] = settings[key];
@@ -65,6 +63,11 @@ class Zinky {
     this.hooks.splice(-3, 0, fn);
   }
 
+  catcher(req, res) {
+    console.log(req.error);
+    res.deliver(500, 'Internal Server Error');
+  }
+
   handleRequest(req, res) {
     req.app = this;
     req.A = req.app;
@@ -73,11 +76,16 @@ class Zinky {
     })
     var step = i => {
       if (i < this.hooks.length && !res.finished) {
-        this.hooks[i](req, res, () => {
-          if (this.hooks[i + 1]) {
-            step(i + 1);
-          }
-        });
+        try {
+          this.hooks[i](req, res, () => {
+            if (this.hooks[i + 1]) {
+              step(i + 1);
+            }
+          });
+        } catch (e) {
+          req.error = e;
+          this.catcher(req, res);
+        }
       }
     }
     step(0);
@@ -96,15 +104,6 @@ class Zinky {
     if (port) this.port = port;
     this.server.listen(this.port, () => {
       console.log("Server listening on: http://localhost:%s", this.port);
-    });
-
-    this.emitter.on('error', (err) => {
-      var msg = C.red('An error ?') + ' ' + C.green('We will help you!');
-      msg += ' Create an issue here: ' +
-        C.underline('https://github.com/zinkyjs/zinky/issues') +
-        ' and we will try our best to find a ' +
-        C.bold('solution to your problem!');
-      console.log(msg);
     });
   }
 

@@ -15,6 +15,7 @@ class Zinky {
     this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
+    this.logRequestDate = false || settings.logRequestDate;
     this.env = settings.env || 'development';
     if (typeof settings.catcher === "function") this.catcher = settings.catcher;
     this.hooks = hooks;

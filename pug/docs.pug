@@ -136,16 +136,14 @@ block content
             | var app = new Zinky({
             |   staticModuleName: 'statics' // Now if you request '/statics/example.ext' Zinky will look for it in 'public' folder.
             | });
-        h5 extra
-        p Here you can put anything you want.#[i Default: {}]
+        h5 logRequestDate
+        p Log or not the date with the request.#[i Default: false]
         p Eg:
         pre
           code.language-javascript
             | const Zinky = require('zinky');
             | var app = new Zinky({
-            |   extra: {
-            |     message: 'My extra data'
-            |   }
+            |   logRequestDate: true, // now the date will appear with every request in the console.
             | });
     #server-listen.section-block 
       h3 listen(#port*)

@@ -75,7 +75,6 @@ class Zinky {
     res.on('finish', () => {
       this.onFinishRequest(req, res);
     })
-    console.log(this.hooks);
     var step = i => {
       if (i < this.hooks.length && !res.finished) {
         var h = this.hooks[i];

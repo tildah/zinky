@@ -69,6 +69,24 @@ class Zinky {
     res.deliver(500, 'Internal Server Error');
   }
 
+  runORCatch(fn, req, res, next, context) {
+    var asy = 'AsyncFunction',
+      fnTxt = 'function';
+    if (fn[Symbol.toStringTag] === asy || typeof fn.then == fnTxt) {
+      fn.call(context, req, res, next).catch((e) => {
+        req.error = e;
+        this.catcher(req, res);
+      });
+    } else {
+      try {
+        fn.call(context, req, res, next);
+      } catch (e) {
+        req.error = e;
+        this.catcher(req, res);
+      }
+    }
+  }
+
   handleRequest(req, res) {
     req.app = this;
     req.A = req.app;
@@ -77,30 +95,11 @@ class Zinky {
     })
     var step = i => {
       if (i < this.hooks.length && !res.finished) {
-        var h = this.hooks[i];
-        var asy = 'AsyncFunction',
-          fn = 'function';
-        if (h[Symbol.toStringTag] === asy || typeof h.then == fn) {
-          this.hooks[i](req, res, () => {
-            if (this.hooks[i + 1]) {
-              step(i + 1);
-            }
-          }).catch((e) => {
-            req.error = e;
-            this.catcher(req, res);
-          });
-        } else {
-          try {
-            this.hooks[i](req, res, () => {
-              if (this.hooks[i + 1]) {
-                step(i + 1);
-              }
-            })
-          } catch (e) {
-            req.error = e;
-            this.catcher(req, res);
+        this.runORCatch(this.hooks[i], req, res, () => {
+          if (this.hooks[i + 1]) {
+            step(i + 1);
           }
-        }
+        })
       }
     }
     step(0);

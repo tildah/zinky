@@ -75,17 +75,32 @@ class Zinky {
     res.on('finish', () => {
       this.onFinishRequest(req, res);
     })
+    console.log(this.hooks);
     var step = i => {
       if (i < this.hooks.length && !res.finished) {
-        try {
+        var h = this.hooks[i];
+        var asy = 'AsyncFunction',
+          fn = 'function';
+        if (h[Symbol.toStringTag] === asy || typeof h.then == fn) {
           this.hooks[i](req, res, () => {
             if (this.hooks[i + 1]) {
               step(i + 1);
             }
+          }).catch((e) => {
+            req.error = e;
+            this.catcher(req, res);
           });
-        } catch (e) {
-          req.error = e;
-          this.catcher(req, res);
+        } else {
+          try {
+            this.hooks[i](req, res, () => {
+              if (this.hooks[i + 1]) {
+                step(i + 1);
+              }
+            })
+          } catch (e) {
+            req.error = e;
+            this.catcher(req, res);
+          }
         }
       }
     }

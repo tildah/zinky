@@ -4,6 +4,7 @@ const json = require(prefix + 'json');
 const parseUrl = require(prefix + 'parseurl');
 const logRequest = require(prefix + 'logrequest');
 const setupResponse = require(prefix + 'setupresponse');
+const filer = require(prefix + 'filer');
 const isRequestingFile = require(prefix + 'isrequestingfile');
 const validateRequest = require(prefix + 'validaterequest');
 const callAction = require(prefix + 'callaction');
@@ -20,6 +21,7 @@ module.exports = [
   json,
   parseUrl,
   logRequest,
+  filer,
   isRequestingFile,
   validateRequest,
   render,

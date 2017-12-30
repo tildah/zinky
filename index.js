@@ -16,8 +16,10 @@ class Zinky {
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
     this.logRequestDate = false || settings.logRequestDate;
+    this.stopPugLayout = false || settings.stopPugLayout;
     this.env = settings.env || 'development';
     if (typeof settings.catcher === "function") this.catcher = settings.catcher;
+    if (typeof settings.render === "function") this.render = settings.render;
     this.hooks = hooks;
     for (var key in settings) {
       if (settings.hasOwnProperty(key) && !this.hasOwnProperty(key)) {

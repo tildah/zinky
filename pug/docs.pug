@@ -27,8 +27,12 @@ block menu
       li #[a(data-scroll, href="#req-operation") operation]
       li #[a(data-scroll, href="#req-params") params]
       li #[a(data-scroll, href="#req-query") query]
+      li #[a(data-scroll, href="#req-url") url]
+      li #[a(data-scroll, href="#req-method") method]
+      li #[a(data-scroll, href="#req-ip") ip]
       li #[a(data-scroll, href="#req-app") app]
       li #[a(data-scroll, href="#req-modules") modules]
+      li #[a(data-scroll, href="#req-module") module]
   li #[a(data-scroll, href="#res-section") res API]
     ul.nav.doc-sub-menu
       li #[a(data-scroll, href="#res-render") render]
@@ -439,6 +443,28 @@ block content
         code.language-javascript
           | GET /auth/login/omar/123456?remember=1
           | // req.query = {remember: 1}
+    #req-url.section-block
+      h3 req.url
+      p The request URL.
+      pre
+        code.language-javascript
+          | GET /auth/login/omar/123456?remember=1
+          | // req.url = '/auth/login/omar/123456?remember=1'
+    #req-method.section-block
+      h3 req.method
+      p The request method.
+      pre
+        code.language-javascript
+          | GET /auth/login/omar/123456?remember=1
+          | // req.url = 'GET'
+    #req-ip.section-block
+      h3 req.ip
+      p The request's IP address.
+      pre
+        code.language-javascript
+          | // req.ip = // the client ip
+          | // on localhost you'll see 127.0.0.1 if you're using IPv4  
+          | // or ::1, ::ffff:127.0.0.1 if you're using IPv6 
     #req-app.section-block
       h3 req.app
         span.title-comment // or req.A
@@ -451,6 +477,14 @@ block content
         code.language-javascript
           | GET_root(req, res) {
           |   req.app.mds.theOtherModuleName.someMethod(args);
+          | }
+    #req-module.section-block
+      h3 req.module
+      p The request's module.
+      pre
+        code.language-javascript
+          | GET_root(req, res) {
+          |   req.module // is the same object in req.A.mds[req.moduleName]
           | }
   section#res-section.doc-section
     h2.section-title res API

@@ -43,7 +43,10 @@ block menu
       li #[a(data-scroll, href="#res-deliver") deliver]
       li #[a(data-scroll, href="#res-reload") reload]
       li #[a(data-scroll, href="#res-cookie") cookie]
+      li #[a(data-scroll, href="#res-clearonecookie") clearOneCookie]
       li #[a(data-scroll, href="#res-clearcookies") clearCookies]
+      li #[a(data-scroll, href="#res-sendfile") sendFile]
+      li #[a(data-scroll, href="#res-download") download]
   li #[a(data-scroll, href="#cli-section") zinky-cli]
     ul
       li #[a(data-scroll, href="#cli-install") Installation]
@@ -537,7 +540,7 @@ block content
       pre
         code.language-javascript
           | res.cookie('lang', 'ar', { maxAge: 30758400000, httpOnly: true });
-    #res-clearOneCookie.section-block
+    #res-clearonecookie.section-block
       h3 res.clearOneCookie('name')
       p  Clears a cookie.
       pre
@@ -551,6 +554,22 @@ block content
           | GET_logout(req, res) {
           |   res.clearCookies();
           |   res.redirect('/');
+          | }
+    #res-sendfile.section-block
+      h3 res.sendFile('filePath')
+      p  Transfers the file at the given path. Sets the Content-Type response HTTP header field based on the filename’s extension.
+      pre
+        code.language-javascript
+          | GET_test(req, res) {
+          |   res.sendFile(myFilePath) // if file does not exist throws {statusCode: 404}, then you handle the error in catcher
+          | }
+    #res-download.section-block
+      h3 res.download('filePath')
+      p  Transfers the file at path as an “attachment”. Typically, browsers will prompt the user for download.
+      pre
+        code.language-javascript
+          | GET_test(req, res) {
+          |   res.download(myFilePath) // if file does not exist throws {statusCode: 404}, then you handle the error in catcher
           | }
   section#cli-section.doc-section
     h2.section-title zinky-cli

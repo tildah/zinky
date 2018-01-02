@@ -111,9 +111,12 @@ class Zinky {
     var hookName = 'AFTER_' + req.moduleName + '_' + req.operation;
     for (var moduleName in req.A.modules) {
       if (req.A.modules[moduleName][hookName]) {
-        req.A.modules[moduleName][hookName](req, res);
+        var module = req.A.modules[moduleName];
+        this.runORCatch(module[hookName], req, res, null, module)
       }
     }
+    var hName = 'AFTER_' + req.operation;
+    this.runORCatch(req.module[hName], req, res, null, req.module)
   }
 
   listen(port) {

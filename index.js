@@ -116,7 +116,8 @@ class Zinky {
       }
     }
     var hName = 'AFTER_' + req.operation;
-    this.runORCatch(req.module[hName], req, res, null, req.module)
+    if (req.module && req.module[hName])
+      this.runORCatch(req.module[hName], req, res, null, req.module)
   }
 
   listen(port) {

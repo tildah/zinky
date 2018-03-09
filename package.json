@@ -26,7 +26,7 @@
     "body-parser": "^1.17.1",
     "colors": "^1.1.2",
     "cookie-parser": "^1.4.3",
-    "zinko": "0.0.x",
+    "zinko": "0.1.x",
     "zinky-beforeaction": "0.0.x",
     "zinky-callaction": "0.0.x",
     "zinky-cookies": "0.0.x",

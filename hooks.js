@@ -15,21 +15,23 @@ const bodyParser = require('body-parser');
 const cookies = require(prefix + 'cookies');
 const cookieParser = require('cookie-parser');
 
-module.exports = [
-  setupResponse,
-  redirect,
-  json,
-  parseUrl,
-  logRequest,
-  filer,
-  isRequestingFile,
-  validateRequest,
-  render,
-  cookies,
-  cookieParser(),
-  bodyParser.json(),
-  bodyParser.urlencoded({ extended: false }),
-  moduleentry,
-  beforeaction,
-  callAction
-];
+module.exports = function (settings) {
+  return [
+    setupResponse,
+    redirect,
+    json,
+    parseUrl,
+    logRequest,
+    filer,
+    isRequestingFile,
+    validateRequest,
+    render,
+    cookies,
+    cookieParser(),
+    bodyParser.json(settings.bodyParserOptions),
+    bodyParser.urlencoded({ extended: false }),
+    moduleentry,
+    beforeaction,
+    callAction
+  ];
+}

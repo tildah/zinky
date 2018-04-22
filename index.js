@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
 const errors = require('zinky-errors');
-const emitter = new(require('events').EventEmitter)();
+const emitter = new (require('events').EventEmitter)();
 const C = require('colors');
 
 class Zinky {
@@ -20,7 +20,7 @@ class Zinky {
     this.env = settings.env || 'development';
     if (typeof settings.catcher === "function") this.catcher = settings.catcher;
     if (typeof settings.render === "function") this.render = settings.render;
-    this.hooks = hooks;
+    this.hooks = hooks(settings);
     for (var key in settings) {
       if (settings.hasOwnProperty(key) && !this.hasOwnProperty(key)) {
         this[key] = settings[key];

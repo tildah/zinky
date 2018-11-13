@@ -2,9 +2,6 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
-const errors = require('zinky-errors');
-const emitter = new (require('events').EventEmitter)();
-const C = require('colors');
 
 class Zinky {
 
@@ -53,15 +50,6 @@ class Zinky {
     this.mds = this.modules;
   }
 
-  correctModuleName(string) {
-    var aliasedModule = this.aliases[string];
-    return (aliasedModule !== undefined) ? aliasedModule : string;
-  }
-
-  correctActionName(string) {
-    return string == '' ? 'root' : string;
-  }
-
   addHook(fn) {
     this.hooks.splice(-3, 0, fn);
   }
@@ -71,48 +59,33 @@ class Zinky {
     res.deliver(500, 'Internal Server Error');
   }
 
-  runORCatch(fn, req, res, next, context) {
-    var asy = 'AsyncFunction',
-      fnTxt = 'function';
-    if (fn[Symbol.toStringTag] === asy || typeof fn.then == fnTxt) {
-      fn.call(context, req, res, next).catch((e) => {
-        req.error = e;
-        this.catcher(req, res);
-      });
-    } else {
-      try {
-        fn.call(context, req, res, next);
-      } catch (e) {
-        req.error = e;
-        this.catcher(req, res);
-      }
+  async runORCatch(fn, req, res, next, context) {
+    try {
+      let r = await fn.call(context, req, res, next);
+      if (r) res.send(r);
+    } catch (e) {
+      req.error = e;
+      this.catcher(req, res);
     }
   }
 
-  handleRequest(req, res) {
+  async handleRequest(req, res) {
     req.app = this;
     req.A = req.app;
-    res.on('finish', () => {
-      this.onFinishRequest(req, res);
-    })
-    var step = i => {
-      if (i < this.hooks.length && !res.finished) {
-        this.runORCatch(this.hooks[i], req, res, () => {
-          if (this.hooks[i + 1]) {
-            step(i + 1);
-          }
-        })
-      }
+    res.on('finish', () => { this.onFinishRequest(req, res); })
+    var index = 0;
+    while (index < this.hooks.length && !res.finished) {
+      await this.runORCatch(this.hooks[index], req, res, () => { });
+      index++;
     }
-    step(0);
   }
 
-  onFinishRequest(req, res) {
+  async onFinishRequest(req, res) {
     var hookName = 'AFTER_' + req.moduleName + '_' + req.operation;
     for (var moduleName in req.A.modules) {
       if (req.A.modules[moduleName][hookName]) {
-        var module = req.A.modules[moduleName];
-        this.runORCatch(module[hookName], req, res, null, module)
+        var m = req.A.modules[moduleName];
+        this.runORCatch(m[hookName], req, res, null, m)
       }
     }
     var hName = 'AFTER_' + req.operation;

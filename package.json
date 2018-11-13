@@ -26,20 +26,7 @@
     "body-parser": "^1.17.1",
     "colors": "^1.1.2",
     "cookie-parser": "^1.4.3",
-    "zinko": "0.1.x",
-    "zinky-beforeaction": "0.0.x",
-    "zinky-callaction": "0.0.x",
-    "zinky-cookies": "0.0.x",
-    "zinky-errors": "0.0.x",
-    "zinky-isrequestingfile": "0.0.x",
-    "zinky-json": "0.0.x",
-    "zinky-logrequest": "0.0.x",
-    "zinky-moduleentry": "0.0.x",
-    "zinky-parseurl": "0.0.x",
-    "zinky-redirect": "0.0.x",
-    "zinky-render": "0.0.x",
-    "zinky-session": "0.0.x",
-    "zinky-setupresponse": "0.0.x",
-    "zinky-validaterequest": "0.0.x"
+    "request-ip": "^2.1.3",
+    "zinko": "0.1.x"
   }
 }

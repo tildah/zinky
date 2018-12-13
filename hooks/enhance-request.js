@@ -26,5 +26,9 @@ module.exports = function (req) {
   req.module = req.A.mds[req.moduleName];
   if (req.moduleName == req.app.staticModuleName) {
     req.action += '/' + req.params.join('/');
+  } else if (!req.module[req.operation]) {
+    req.params.unshift(req.action);
+    req.action = "root";
+    req.operation = `${req.method}_${req.action}`;
   }
 }

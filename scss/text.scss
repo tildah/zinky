@@ -1,0 +1,26 @@
+.ht {
+  color: $color1;
+}
+
+.display-font {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.mono-font {
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @extend .display-font;
+  font-weight: bold;
+  color: $color1;
+}
+
+.justified {
+  text-align: justify;
+}

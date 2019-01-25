@@ -1,0 +1,90 @@
+#home-header {
+  color: $color2;
+  padding-bottom: 20px;
+
+  #website-presentation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    #website-name{
+      @extend .display-font;
+      font-weight: bold;
+      font-size: 90px;
+    }
+
+    #website-logo{
+      margin: 20px;
+      width: 200px;
+    }
+
+    #start {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      height: 50px;
+      color: white;
+
+      #start-text {
+        @extend .mono-font;
+        background: $gray;
+        font-size: 20px;
+      }
+
+      #start-button {
+        background: $color1;
+        cursor: pointer;
+        .mdi {
+          font-size: 48px;
+        }
+      }
+
+      #start-text, #start-button {
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+      }
+    }
+  }
+}
+
+.home-section {
+  padding: 40px;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .home-section-title {
+    @extend .display-font;
+    color: $color2;
+    display: flex;
+    justify-content: center;
+    font-size: 60px;
+    border-bottom: 1px solid fade-out($color2, .54);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    width: 610px;
+  }
+
+  .home-section-content {
+    max-width: 610px;
+    margin: 20px;
+    text-align: center;
+  }
+}
+
+.home-section:nth-child(odd) {
+  border-top: 1px solid fade-out($color2, .9);
+  border-bottom: 1px solid fade-out($color2, .9);
+  background-color: fade-out($color2, .98);
+}
+
+#about-section .home-section-content {
+  line-height: 25px;
+  width: 75%;
+  .ht {
+    color: $color1;
+  }
+}

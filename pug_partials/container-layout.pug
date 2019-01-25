@@ -1,0 +1,27 @@
+doctype html
+html(lang='en')
+  head
+    title ZinkyJS:
+      block page-title
+    include ./common-head.pug
+  body
+    .lateral-page
+      .header
+        a.header-logo(href="index.html")
+          .header-logo-img-wrapper
+            img.header-logo-img(src="images/logo.png")
+          .header-logo-title ZinkyJS
+        .flex
+        include ./nav.pug
+      .doc-wrapper
+        .doc-header
+          .doc-title
+            block header-title
+          .meta
+            i.fa.fa-clock-o
+            |  Last updated: #{new Date().getDate()} - #{new Date().getMonth()+1} - #{new Date().getFullYear()} 
+        block menu_wrap
+        .doc-content
+          block content
+    include ./import-foot.pug
+        

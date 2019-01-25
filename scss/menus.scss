@@ -1,0 +1,31 @@
+.menu-hor {
+  display: flex;
+  flex-direction: row;
+  .menu-item {
+    padding: 15px 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.8s; /* Safari */
+    transition: all width 0.8s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: fade-out(white, .8)
+    }
+
+    .mdi {
+      font-size: 24px;
+    }
+  }
+}
+
+.menu {
+  color: white;
+  @extend .camoufled-link;
+}
+
+ul ul {
+  list-style: none;
+  padding-left: 10px;
+}

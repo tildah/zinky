@@ -1,0 +1,100 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Serving Files
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Serving Files
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_serve')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | Serving static content in ZinkyJS respects the principle of modularity that comes with the framework.
+    ul.sections-list
+      a(href="#global-section")
+        li Global Files
+      a(href="#module-section")
+        li Module's Files
+      a(href="#notfound-section")
+        li If Not Found
+      a(href="#program-section")
+        li Programmatically
+  section#global-section.doc-section
+    h2.section-title Global Files
+    .section-block 
+      | By default, ZinkyJS serves all the files in 'public' folder through a special built-in module called #[span.ht file]. 
+      br
+      | Those settings are editable by #[span.ht staticFolder] for the folder name and #[span.ht staticModuleName] for the special module name.
+      p To test that, create 'public/main.js' with this line:
+      pre
+        code.language-javascript 
+          | alert("I'm a global js file");
+      p And import the file in 'app_modules/home/views/index.pug':
+      pre
+        code.language-javascript 
+          | block content
+          |   h3 This is my page content 
+          |   p I love ZinkyJS
+          |   script(src="/file/main.js")
+      p Visit #[a.ht(href="localhost:3000", target="_blank") localhost:3000]
+  section#module-section.doc-section
+    h2.section-title Module's Files
+    .section-block 
+      | You can put static content specific to module into its client folder and get them by a special action called file.
+      br
+      | These settings are not editable.
+      p To test that, put any image in 'app_modules/home/client' and import the file in 'app_modules/home/views/index.pug':
+      pre
+        code.language-javascript 
+          | block content
+          |   img(src="/home/file/imageName.ext")
+          |   h3 This is my page content 
+          |   p I love ZinkyJS
+          |   script(src="/file/main.js")
+      p Note: Even if 'home' module is aliased by '', you still have to write '/home/file' if you want to get its static content.
+  section#notfound-section.doc-section
+    h2.section-title If Not Found
+    .section-block 
+      | If the file does not exist, ZinkyJS will throw:
+      pre 
+        code.language-cli
+          | { statusCode: 404 }
+      p Check the #[a.ht(href="tuto_errors.html", target="_blank") error handling course] for further details.
+  section#program-section.doc-section
+    h2.section-title Programmatically
+    .section-block 
+      | If in any case we want to send a file from an operation, we can use some of the res methods that were developed for this purpose:
+      p #[.inline-title - sendFile("filePath")]: Responds with the file at the given path.
+        br
+        | To test it, add the following method to "app_modules/home/index.js" then visit #[a.ht(href="localhost:3000/myimage", target="_blank") localhost:3000/myimage]: 
+        pre
+          code.language-javascript 
+            | GET_myimage(req, res, next) {
+            |   res.sendFile(__dirname + "/client/imageName.ext") // the image you added earlier
+            | }
+      p #[.inline-title - download("filePath", "fileName")]: Responds with the file at the given path as an “attachment”. Typically, browsers will prompt the user for download. Override the default filename with the "fileName" parameter.
+        br
+        | To test it, add the following method to "app_modules/home/index.js" then visit #[a.ht(href="localhost:3000/myimage", target="_blank") localhost:3000/myimage]: 
+        pre
+          code.language-javascript 
+            | GET_myimage(req, res, next) {
+            |   res.download(__dirname + "/client/imageName.ext", "my_image.ext") // the image you added earlier
+            | }
+      p #[.inline-title - sendAsFile("content", "extension")]: Responds with the content as a file that has the given extension.
+        br
+        | Imagine you have an svg that you wrote in Pug and after you render it, you want to send it as file not as html. You'll just have to write this:
+        pre
+          code.language-javascript 
+            | GET_svg(req, res, next) {
+            |   // We'll say, you have a file name 'svg.pug' in 'views'
+            |   var content = this.v("svg").render()
+            |   res.sendAsFile(content, "svg");
+            | }
+  a.next_page(href="tuto_inheritance.html") Next Course: Inheritance
+    .fa.fa-arrow-right

@@ -1,0 +1,75 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Reference
+
+block header-title
+  i.icon.mdi.mdi-book-open-page-variant
+  |  Reference
+
+
+block menu
+  - var docs = require(dirname+'/ref/docs.json')
+  each entity in docs
+    li #[a(data-scroll, href="#section-"+entity.name)= entity.name]
+      //- ul.nav.doc-sub-menu
+      //-   li #[a(data-scroll, href="#server-constructor") constructor]
+
+block content
+  - var docs = require(dirname+'/ref/docs.json')
+  each entity in docs
+    section.doc-section(id="section-"+entity.name)
+      h2.section-title= entity.name
+      .section-block= entity.desc
+      if entity.props
+        .section-block(id="props-"+entity.name)
+          h3 Properties
+          table.ref-table.pure-table.pure-table-bordered
+            thead
+              tr
+                th Property
+                th Description
+            tbody
+              each prop in entity.props
+                tr
+                  td.main= prop.name
+                  td= prop.desc
+      if entity.methods
+        .section-block(id="methods-"+entity.name)
+          h3 Methods
+          table.ref-table.pure-table.pure-table-bordered
+            thead
+              tr
+                th Method
+                th Parameters
+                th Description
+            tbody
+              each method in entity.methods
+                tr
+                  td.main= method.name
+                  td
+                    if method.params
+                      ul
+                        each param in method.params
+                          li
+                            strong= param.name + ': '
+                            span= param.desc + '. \n'
+                            if param.def
+                              i= '\t Default: ' + param.def
+                  td= method.desc
+      if entity.con
+        .section-block(id="con-"+entity.name)
+          h3 Constructor
+          p= entity.con.desc
+          table.ref-table.pure-table.pure-table-bordered
+            thead
+              tr
+                th Property
+                th Type
+                th Default
+            tbody
+              each option in entity.con.options
+                tr
+                  td.main= option.name
+                  td= option.type
+                  td= option.def

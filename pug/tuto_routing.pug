@@ -1,0 +1,168 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Routing
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Routing
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_routing')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | ZinkyJS's routing style is one of the awesome features that make this framework special. 
+      | Unlike most of other frameworks in which you attach functions to routes, in ZinkyJS, routes know automatically which function to run.
+      | This makes the project architecture more clear, indeed, by reading the url you know where the code handling the request is located in your project.
+    ul.sections-list
+      a(href="#convention-section")
+        li Convention
+      a(href="#code-section")
+        li Functions Code
+      a(href="#values-section")
+        li Params, Query & Body
+      a(href="#root-section")
+        li Module's Root
+      a(href="#aliases-section")
+        li Aliases
+      a(href="#notfound-section")
+        li If Not Found
+  section#convention-section.doc-section
+    h2.section-title Convention
+    .section-block 
+      | As said earlier, in ZinkyJS apps, functions are attached automatically to routes. And they are organized in a way that lets you locate the code handling the request easily.
+      | This idea requires making some conventions, to become possible.
+      p ZinkyJS splits every request path by "/" into parts, each one of them has its meaning:
+      ol.text-list
+        li First part: 
+          .li-desc Refers to the module
+        li Second part: 
+          .li-desc Refers to the action (function) in the module
+        li Rest of parts: 
+          .li-desc Are read as parameters grouped in an array 
+      p Eg:
+      pre
+        code.language-javascript 
+          | /users/create/Omar/premium
+          | translates to:
+          |   "users": module name
+          |   "create": action
+          |   "Omar": first parameter
+          |   "premium": second parameter
+  section#code-section.doc-section
+    h2.section-title Functions Code
+    .section-block 
+      | Every function that matches a route resides in the "index.js" of its module.
+      p A function name is composed of two parts separated by an underscore ("_"):
+      ol.text-list
+        li Method: 
+          .li-desc GET, POST, PUT... (uppercase)
+        li Action: 
+          .li-desc The request action (saw above)
+      p Eg:
+      pre
+        code.language-javascript 
+          | GET /users/create/Omar/premium
+          | The function that handles this request is 'GET_create' located in 'app_modules/users/index.js'
+      p In ZinkyJS, these functions are called #[span.ht operations] 
+      p So:
+      pre
+        code.language-javascript 
+          | GET /users/create/Omar/premium
+          | translates to:
+          |   "users": module name
+          |   "create": action
+          |   "GET_create": operation
+          |   "Omar": first parameter
+          |   "premium": second parameter
+      p So, let's write the code:
+      p 1. Create the "users" module by running:
+      pre
+        code.code-cli zinky -M users
+      p 2. Add this method(operation) to the class in "app_modules/users/index.js":
+      pre
+        code.language-javascript 
+          | GET_create(req, res) {
+          |   res.end('create user with name: ', req.params[0], ' as:', req.params[1]);
+          | }
+      p 3. Visit #[a.ht(href="localhost:3000/users/create/Omar/premium", target="_blank") localhost:3000/users/create/Omar/premium], and see the result!
+  section#values-section.doc-section
+    h2.section-title Params, Query & Body
+    .section-block 
+      | In addition to params, we can send request values just as we do traditionally:
+      p - Query:
+      pre
+        code.language-javascript 
+          | // for: GET /users/create/Omar/premium?gender=male
+          | GET_create(req, res) {
+          |   req.query  // will look like: {gender: "male"}
+          |   req.params // will look like: ['Omar', 'premium']
+          | }
+      p - Body: you will find the request body in #[span.ht req.body]
+  section#root-section.doc-section
+    h2.section-title Module's Root
+    .section-block 
+      | We saw that ZinkyJS parses the url and searches for the action to know what function it should call. 
+      | But sometimes, you simply don't need an action.
+      p Imagine we want to get users. It would be sufficient to just request  #[span.ht GET /users/], without 
+       | specifying any action. ZinkyJS makes this possible by calling to  #[span.ht root] action if no action found.
+       br
+       | So you write in "app_modules/users/index.js":
+      pre
+        code.language-javascript 
+          | GET_root(req, res) {
+          |   var users = ['Mohamad', 'AbuBakr', 'Omar', 'Othman'];
+          |   res.json(users);
+          | }
+  section#aliases-section.doc-section
+    h2.section-title Aliases
+    .section-block 
+      | ZinkyJS gives the possibility to call a module by a different name than the one you gave to its folder.
+      p If for any reason you want to replace "users" in the request by something else, we'll say "customers" for example, 
+       | you will just have to add #[span.ht aliases] property to app object, like this:
+      pre 
+        code.language-javascript
+          | const Zinky = require('zinky');
+          |
+          | var app = new Zinky({
+          |  aliases: {
+          |     'customers': 'users'
+          |   }
+          | });
+          |
+          | app.listen();
+      p That way, any time ZinkyJS finds "customers" as module name, it will call "users" module.
+      h3 Usefulness of aliases
+      p The aliases prop is very useful as it resolves a problem we face in every ZinkyJS project.
+        br
+        | We saw in the previous course how to make a home page, but 'www.example.com/home' is not an acceptable home page route.
+        br
+        | A website home page should be accessible by this route 'www.example.com'.
+      p Here comes the 'aliases' super hero to resolve that. So you tell ZinkyJS that if no module name is given, call the home module:
+      pre 
+        code.language-javascript
+          | const Zinky = require('zinky');
+          |
+          | var app = new Zinky({
+          |  aliases: {
+          |     '': 'home'
+          |     'customers': 'users'
+          |   }
+          | });
+          |
+          | app.listen();
+  section#notfound-section.doc-section
+    h2.section-title If Not Found
+    .section-block 
+      | If the module or the operation does not exist, ZinkyJS will throw:
+      pre 
+        code.language-cli
+          | { statusCode: 404 }
+      p Check the #[a.ht(href="tuto_errors.html", target="_blank") error handling course] for further details.
+      
+  a.next_page(href="tuto_hooks.html") Next Course: Hooks 
+    .fa.fa-arrow-right

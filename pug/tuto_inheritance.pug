@@ -1,0 +1,44 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Inheritance
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Inheritance
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_inheritance')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | Another great feature that come with ZinkyJS is modules' inheritance. With it, you can make use of a module's operations in another one without the need to rewrite them.
+  section.doc-section
+    h2.section-title Example
+    .section-block 
+      | Create a 'login' module with this operation:
+      pre
+        code.language-javascript 
+          | POST_login(req, res, next) {
+          |   // The code to login...
+          | }
+      p Now, we want to create a module 'auth' that uses this same operation of 'login' module and add a new one specific to register.
+        br
+        | We'll need to make 'app_modules/auth/index.js' look like this:
+      pre
+        code.language-javascript 
+          | const Login = require('../login');
+          |
+          | class Auth extends Login {
+          |
+          |   POST_register(req, res) {
+          |     // The code to register...
+          |   }
+          |
+          | }
+          |
+          | module.exports = Auth;
+      p We can now post to #[span.ht /auth/register] as well as you can post #[span.ht /auth/login].

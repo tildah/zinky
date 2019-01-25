@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en"><head><title>ZinkyJS:How to Zinky with Socket.IO</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="It makes routes inheritance possible. It makes your code clean and reusable over application. It makes project separated into fullstack modules. It's ExpressJS friendly. It's ZinkyJS"><link rel="shortcut icon" href="images/logo.png"><link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono" rel="stylesheet"><link rel="stylesheet" href="./css/prism.css"><!-- PURE CSS--><link rel="stylesheet" href="./bower_components/pure/pure-min.css"><link rel="stylesheet" href="./bower_components/pure/grids-responsive-min.css"><!-- Plugins CSS--><link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="./bower_components/mdi/css/materialdesignicons.min.css"><!-- Theme CSS--><link id="theme-style" rel="stylesheet" href="./css/style.css"></head><body><div class="lateral-page"><div class="header"><a class="header-logo" href="index.html"><div class="header-logo-img-wrapper"><img class="header-logo-img" src="images/logo.png"></div><div class="header-logo-title">ZinkyJS</div></a><div class="flex"></div><div id="nav"><div class="menu-hor menu"><a class="menu-item" href="tuto_hello.html"><i class="mdi mdi-road-variant"></i> Tutorial</a><a class="menu-item" href="reference.html"><i class="mdi mdi-book-open-page-variant"></i> Docs</a><a class="menu-item" href="https://github.com/zinkyjs/zinky"> <i class="mdi mdi-github-circle"></i> Github</a><a class="menu-item" href="https://github.com/zinkyjs/zinky/issues"><i class="mdi mdi-alert-circle"></i> Support</a></div></div></div><div class="doc-wrapper"><div class="doc-header"><div class="doc-title"><div><img src="images/socket.png"></div> How to Zinky with Socket.IO ?</div><div class="meta"><i class="fa fa-clock-o"></i> Last updated: 9 - 3 - 2018 </div></div><div class="doc-content"><br><br><section class="doc-section"><div class="section-block">In this lesson, we'll see how to implement the famous <a class="ht" href="https://socket.io/" target="_blank">Socket.IO</a> package that allows us to establish real-time bidirectional event-based communication.</div></section><section class="doc-section"><h2 class="section-title">Client Side</h2><div class="section-block"><p>Firstly, we'll set up the client side that does not change from the official way.</p><p>If in any case you didn't follow the official guide, here is how a basic client side implementation should look like:</p><pre><code class="language-html">&lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const socket = io('http://localhost');
+  // And everything else...
+&lt;/script&gt;</code></pre></div></section><section class="doc-section"><h2 class="section-title">Server Side</h2><div class="section-block"><p>As for server side, we'll have to initialize the io object passing to it 'app.server':</p><pre><code class="language-javascript">const Zinky = require('zinky');
+var app = new Zinky();
+var io = require('socket.io')(app.server);
+io.on('connection', (socket) => {
+  console.log('socket connected')
+  socket.on('disconnect', () => {
+    console.log('socket disconnected')
+  });
+});</code></pre></div></section><section class="doc-section"><h2 class="section-title">Use Socket.IO in modules</h2><div class="section-block"><h3>Attach to app</h3><p>Before we can use Socket.IO in app modules, we have to append it to app object and reload the modules:<br>So app.js will look like:</p><pre><code class="language-javascript">const Zinky = require('zinky');
+var app = new Zinky();
+var io = require('socket.io')(app.server);
+app.io = io;
+app.loadModules();</code></pre></div><div class="section-block"><h3>Track connections</h3><p>Tracking sockets connections is done in modules constructor.</p><p>Eg:</p><pre><code class="language-javascript">const Zinko = require('zinko');
+
+class Auth extends Zinko {
+
+  constructor(dirname, app) {
+    super(dirname, app);
+    if (app.io) {
+      app.io.on('connection', (socket) => {
+        console.log('socket connected')
+        socket.on('disconnect', () => {
+          console.log('socket disconnected')
+        });
+      });
+    }
+  }
+
+}</code></pre></div><div class="section-block"><h3>In operations</h3><p>In operations, it is possible to use the Socket.IO server.</p><p>Eg:</p><pre><code class="language-javascript">const Zinko = require('zinko');
+
+class Auth extends Zinko {
+
+  POST_login(req, res) {
+    // login code...
+    req.A.io.emit('A new logged-in user');
+  }
+
+}</code></pre></div><div class="section-block"><h3>Use Socket.IO in only one module</h3><p>If we want just use Socket.IO in only one module without having to declare it in app.js, we can do that, this way:</p><pre><code class="language-javascript">const Zinko = require('zinko');
+
+class Auth extends Zinko {
+
+  constructor(dirname, app) {
+    super(dirname, app);
+    this.io = require('socket.io')(app.server);
+    this.io.on('connection', (socket) => {
+      console.log('socket connected')
+      socket.on('disconnect', () => {
+        console.log('socket disconnected')
+      });
+    });
+  }
+
+}</code></pre><p>In this case, instead of using <span class="ht">req.A.io</span> use <span class="ht">this.io</span> in operations.</p><p>So, using the same example of operations we saw earlier, the code will be like this:</p><pre><code class="language-javascript">const Zinko = require('zinko');
+
+class Auth extends Zinko {
+
+  POST_login(req, res) {
+    // login code...
+    this.io.emit('A new logged-in user');
+  }
+
+}</code></pre></div></section><section class="doc-section"><div class="section-block"><p>Hope this helped you! If you need any help don't hesitate to ask for it here:<a href="https://github.com/zinkyJS/zinky/issues">https://github.com/zinkyJS/zinky/issues</a></p></div></section></div></div></div><script src="./bower_components/smooth-scroll/dist/js/smooth-scroll.js"></script><script src="./bower_components/scrollbot/js/scrollbot.min.js"></script><script src="./js/prism.js"></script><script src="./js/main.js"></script></body></html>

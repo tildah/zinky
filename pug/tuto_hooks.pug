@@ -1,0 +1,178 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Hooks
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Hooks
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_hooks')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | ZinkyJS's hooks are functions that are called before the request operation to give you the possibility to 
+      | handle the request, stop it or anything you want to do before the operation execution.
+      p There are 4 different types of hooks in ZinkyJS:
+    ul.sections-list
+      a(href="#global-section")
+        li Global Hooks
+      a(href="#module-section")
+        li Module's Hook
+      a(href="#before-section")
+        li BEFORE Hooks
+      a(href="#after-section")
+        li AFTER Hooks
+    .section-block
+      | Additionally to that, we'll see:
+    ul.sections-list
+      a(href="#express-section")
+        li Express Middlewares
+      a(href="#order-section")
+        li Execution Order
+  section#global-section.doc-section
+    h2.section-title Global Hooks
+    .section-block 
+      | Global hooks are hooks that are called on every request in the app, before the request operation.
+      p To add a hook, use #[span.ht addHook()] method after app initialization.
+      pre
+        code.language-javascript
+          | const Zinky = require('zinky');
+          |
+          | var app = new Zinky({
+          |  aliases: {
+          |     '': 'home'
+          |     'customers': 'users'
+          |   }
+          | });
+          |
+          | app.addHook((req, res, next) => {
+          |   console.log("I'm a global hook. I run every time!")
+          |   next();
+          | })
+          |
+          | app.listen();
+      p You've probably noticed the usual #[span.ht (req, res, next)], well known by ExpressJS developers. But if it's the first time you see them 
+       | don't worry, here is a short explanation:
+      p #[.inline-title - req]: Represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, and so on. By convention, the object is always referred to as req. It's an enhanced version of Node’s own request object and supports all #[a(href="https://nodejs.org/api/http.html#http_class_http_clientrequest", target="_blank") built-in fields and methods]. 
+      p #[.inline-title - res]: Represents the HTTP response that an Express app sends when it gets an HTTP request. By convention, the object is always referred to as res. It's an enhanced version of Node’s own response object and supports all #[a(href="https://nodejs.org/api/http.html#http_class_http_serverresponse", target="_blank") built-in fields and methods]. 
+      p #[.inline-title - next]: This is the callback. Call it when you are done with the hook and want to run next hook or operation (the operation is actually a hook that is called lastly, that's why we don't give it a next callback).
+      p You can copy the code to your project and see what it does.
+  section#module-section.doc-section
+    h2.section-title Module's Hook
+    .section-block 
+      | A module's hook is a hook that is called on every request on the module.
+      p To create a module's hook add #[span.ht hook(req, res, next)] method to the module and you're done.
+      p Test it, by adding this to "app_modules/users/index.js":
+      pre
+        code.language-javascript 
+          | hook(req, res, next) {
+          |   console.log("Hello! I'm the users module hook. I run every time you request users module")
+          |   next();
+          | }
+      p Visit #[a.ht(href="localhost:3000/users/", target="_blank") localhost:3000/users/], and open the terminal that's running the app to see the result.
+        br 
+        | You will see these messages:
+      pre
+        code.language-cli 
+        | I'm a global hook. I run every time!
+        | Hello! I'm the users module hook. I run every time you request users module
+  section#before-section.doc-section
+    h2.section-title BEFORE Hooks
+    .section-block 
+      | BEFORE Hooks are, as their name suggests, hooks that run before a specific operation.
+      br
+      | They are made by creating methods named #[span.ht 'BEFORE_' + operation]
+      p Eg:
+      pre
+        code.language-javascript 
+          | BEFORE_GET_root(req, res, next) {
+          |   console.log("Keep Ready! You're about to access operation");
+          |   next();
+          | }
+      p Add the above method to "app_modules/users/index.js", and visit #[a.ht(href="localhost:3000/users/", target="_blank") localhost:3000/users/].
+        br
+        | Check the terminal!
+      p What we saw here, are #[span.ht internal BEFORE hooks], that means that they belongs to the module of the operation they're attached to. But since ZinkyJS is awesome, it gives us 
+       | a way to attach a hook to a specific operation from outside its module. These are what we call #[span.ht external BEFORE hooks]
+      p External BEFORE hooks are created by writing methods named as following:
+        br
+        | #[span.ht 'BEFORE_' + operationModule + operation]
+      p Add this hook to "app_modules/home/index.js", and test it:
+      pre
+        code.language-javascript 
+          | BEFORE_users_GET_root(req, res, next) {
+          |   console.log("I'm a before hook that lives at home");
+          |   next();
+          | }
+  section#after-section.doc-section
+    h2.section-title AFTER Hooks
+    .section-block 
+      | Just as ZinkyJS offers a way to make hooks before a specific operation, it allow us to attach hooks after the operation is called.
+      p The AFTER hooks are called after the request has finished, which means that the client gets the request response before they are called.
+      p And like BEFORE hooks, the AFTER hooks can be internal or external.
+      p To see it in real add these lines to 'app_modules/users/index.js':
+      pre
+        code.language-javascript 
+          | AFTER_GET_root(req, res) {
+          |   console.log("I'm the hook that runs after the client has received the response");
+          | }
+      p And these ones to "app_modules/home/index.js":
+      pre
+        code.language-javascript 
+          | AFTER_users_GET_root(req, res) {
+          |   console.log("I'm called from home after client has been served");
+          | }
+      p Now run the app and visit #[a.ht(href="localhost:3000/users/", target="_blank") localhost:3000/users/].
+      p As you can see, AFTER hooks don't get a callback. That's because they are not called in a stack, ZinkyJS runs every one of them asynchronously and does not wait until the first finishes to call the second.
+  section#express-section.doc-section
+    h2.section-title Express Middlewares
+    .section-block 
+      | ZinkyJS hooks get the same parameters as ExpressJS middlewares do, that's what makes them compatible.
+      p ExpressJS middlewares, when used in ZinkyJS, are used as global hooks and are added using #[span.ht addHook()]. This method (addHook) works exactly like the #[span.ht use()] method of ExpressJS.
+      p In our example we'll use this  #[a.ht(href="https://www.npmjs.com/package/basicauth-middleware", target="_blank") basicauth-middleware] that was developed originaly for ExpressJS but that we can use with ZinkyJS.
+        br
+        | Here is how to do it:
+      pre 
+        code.language-javascript
+          | const Zinky = require('zinky');
+          | const basicauth = require('basicauth-middleware');
+          |
+          | var app = new Zinky({
+          |  aliases: {
+          |     'customers': 'users'
+          |   }
+          | });
+          |
+          | app.addHook(basicauth('myname', 'somesecretword'));
+          | app.listen();
+      p Install the newly used package:
+      pre
+        code.code-cli sudo npm install -g basicauth-middleware
+      p Now run the app and open it in your browser.
+  section#order-section.doc-section
+    h2.section-title Execution Order
+    .section-block 
+      | We saw that ZinkyJS allows us to attach hooks before and after operations, but things can get confusing because of the multiple types of hooks. 
+      | One of this unclear things is the order in which hooks are called. So let's explane it:
+      br
+      | At first, when the app receives a request, ZinkyJS runs its built-in hooks, those who parse the url, cookies, query... and enhance req and res objects in order to make our lifes easier. 
+      | Next, it calls the global hooks in the order they were added using #[span.ht addHook()]. Then, ZinkyJS looks for the external BEFORE hooks ordered by their respective modules names alphabetically. 
+      | After that, it calls the internal BEFORE hook and finally runs the operation and waits for the response to be sent to run all the AFTER Hooks simultaneously.
+      p Summarizing all that, gives:
+      ol.text-list
+        li Built-in Hooks
+        li Global Hooks  
+          .li-desc (In the order they were added)
+        li External BEFORE Hooks 
+          .li-desc (ordered by their respective modules names alphabetically) 
+        li Internal BEFORE Hook
+        li Operation
+        li AFTER Hooks 
+          .li-desc (simultaneously) 
+  a.next_page(href="tuto_views.html") Next Course: Views & Templating Engines 
+    .fa.fa-arrow-right

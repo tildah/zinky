@@ -1,0 +1,58 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Views & Templating Engines
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Views & Templating Engines
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_errors')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | ZinkyJS offers a way to handle all errors in one place instead of trying to catch them in every method and function.
+    ul.sections-list
+      a(href="#catcher-section")
+        li Catcher
+  section#catcher-section.doc-section
+    h2.section-title Catcher
+    .section-block 
+      | Define a catcher function in Zinky instance (app) that takes req and res as parameters. The thrown error is found in #[span.ht req.error].
+      p Eg:
+      pre
+        code.language-javascript 
+          | const Zinky = require('zinky');
+          |
+          | var app = new Zinky({
+          |   aliases: {
+          |     '': 'home'
+          |     'customers': 'users'
+          |   },
+          |   catcher: function(req, res) {
+          |     console.log(req.error);
+          |     res.deliver(500, 'Oooops something went wrong!');
+          |   }
+          | });
+          |
+          | app.listen();
+      p Now we'll simulate an error to test the catcher. Add this operation to 'app_modules/home/index.js':
+      pre
+        code.language-javascript 
+          | GET_simulate(req, res) {
+          |   a = b;
+          | }
+      p Visit #[a.ht(href="localhost:3000/simulate", target="_blank") localhost:3000/simulate]
+      p Even if we don't define a catcher, ZinkyJS has built-in function that logs the error then responds 500 as status code and 'Internal Server Error' as message. Here is its code:
+      pre
+        code.language-javascript 
+          | catcher(req, res) {
+          |   console.log(req.error);
+          |   res.deliver(500, 'Internal Server Error');
+          | }
+  a.next_page(href="tuto_serve.html") Next Course: Serving Files
+    .fa.fa-arrow-right

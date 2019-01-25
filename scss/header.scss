@@ -1,0 +1,33 @@
+.lateral-page {
+  .header {
+    background: $color1;
+    color: white;
+    display: flex;
+    @extend .camoufled-link;
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+
+      .header-logo-img-wrapper {
+        background-color: white;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 16px;
+        border-bottom: 1px solid fade-out($color1, .8);
+        box-sizing: border-box;
+        .header-logo-img {
+          width: 48px;
+        }
+      }
+
+      .header-logo-title {
+        font-weight: bold;
+        font-size: 29px;
+        margin: 0px 15px;
+      }
+    }
+  }
+}

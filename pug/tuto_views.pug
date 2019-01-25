@@ -1,0 +1,173 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  |  Views & Templating Engines
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |   Views & Templating Engines
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_views')
+
+block content
+  section#download-section.doc-section
+    h2.section-title
+    .section-block
+    ul.sections-list
+      a(href='#location-section')
+        li Location
+      a(href='#pl-section')
+        li Pug
+      a(href='#other-section')
+        li Other Templating Engines
+  section#location-section.doc-section
+    h2.section-title Location
+    .section-block
+      | Each one of ZinkyJS modules contains its own views. These are put in "views" folder in the module's folder. 
+      br
+      | Every Zinko(module) retrieves its views into 
+      span.ht views
+      |  property with their names(excluding the extension).
+      p Eg:
+      pre
+        code.language-javascript 
+          | // For this module tree:
+          | // moduleName
+          | //   |_ client
+          | //   |_ views
+          | //        |_ index.pug
+          | //   |_ index.js
+          |
+          | GET_root(req, res, next) {
+          |   res.render(this.v("index"));
+          |   // Or if you are working in another module.
+          |   res.render(req.app.modules.moduleName.v("index"));
+          | }
+  section#pl-section.doc-section
+    h2.section-title Pug
+    .section-block
+      | ZinkyJS uses 
+      span.ht Pug
+      |  as the default templating engine. It handles it with 
+      a.ht(href='https://www.npmjs.com/package/pug-layout', target='_blank') pug-layout
+      | . You can check its complete API, but here, we are interested
+      |             in only two of its methods: 
+      span.ht extends(), render()
+      | .
+      p
+        | The pug-layout package allows to read a pug file either as a layout or as a page. So, ZinkyJS made a convention in order to make the decision of in which type would it read views:
+        br
+        | If a file name starts with 
+        span.ht L_
+        |  then
+        |               it's read as a layout, if not, it will be read as a page.
+      p
+        | To test it, create this file 'app_modules/home/views/L_main.pug' with this content:
+      pre
+        code.language-jade 
+          | html
+          | head
+          |   title App
+          | body
+          |   h1
+          |     span Hello
+          |     span= name
+          |   block content
+      p
+        | The file we created is a layout.
+        br
+        | Let's create now the page that will extend it. Put in 'app_modules/home/views/index.pug' this:
+      pre
+        code.language-jade 
+          | block content
+          |   h3 This is my page content
+          |   p I love ZinkyJS
+      p
+        | At this stage, there is nothing indicating that 'index.pug' extends from 'L_main.pug'.
+        br
+        | We'll make this in the home root. So in 'app_modules/home/index.js' replace the content of 'GET_root' by:
+      pre
+        code.language-javascript 
+          | GET_root(req, res) {
+          |   var index = this.v("index");
+          |   index.extend(this.v("L_main")):
+          |   var html = index.render({name: 'Zayd'});
+          |   res.end(html);
+          | }
+      p
+        | Visit 
+        a.ht(href='localhost:3000', target='_blank') localhost:3000
+        | , and enjoy!
+      p We can even make the same thing with less code:
+      pre
+        code.language-javascript 
+          | GET_root(req, res) {
+          |   res.render(this.v("index"), {name: 'Zayd'}, this.v("L_main"));
+          |   // And don't forget to thank ZinkyJS
+          | }
+  section#other-section.doc-section
+    h2.section-title Other Templating Engines
+    .section-block
+      | ZinkyJS is not a dictator! And it doesn't force you to make the same choices it did.
+      br
+      | If you're not a big fan of Pug, you still have the choice to work with other templating engines. To do so, you have to set 
+      span.ht stopPugLayout
+      |             to true in the Zinky instance, and write a 
+      span.ht render
+      |  method that returns the resulting html using the templating engine's API you choosed.
+      p
+        | Say that we want to use 
+        a.ht(href='http://ejs.co/', target='_blank') EJS
+        |  instead of Pug. 
+        br
+        | We will have to install EJS and require it in 'app.js', then, set 
+        span.ht stopPugLayout
+        |  to true and write the 
+        span.ht render
+        |               method that uses EJS API.
+      p So 'app.js' will look like this:
+      pre
+        code.language-javascript 
+          |  const Zinky = require('zinky');
+          |  const ejs = require('ejs'); // Don't forget to npm install ejs
+          |  
+          |  var app = new Zinky({
+          |    aliases: {
+          |      '': 'home'
+          |      'customers': 'users'
+          |    },
+          |    stopPugLayout: true,
+          |    render: function(view, data, options) {
+          |      return ejs.render(view, data, options);
+          |      // According to EJS API, render function takes these three parameters
+          |    }
+          |  });
+          |
+          |  app.listen();
+      p
+        | Let's now, remake our views. Delete 'L_main.pug' and 'index.pug' from 'app_modules/home/views', then create in that folder a file named 'index.ejs' with this content:
+      pre
+        code.language-html 
+          |  &lt;html&gt;
+          |    &lt;head&gt;
+          |      &lt;title&gt;App&lt;/title&gt;
+          |    &lt;/head&gt;
+          |    &lt;body&gt;
+          |      &lt;h1&gt; Hello &lt;%= name %&gt;&lt;/h1&gt;
+          |      &lt;h3&gt;This is my page content &lt;/h3&gt;
+          |      &lt;p&gt;I love ZinkyJS&lt;/p&gt;
+          |    &lt;/body&gt;
+          |  &lt;/html&gt;     
+      p Now render this in 'app_modules/home/index.js':
+      pre
+        code.language-javascript 
+          | GET_root(req, res) {
+          |   res.render(this.v("index"), {name: 'Zayd'}, {});
+          |   // res.render takes the same parameters as our custom 'render()' method does.
+          | }
+      p Note: For the rest of the tutorials we'll keep working with pug layout.
+  a.next_page(href='tuto_errors.html')
+    | Next Course: Error Handling
+    .fa.fa-arrow-right

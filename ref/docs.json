@@ -1,0 +1,376 @@
+[
+  {
+    "name": "Zinky",
+    "desc": "Zinky is the server class",
+    "props": [
+      {
+        "name": "port",
+        "desc": "The port on which the server should listen"
+      }
+      ,{
+        "name": "aliases",
+        "desc": "Object to replace modules names in routes"
+      }
+      ,{
+        "name": "staticModuleName",
+        "desc": "The special module name that serves global static content"
+      }
+      ,{
+        "name": "staticFolder",
+        "desc": "The folder that contains global static content"
+      }
+      ,{
+        "name": "logRequestDate",
+        "desc": "Whether to log request date in console or not"
+      }
+      ,{
+        "name": "stopPugLayout",
+        "desc": "If true, ZinkyJS will not use pug-layout. This requires a render function"
+      }
+      ,{
+        "name": "modules",
+        "desc": "Object containing app modules"
+      }
+      ,{
+        "name": "mds",
+        "desc": "Same as modules"
+      }
+    ],
+    "con": {
+      "desc": "new Zinky({options}), where options is an object with the following properties:",
+      "options": [
+        {
+          "name": "port",
+          "type": "INTEGER, STRING",
+          "def": "3000"
+        }
+        ,{
+          "name": "aliases",
+          "type": "OBJECT{'aliase': 'moduleName'}",
+          "def": "{}"
+        }
+        ,{
+          "name": "staticModuleName",
+          "type": "STRING",
+          "def": "file"
+        }
+        ,{
+          "name": "staticFolder",
+          "type": "STRING",
+          "def": "public"
+        }
+        ,{
+          "name": "logRequestDate",
+          "type": "BOOLEAN",
+          "def": "false"
+        }
+        ,{
+          "name": "stopPugLayout",
+          "type": "BOOLEAN",
+          "def": "false"
+        }
+        ,{
+          "name": "catcher",
+          "type": "FUNCTION",
+          "def": "Logs error and responds it"
+        }
+        ,{
+          "name": "render",
+          "type": "FUNCTION",
+          "def": "Renders views using pug-layout"
+        }
+      ]
+    },
+    "methods": [
+      {
+        "name": "addHook(hook(req, res, next))",
+        "params": [
+          {
+            "name": "hook",
+            "desc": "The hook to add. It takes the famous req, res and next as arguments"
+          }
+        ],
+        "desc": "Adds a global hook"
+      }
+      ,{
+        "name": "listen(#port)",
+        "params": [
+          {
+            "name": "port",
+            "desc": "port on which to listen",
+            "def": "The existent app port"
+          }
+        ],
+        "desc": "listens for connections on the given port"
+      }
+      ,{
+        "name": "loadModules()",
+        "desc": "Load(or reload) all app modules to modules property"
+      }
+      ,{
+        "name": "catcher({req}, {res})",
+        "params": [
+          {
+            "name": "req",
+            "desc": "req object found in every hook"
+          },
+          {
+            "name": "res",
+            "desc": "res object found in every hook"
+          }
+        ],
+        "desc": "Catches all errors in hooks and operations"
+      }
+      ,{
+        "name": "render(..args)",
+        "params": [
+          {
+            "name": "...args",
+            "desc": "Parameters are completely customizable"
+          }
+        ],
+        "desc": "Defines the way views are rendered"
+      }
+    ]
+  }
+  ,{
+    "name": "Zinko",
+    "desc": "Zinko is the most basic module class",
+    "props": [
+      {
+        "name": "app",
+        "desc": "The app instance passed in initialization"
+      }
+      ,{
+        "name": "clientFolder",
+        "desc": "The folder that contains the module's static content"
+      }
+      ,{
+        "name": "dirname",
+        "desc": "The path to directory where module's index.js is located"
+      }
+      ,{
+        "name": "viewsFolder",
+        "desc": "The folder that contains the module's views"
+      }
+    ]
+    ,"methods": [
+      {
+        "name": "constructor(dirname, app)",
+        "params": [
+          {
+            "name": "dirname",
+            "desc": "The path to directory where module's index.js is located"
+          }
+          ,{
+            "name": "app",
+            "desc": "The app instance"
+          }
+        ],
+        "desc": "Module's constructor"
+      }
+      ,{
+        "name": "v(viewName)",
+        "desc": "Return a module's view by its name(without extension)"
+      }
+      ,{
+        "name": "GET_file(req, res)",
+        "desc": "This method is a default operation created in Zinko, that responds with a file after looking for it in clientFolder"
+      }
+    ]
+  }
+  ,{
+    "name": "req",
+    "desc": "The req object represents the HTTP request passed as first argument in every hook and operation. Here are the properties added to it by ZinkyJS:",
+    "props": [
+      {
+        "name": "action",
+        "desc": "Requested action name"
+      }
+      ,{
+        "name": "app",
+        "desc": "App object"
+      }
+      ,{
+        "name": "ip",
+        "desc": "Request client IP address"
+      }
+      ,{
+        "name": "method",
+        "desc": "Request method"
+      }
+      ,{
+        "name": "moduleName",
+        "desc": "Requested module name"
+      }
+      ,{
+        "name": "module",
+        "desc": "Request module"
+      }
+      ,{
+        "name": "operation",
+        "desc": "Function name that will be called on this request"
+      }
+      ,{
+        "name": "params",
+        "desc": "Request params"
+      }
+      ,{
+        "name": "query",
+        "desc": "Parsed request query string"
+      }
+      ,{
+        "name": "url",
+        "desc": "Request URL"
+      }
+    ]
+  }
+  ,{
+    "name": "res",
+    "desc": "The res object represents the HTTP response that an ZinkyJS app sends when it gets an HTTP request. Here are the methods added to it by ZinkyJS:",
+    "methods": [
+      {
+        "name": "clearCookies()",
+        "desc": "Deletes all cookies."
+      }
+      ,{
+        "name": "clearOneCookie('name')",
+        "params": [
+          {
+            "name": "name",
+            "desc": "Cookie name."
+          }
+        ],
+        "desc": "Deletes one cookie."
+      }
+      ,{
+        "name": "contentType('contentType')",
+        "params": [
+          {
+            "name": "contentType",
+            "desc": "content type."
+          }
+        ],
+        "desc": "Sets the HTTP content-type for the response."
+      }
+      ,{
+        "name": "cookie('name', val, {options})",
+        "params": [
+          {
+            "name": "name",
+            "desc": "Cookie name."
+          }
+          ,{
+            "name": "val",
+            "desc": "Cookie value."
+          }
+          ,{
+            "name": "option",
+            "desc": "HTTP Cookie directives:\n\tdomain\n\tencode\n\texpires\n\thttpOnly\n\tmaxAge\n\tpath\n\tsameSite\n\tsecure"
+          }
+        ],
+        "desc": "Sets a cookie."
+      }
+      ,{
+        "name": "deliver(#status, 'response')",
+        "params": [
+          {
+            "name": "status",
+            "desc": "Status code."
+          }
+          ,{
+            "name": "response",
+            "desc": "String body response."
+          }
+        ],
+        "desc": "Sends the response with the given HTTP status."
+      }
+      ,{
+        "name": "download('filePath')",
+        "params": [
+          {
+            "name": "filePath",
+            "desc": "Path to file."
+          }
+        ],
+        "desc": "Transfers the file at path as an “attachment”. Typically, browsers will prompt the user for download."
+      }
+      ,{
+        "name": "json({obj})",
+        "params": [
+          {
+            "name": "obj",
+            "desc": "JSON object to send."
+          }
+        ],
+        "desc": "Responds with JSON object (with the correct content-type)."
+      }
+      ,{
+        "name": "redirect('location')",
+        "params": [
+          {
+            "name": "location",
+            "desc": "Redirection url"
+          }
+        ],
+        "desc": "Redirects to the given URL."
+      }
+      ,{
+        "name": "reload()",
+        "desc": "Redirects back to the URL specified in the Referer header."
+      }
+      ,{
+        "name": "render(pugLayout.Page view, {locals}, pugLayout.Layout layout*)",
+        "params": [
+          {
+            "name": "view",
+            "desc": "The view to render"
+          }
+          ,{
+            "name": "locals",
+            "desc": "Data passed to view"
+          }
+          ,{
+            "name": "layout",
+            "desc": "Layout extended by view. (optional)"
+          }
+        ],
+        "desc": "Responds with rendered view."
+      }
+      ,{
+        "name": "sendAsFile('content', 'ext')",
+        "params": [
+          {
+            "name": "content",
+            "desc": "Content to transfer."
+          }
+          ,{
+            "name": "ext",
+            "desc": "File Extension."
+          }
+        ],
+        "desc": "Transfers the given content as file. Sets the Content-Type response HTTP header field based on the given extension."
+      }
+      ,{
+        "name": "sendFile('filePath')",
+        "params": [
+          {
+            "name": "filePath",
+            "desc": "Path to file."
+          }
+        ],
+        "desc": "Transfers the file at the given path. Sets the Content-Type response HTTP header field based on the filename’s extension."
+      }
+      ,{
+        "name": "status(#code)",
+        "params": [
+          {
+            "name": "code",
+            "desc": "Status code."
+          }
+        ],
+        "desc": "Sets the HTTP status for the response."
+      }
+    ]
+  }
+]

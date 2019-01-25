@@ -1,0 +1,135 @@
+extends ./../pug_partials/container-layout.pug
+
+block page-title
+  | How to Zinky with Socket.IO
+
+block header-title
+  div
+    img(src="images/socket.png")
+  |  How to Zinky with Socket.IO ?
+
+block content
+  br
+  br
+  section.doc-section
+    .section-block
+      | In this lesson, we'll see how to implement the famous #[a.ht(href="https://socket.io/", target="_blank") Socket.IO] package that allows us to establish real-time bidirectional event-based communication.
+  section.doc-section
+    h2.section-title Client Side
+    .section-block
+      p Firstly, we'll set up the client side that does not change from the official way.
+      p If in any case you didn't follow the official guide, here is how a basic client side implementation should look like:
+      pre
+        code.language-html
+          | &lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
+          | &lt;script&gt;
+          |   const socket = io('http://localhost');
+          |   // And everything else...
+          | &lt;/script&gt;
+  section.doc-section
+    h2.section-title Server Side
+    .section-block
+      p As for server side, we'll have to initialize the io object passing to it 'app.server':
+      pre
+        code.language-javascript
+          | const Zinky = require('zinky');
+          | var app = new Zinky();
+          | var io = require('socket.io')(app.server);
+          | io.on('connection', (socket) => {
+          |   console.log('socket connected')
+          |   socket.on('disconnect', () => {
+          |     console.log('socket disconnected')
+          |   });
+          | });
+  section.doc-section
+    h2.section-title Use Socket.IO in modules
+    .section-block
+      h3 Attach to app
+      p Before we can use Socket.IO in app modules, we have to append it to app object and reload the modules:
+        br
+        | So app.js will look like:
+      pre
+        code.language-javascript
+          | const Zinky = require('zinky');
+          | var app = new Zinky();
+          | var io = require('socket.io')(app.server);
+          | app.io = io;
+          | app.loadModules();
+    .section-block
+      h3 Track connections
+      p Tracking sockets connections is done in modules constructor.
+      p Eg:
+      pre
+        code.language-javascript
+          | const Zinko = require('zinko');
+          |
+          | class Auth extends Zinko {
+          |
+          |   constructor(dirname, app) {
+          |     super(dirname, app);
+          |     if (app.io) {
+          |       app.io.on('connection', (socket) => {
+          |         console.log('socket connected')
+          |         socket.on('disconnect', () => {
+          |           console.log('socket disconnected')
+          |         });
+          |       });
+          |     }
+          |   }
+          |
+          | }
+    .section-block
+      h3 In operations
+      p In operations, it is possible to use the Socket.IO server.
+      p Eg:
+      pre
+        code.language-javascript
+          | const Zinko = require('zinko');
+          |
+          | class Auth extends Zinko {
+          |
+          |   POST_login(req, res) {
+          |     // login code...
+          |     req.A.io.emit('A new logged-in user');
+          |   }
+          |
+          | }
+    .section-block
+      h3 Use Socket.IO in only one module
+      p If we want just use Socket.IO in only one module without having to declare it in app.js, we can do that, this way:
+      pre
+        code.language-javascript
+          | const Zinko = require('zinko');
+          |
+          | class Auth extends Zinko {
+          |
+          |   constructor(dirname, app) {
+          |     super(dirname, app);
+          |     this.io = require('socket.io')(app.server);
+          |     this.io.on('connection', (socket) => {
+          |       console.log('socket connected')
+          |       socket.on('disconnect', () => {
+          |         console.log('socket disconnected')
+          |       });
+          |     });
+          |   }
+          |
+          | }
+      p In this case, instead of using #[span.ht req.A.io] use #[span.ht this.io] in operations.
+      p So, using the same example of operations we saw earlier, the code will be like this:
+      pre
+        code.language-javascript
+          | const Zinko = require('zinko');
+          |
+          | class Auth extends Zinko {
+          |
+          |   POST_login(req, res) {
+          |     // login code...
+          |     this.io.emit('A new logged-in user');
+          |   }
+          |
+          | }
+  section.doc-section
+    .section-block
+      p Hope this helped you! If you need any help don't hesitate to ask for it here:
+        | #[a(href="https://github.com/zinkyJS/zinky/issues") https://github.com/zinkyJS/zinky/issues]

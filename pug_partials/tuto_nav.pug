@@ -1,0 +1,8 @@
+mixin tuto_nav(active)
+  li(class=active == "tuto_hello" ? 'active' : '') #[a(href="tuto_hello.html") Hello World]
+  li(class=active == "tuto_routing" ? 'active' : '') #[a(href="tuto_routing.html") Routing]
+  li(class=active == "tuto_hooks" ? 'active' : '') #[a(href="tuto_hooks.html") Hooks]
+  li(class=active == "tuto_views" ? 'active' : '') #[a(href="tuto_views.html") Views & Templating Engines]
+  li(class=active == "tuto_errors" ? 'active' : '') #[a(href="tuto_errors.html") Error Handling]
+  li(class=active == "tuto_serve" ? 'active' : '') #[a(href="tuto_serve.html") Serving Files]
+  li(class=active == "tuto_inheritance" ? 'active' : '') #[a(href="tuto_inheritance.html") Inheritance]

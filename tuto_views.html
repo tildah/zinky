@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><title>ZinkyJS: Views & Templating Engines</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="It makes routes inheritance possible. It makes your code clean and reusable over application. It makes project separated into fullstack modules. It's ExpressJS friendly. It's ZinkyJS"><link rel="shortcut icon" href="images/logo.png"><link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono" rel="stylesheet"><link rel="stylesheet" href="./css/prism.css"><!-- PURE CSS--><link rel="stylesheet" href="./bower_components/pure/pure-min.css"><link rel="stylesheet" href="./bower_components/pure/grids-responsive-min.css"><!-- Plugins CSS--><link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="./bower_components/mdi/css/materialdesignicons.min.css"><!-- Theme CSS--><link id="theme-style" rel="stylesheet" href="./css/style.css"></head><body><div class="lateral-page"><div class="header"><a class="header-logo" href="index.html"><div class="header-logo-img-wrapper"><img class="header-logo-img" src="images/logo.png"></div><div class="header-logo-title">ZinkyJS</div></a><div class="flex"></div><div id="nav"><div class="menu-hor menu"><a class="menu-item" href="tuto_hello.html"><i class="mdi mdi-road-variant"></i> Tutorial</a><a class="menu-item" href="reference.html"><i class="mdi mdi-book-open-page-variant"></i> Docs</a><a class="menu-item" href="https://github.com/zinkyjs/zinky"> <i class="mdi mdi-github-circle"></i> Github</a><a class="menu-item" href="https://github.com/zinkyjs/zinky/issues"><i class="mdi mdi-alert-circle"></i> Support</a></div></div></div><div class="doc-wrapper"><div class="doc-header"><div class="doc-title"><i class="icon mdi mdi-road-variant"></i>  Views & Templating Engines</div><div class="meta"><i class="fa fa-clock-o"></i> Last updated: 9 - 3 - 2018 </div></div><div class="scrollable absolute-menu" id="menu-wrapper"><ul class="menu" id="content-menu"><li><a href="tuto_hello.html">Hello World</a></li><li><a href="tuto_routing.html">Routing</a></li><li><a href="tuto_hooks.html">Hooks</a></li><li class="active"><a href="tuto_views.html">Views & Templating Engines</a></li><li><a href="tuto_errors.html">Error Handling</a></li><li><a href="tuto_serve.html">Serving Files</a></li><li><a href="tuto_inheritance.html">Inheritance</a></li></ul></div><div class="doc-content"><section class="doc-section" id="download-section"><h2 class="section-title"></h2><div class="section-block"></div><ul class="sections-list"><a href="#location-section"><li>Location</li></a><a href="#pl-section"><li>Pug</li></a><a href="#other-section"><li>Other Templating Engines</li></a></ul></section><section class="doc-section" id="location-section"><h2 class="section-title">Location</h2><div class="section-block">Each one of ZinkyJS modules contains its own views. These are put in "views" folder in the module's folder. <br>Every Zinko(module) retrieves its views into <span class="ht">views</span> property with their names(excluding the extension).<p>Eg:</p><pre><code class="language-javascript"> // For this module tree:
+// moduleName
+//   |_ client
+//   |_ views
+//        |_ index.pug
+//   |_ index.js
+
+GET_root(req, res, next) {
+  res.render(this.v("index"));
+  // Or if you are working in another module.
+  res.render(req.app.modules.moduleName.v("index"));
+}</code></pre></div></section><section class="doc-section" id="pl-section"><h2 class="section-title">Pug</h2><div class="section-block">ZinkyJS uses <span class="ht">Pug</span> as the default templating engine. It handles it with <a class="ht" href="https://www.npmjs.com/package/pug-layout" target="_blank">pug-layout</a>. You can check its complete API, but here, we are interested
+            in only two of its methods: <span class="ht">extends(), render()</span>.<p>The pug-layout package allows to read a pug file either as a layout or as a page. So, ZinkyJS made a convention in order to make the decision of in which type would it read views:<br>If a file name starts with <span class="ht">L_</span> then
+              it's read as a layout, if not, it will be read as a page.</p><p>To test it, create this file 'app_modules/home/views/L_main.pug' with this content:</p><pre><code class="language-jade"> html
+head
+  title App
+body
+  h1
+    span Hello
+    span= name
+  block content</code></pre><p>The file we created is a layout.<br>Let's create now the page that will extend it. Put in 'app_modules/home/views/index.pug' this:</p><pre><code class="language-jade"> block content
+  h3 This is my page content
+  p I love ZinkyJS</code></pre><p>At this stage, there is nothing indicating that 'index.pug' extends from 'L_main.pug'.<br>We'll make this in the home root. So in 'app_modules/home/index.js' replace the content of 'GET_root' by:</p><pre><code class="language-javascript"> GET_root(req, res) {
+  var index = this.v("index");
+  index.extend(this.v("L_main")):
+  var html = index.render({name: 'Zayd'});
+  res.end(html);
+}</code></pre><p>Visit <a class="ht" href="localhost:3000" target="_blank">localhost:3000</a>, and enjoy!</p><p>We can even make the same thing with less code:</p><pre><code class="language-javascript"> GET_root(req, res) {
+  res.render(this.v("index"), {name: 'Zayd'}, this.v("L_main"));
+  // And don't forget to thank ZinkyJS
+}</code></pre></div></section><section class="doc-section" id="other-section"><h2 class="section-title">Other Templating Engines</h2><div class="section-block">ZinkyJS is not a dictator! And it doesn't force you to make the same choices it did.<br>If you're not a big fan of Pug, you still have the choice to work with other templating engines. To do so, you have to set <span class="ht">stopPugLayout</span>            to true in the Zinky instance, and write a <span class="ht">render</span> method that returns the resulting html using the templating engine's API you choosed.<p>Say that we want to use <a class="ht" href="http://ejs.co/" target="_blank">EJS</a> instead of Pug. <br>We will have to install EJS and require it in 'app.js', then, set <span class="ht">stopPugLayout</span> to true and write the <span class="ht">render</span>              method that uses EJS API.</p><p>So 'app.js' will look like this:</p><pre><code class="language-javascript">  const Zinky = require('zinky');
+ const ejs = require('ejs'); // Don't forget to npm install ejs
+ 
+ var app = new Zinky({
+   aliases: {
+     '': 'home'
+     'customers': 'users'
+   },
+   stopPugLayout: true,
+   render: function(view, data, options) {
+     return ejs.render(view, data, options);
+     // According to EJS API, render function takes these three parameters
+   }
+ });
+
+ app.listen();</code></pre><p>Let's now, remake our views. Delete 'L_main.pug' and 'index.pug' from 'app_modules/home/views', then create in that folder a file named 'index.ejs' with this content:</p><pre><code class="language-html">  &lt;html&gt;
+   &lt;head&gt;
+     &lt;title&gt;App&lt;/title&gt;
+   &lt;/head&gt;
+   &lt;body&gt;
+     &lt;h1&gt; Hello &lt;%= name %&gt;&lt;/h1&gt;
+     &lt;h3&gt;This is my page content &lt;/h3&gt;
+     &lt;p&gt;I love ZinkyJS&lt;/p&gt;
+   &lt;/body&gt;
+ &lt;/html&gt;     </code></pre><p>Now render this in 'app_modules/home/index.js':</p><pre><code class="language-javascript"> GET_root(req, res) {
+  res.render(this.v("index"), {name: 'Zayd'}, {});
+  // res.render takes the same parameters as our custom 'render()' method does.
+}</code></pre><p>Note: For the rest of the tutorials we'll keep working with pug layout.</p></div></section><a class="next_page" href="tuto_errors.html">Next Course: Error Handling<div class="fa fa-arrow-right"></div></a></div></div></div><script src="./bower_components/smooth-scroll/dist/js/smooth-scroll.js"></script><script src="./bower_components/scrollbot/js/scrollbot.min.js"></script><script src="./js/prism.js"></script><script src="./js/main.js"></script></body></html>

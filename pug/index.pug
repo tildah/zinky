@@ -1,0 +1,61 @@
+doctype html
+html(lang="en")
+  head
+    title ZinkyJS
+    include ./../pug_partials/common-head.pug
+  body
+    #home-header
+      include ./../pug_partials/nav.pug
+      #website-presentation
+        img#website-logo(src="images/logo.png")
+        #website-name Zinky
+          span.js JS
+        #start
+          #start-text ~$ start-learn --framework zinky
+            span.blinking _
+          a#start-button(href="tuto_hello.html")
+            i.mdi.mdi-chevron-right
+  .home-section#about-section
+    .home-section-title What is ZinkyJS ?
+    .home-section-content
+      | ‘ZinkyJS’ is a #[span.ht minimalist semi-opinionated modular] framework.
+      br
+      | The idea behind it was to make every feature in the application separated from the others so developers can #[span.ht easily maintain] their code and #[span.ht reuse] it over applications.
+      br
+      | In Addition to that, the separation of features makes #[span.ht team work smoother] and #[span.ht reduces conflicts].
+      br
+      | The features are organized into folders with every feature containing its #[span.ht fullstack] code, from routes to client controller through views.
+      br
+      | We took advantages of #[span.ht EcmaScript 6] to build a framework that makes module’s #[span.ht inheritance] possible, and rethinking the way we attach routes to controller by making new #[span.ht conventions].
+      br
+      | But wait! All of that doesn’t mean that we lose the work built by the NodeJS community since its creation. ZinkyJS supports all ExpressJS middlewares so developers don’t have to reinvent the wheel, they just #[span.ht evoluate]!
+  .home-section#features-section
+    .home-section-title Features
+    .home-section-content.pure-g
+      a.pure-u-1.pure-u-md-1-2.feature-item(href="tuto_hello.html#generate-module", target='_blank')
+        img.feature-img(src="images/app_modules.png")
+        .feature-title Modular Fullstack
+      a.pure-u-1.pure-u-md-1-2.feature-item(href="tuto_routing.html", target='_blank')
+        img.feature-img(src="images/routes.png")
+        .feature-title Conventional Routing
+      a.pure-u-1.pure-u-md-1-2.feature-item(href="tuto_inheritance.html", target='_blank')
+        img.feature-img(src="images/inheritance.png")
+        .feature-title Inheritance
+      a.pure-u-1.pure-u-md-1-2.feature-item(href="tuto_hooks.html#express-section", target='_blank')
+        img.feature-img(src="images/express.png")
+        .feature-title Express Friendly
+  .home-section.grid-section#howto-section
+    .home-section-title How To's
+    .home-section-content.pure-g
+      a.pure-u-1.pure-u-md-1-2.section-item(href="how_to_mongodb.html")
+        img.section-item-img(src="images/mongodb-logo.png")
+        .section-item-title How to use MongoDB with ZinkyJS
+      a.pure-u-1.pure-u-md-1-2.section-item(href="how_to_socket.html")
+        img.section-item-img(src="images/socket.png")
+        .section-item-title How to use Socket.IO with ZinkyJS
+  .home-section.grid-section#trust-section
+    .home-section-title Projects Using ZinkyJS
+    .home-section-content.pure-g
+      a.pure-u-1.pure-u-md-1.section-item(href="https://points.takiacademy.com", target="blank")
+        img.section-item-img(src="images/ta.png")
+  include ./../pug_partials/footer.pug

@@ -1,0 +1,80 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Hello World
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Hello World
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_hello')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | We'll see how to make a simple "Hello World" website with ZinkyJS.
+  section#installation-section.doc-section
+    h2.section-title Install zinky-cli
+    .section-block 
+      | To make things simpler and faster, ZinkyJS has developed a CLI tool that
+      | we'll be using for this tutorials. So let's install it!
+      p To do that, open the terminal and run this command:
+      pre
+        code.code-cli sudo npm install -g zinky-cli
+  section#generate-section.doc-section
+    h2.section-title Generate Application
+    .section-block 
+      | Now that zinky-cli is installed, we can generate our app.
+      p In the terminal, navigate to the folder where you want to put your website, and run this command
+      pre
+        code.code-cli zinky -a appname
+      p You will note that a new folder named "appname" was created containing our newly generated app.
+      p Navigate into it:
+      pre
+        code.code-cli cd appname
+      p And install its npm dependencies, by running this command:
+      pre
+        code.code-cli npm install
+  section#generate-module.doc-section
+    h2.section-title Application Module
+    .section-block 
+      | ZinkyJS apps put project into separate folders representing the app modules. Each one of them contains
+      | its routes controllers, views and public files.
+      p At the moment, the app has not yet any module, so we'll generate one called #[span.ht home] that will handle our application home page.
+        | To perform this, run this zinky-cli command:
+      pre
+        code.code-cli zinky -M home
+      p You will see the new module's folder in "app_modules" folder.
+    .section-block 
+      p One last thing we have to do before we'll be able to see the #[span.ht Hello World] is to tell our home
+        | module to display this message.
+      P Open #[span.ht app_modules/home/index.js] and add the following line to #[span.ht GET_root] method:
+      pre
+        code.language-javascript 
+          | res.end('Hello World');
+      p So the file will look like:
+      pre
+        code.language-javascript 
+          | const Zinko = require('zinko');
+          | class Home extends Zinko {
+          |
+          |   GET_root(req, res) {
+          |     res.end('Hello World');
+          |   }
+          |
+          | }
+          |
+          | module.exports = Home;
+  section#result-module.doc-section
+    h2.section-title See Result
+    .section-block 
+      p We can now check the result.
+      p Start the app by running:
+      pre
+        code.code-cli node app.js
+      p And visit #[span.ht localhost:3000/home/] using your browser then enjoy the result!
+  a.next_page(href="tuto_routing.html") Next Course: Routing 
+    .fa.fa-arrow-right

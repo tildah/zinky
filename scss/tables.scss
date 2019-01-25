@@ -1,0 +1,17 @@
+.ref-table {
+  th {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: $color1;
+    color: white;
+  }
+  td {
+    &.main {
+      font-weight: bold;
+      background-color: fade-out($color1, .9);
+    }
+  }
+  td, th {
+    height: 50px;
+    white-space: pre-line;
+  }
+}

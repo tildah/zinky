@@ -51,7 +51,7 @@ class Zinky {
   }
 
   addHook(fn) {
-    this.hooks.splice(-3, 0, fn);
+    this.hooks.splice(-4, 0, fn);
   }
 
   catcher(req, res) {

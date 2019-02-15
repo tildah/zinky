@@ -17,9 +17,9 @@ module.exports = function () {
     cookieParser(),
     parseBody,
     staticFiles,
-    validateRequest,
     moduleHook,
     beforeAction,
+    validateRequest,
     callAction
   ];
 }

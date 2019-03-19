@@ -87,9 +87,26 @@ block content
       pre
         code.language-javascript 
           | GET_create(req, res) {
-          |   res.end('create user with name: ', req.params[0], ' as:', req.params[1]);
+          |   res.end(`create user with name: ${req.params[0]} as: ${req.params[1]}`);
           | }
       p 3. Visit #[a.ht(href="localhost:3000/users/create/Omar/premium", target="_blank") localhost:3000/users/create/Omar/premium], and see the result!
+  section#values-section.doc-section
+    h2.section-title Direct Responder
+    .section-block 
+      | Instead of putting the response in #[span.ht res.end] or #[span.ht req.json], you can just return it in the function as you used to do in any other function.
+      p So instead of that:
+      pre
+        code.language-javascript 
+          | GET_create(req, res) {
+          |   res.end(`create user with name: ${req.params[0]} as: ${req.params[1]}`);
+          | }
+      p You can do this:
+      pre
+        code.language-javascript 
+          | GET_create(req, res) {
+          |   return `create user with name: ${req.params[0]} as: ${req.params[1]}`;
+          | }
+      p This is very useful, when you have a function that acts as an operation and as a helper at the same time.
   section#values-section.doc-section
     h2.section-title Params, Query & Body
     .section-block 

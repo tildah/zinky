@@ -28,7 +28,7 @@ class Zinky {
     this.server = http.createServer((req, res) => {
       this.handleRequest(req, res)
     });
-    this.loadModules();
+    if (!settings.patientMode) this.loadModules();
   }
 
   loadModules() {

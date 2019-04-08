@@ -1,0 +1,82 @@
+extends ./../pug_partials/lateral-layout.pug
+
+block page-title
+  | Model with Zongel
+
+block header-title
+  i.icon.mdi.mdi-road-variant
+  |  Model with Zongel
+
+block menu
+  include ../pug_partials/tuto_nav.pug
+  +tuto_nav('tuto_zongel')
+
+block content
+  section.doc-section
+    h2.section-title
+    .section-block
+      | You can attach a "Zinky made" model to your module by setting 'useZongel' to true. 
+      br
+      | This feature is only available for projects using MongoDB.
+      br
+      | Zongel is a wrapper for 'collection' function of MongoDB instance.
+      br
+      | It wraps insertOne, insertMany, updateOne and updateMany to validate schema before performing DB operations.
+      br
+      | It wraps find to return array
+      br
+      | It uses #[a(href="https://www.npmjs.com/package/ajv") AJV] for schema validation, and adds a special field called "private", (eg: password).
+  section#usage-section.doc-section
+    h2.section-title Example
+    .section-block
+      p Here is how to use it, module index.js:
+      pre
+        code.language-javascript 
+          | const Zinko = require('zinko');
+          |
+          | class Crud extends Zinko {
+          | 
+          |   get useZongel() { return true; }
+          | 
+          |   async POST_root(req, res) {
+          |     await this.model.insertOne({ name: 'rruk', age: 'r' })
+          |     return "ok"
+          |   }
+          | 
+          |   async GET_root(req, res) {
+          |     let j = await this.model.findOne({ name: 'rruk' });
+          |     return j
+          |   }
+          | 
+          |   async PUT_root(req, res) {
+          |     let j = await this.model.updateOne({ name: 'rruk' }, { $set: { age: 1 } });
+          |     console.log(j.ops)
+          |     return 'ok'
+          |   }
+          |
+          | }
+          | 
+          | module.exports = Crud;
+      p And model.js in the same folder:
+      pre
+        code.language-javascript 
+          | const Zongel = require("zongel");
+          | 
+          | class Model extends Zongel {
+          | 
+          |   get collectionName() { return "crud" }
+          | 
+          |   get schema() {
+          |     return {
+          |       properties: {
+          |         name: { type: "string" },
+          |         age: { type: "integer" }
+          |       },
+          |       required: ["name"],
+          |       private: ["age"]
+          |     }
+          |   }
+          | 
+          | }
+          | 
+          | module.exports = Model;

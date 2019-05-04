@@ -54,6 +54,10 @@ class Zinky {
     this.hooks.splice(-4, 0, fn);
   }
 
+  addHookFromModule(scope, fn) {
+    this.hooks.splice(-4, 0, scope[fn].bind(scope));
+  }
+
   catcher(req, res) {
     console.log(req.error);
     res.deliver(500, 'Internal Server Error');

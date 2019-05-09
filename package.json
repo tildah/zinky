@@ -1,6 +1,6 @@
 {
   "name": "zinky",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "modular fullstack nodejs framework",
   "main": "index.js",
   "scripts": {

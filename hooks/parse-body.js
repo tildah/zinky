@@ -6,4 +6,7 @@ module.exports = async req => {
   } catch (error) {
     req.body = {};
   }
+  if (req.headers['Content-Type'] === "application/json") {
+    req.body = JSON.parse(req.body);
+  }
 }

@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const hooks = require('./hooks');
+const allowCors = require("./hooks/allow-cors");
 
 class Zinky {
 
@@ -18,6 +19,7 @@ class Zinky {
     if (typeof settings.catcher === "function") this.catcher = settings.catcher;
     if (typeof settings.render === "function") this.render = settings.render;
     this.hooks = hooks(settings);
+    if (settings.allowCors) this.addHook(allowCors);
     for (var key in settings) {
       if (settings.hasOwnProperty(key) && !this.hasOwnProperty(key)) {
         this[key] = settings[key];
@@ -54,8 +56,8 @@ class Zinky {
     this.hooks.splice(-4, 0, fn);
   }
 
-  addHookFromModule(scope, fn) {
-    this.hooks.splice(-4, 0, scope[fn].bind(scope));
+  addHookFromModule(mdName, fn) {
+    this.addHook(this.mds[mdName][fn].bind(this.mds[mdName]));
   }
 
   catcher(req, res) {

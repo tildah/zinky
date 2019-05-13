@@ -60,6 +60,14 @@ class Zinky {
     this.addHook(this.mds[mdName][fn].bind(this.mds[mdName]));
   }
 
+  addTardyHook(fn) {
+    this.hooks.splice(-1, 0, fn);
+  }
+
+  addTardyHookFromModule(mdName, fn) {
+    this.addTardyHook(this.mds[mdName][fn].bind(this.mds[mdName]));
+  }
+
   catcher(req, res) {
     console.log(req.error);
     res.deliver(500, 'Internal Server Error');

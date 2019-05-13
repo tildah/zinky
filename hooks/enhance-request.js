@@ -20,13 +20,13 @@ module.exports = function (req) {
 
   req.moduleName = correctModuleName(urlParts[start]);
   req.action = correctActionName(urlParts[start + 1]);
-  req.operation = req.method + '_' + req.action;
+  req.operation = `${req.method}_${req.action}`;
   req.params = urlParts.slice(start + 2);
   req.query = urlParsed.query;
   req.module = req.A.mds[req.moduleName];
-  if (req.moduleName == req.app.staticModuleName) {
-    req.action += '/' + req.params.join('/');
-  } else if (!req.module[req.operation]) {
+  if (req.moduleName == req.app.staticModuleName)
+    return req.action += `/${req.params.join('/')}`;
+  if (req.module && !req.module[req.operation]) {
     req.params.unshift(req.action);
     req.action = "root";
     req.operation = `${req.method}_${req.action}`;

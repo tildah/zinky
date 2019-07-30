@@ -25,8 +25,8 @@ module.exports = function (req) {
   req.query = urlParsed.query;
   req.module = req.A.mds[req.moduleName];
   if (req.moduleName == req.app.staticModuleName)
-    return req.action += `/${req.params.join('/')}`;
-  if (req.module && !req.module[req.operation]) {
+    req.action += `/${req.params.join('/')}`;
+  else if (req.module && !req.module[req.operation]) {
     req.params.unshift(req.action);
     req.action = "root";
     req.operation = `${req.method}_${req.action}`;

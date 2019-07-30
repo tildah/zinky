@@ -1,6 +1,10 @@
 module.exports = async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", req.A.cors.origins.join(","));
+  const { origins, headers, ...additional } = req.A.cors;
+  res.setHeader("Access-Control-Allow-Origin", origins.join(","));
   res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", req.A.cors.headers.join(","));
+  res.setHeader("Access-Control-Allow-Headers", headers.join(","));
+  Object.keys(additional).forEach(header => {
+    res.setHeader(header, additional[header]);
+  });
   if (req.method == "OPTIONS") return "Cors Allowed";
 };

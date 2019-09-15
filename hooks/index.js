@@ -7,14 +7,12 @@ const callAction = require("./call-action");
 const beforeAction = require("./before-action");
 const moduleHook = require("./module-hook");
 const parseBody = require("./parse-body");
-const cookieParser = require('cookie-parser');
 
 module.exports = function () {
   return [
     enhanceResponse,
     enhanceRequest,
     logRequest,
-    cookieParser(),
     parseBody,
     staticFiles,
     moduleHook,

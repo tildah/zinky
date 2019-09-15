@@ -73,10 +73,10 @@ class Zinky {
     res.deliver(500, 'Internal Server Error');
   }
 
-  async runORCatch(fn, req, res, next, context) {
+  async runORCatch(fn, req, res) {
     try {
-      let r = await fn.call(context, req, res, next);
-      if (r) res.send(r);
+      let r = await fn(req, res, ...(req.params || []));
+      if (r !== undefined) res.send(r);
     } catch (e) {
       req.error = e;
       this.catcher(req, res);
@@ -89,7 +89,7 @@ class Zinky {
     res.on('finish', () => { this.onFinishRequest(req, res); })
     var index = 0;
     while (index < this.hooks.length && !res.finished) {
-      await this.runORCatch(this.hooks[index], req, res, () => { });
+      await this.runORCatch(this.hooks[index], req, res);
       index++;
     }
   }
@@ -99,12 +99,12 @@ class Zinky {
     for (var moduleName in req.A.modules) {
       if (req.A.modules[moduleName][hookName]) {
         var m = req.A.modules[moduleName];
-        this.runORCatch(m[hookName], req, res, null, m)
+        this.runORCatch(m[hookName].bind(m), req, res)
       }
     }
     var hName = 'AFTER_' + req.operation;
     if (req.module && req.module[hName])
-      this.runORCatch(req.module[hName], req, res, null, req.module)
+      this.runORCatch(req.module[hName].bind(req.module), req, res)
   }
 
   listen(port) {

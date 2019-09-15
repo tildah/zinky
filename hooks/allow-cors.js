@@ -1,4 +1,5 @@
 module.exports = async (req, res) => {
+  if (!req.A.allowCors) return;
   const { origins, headers, ...additional } = req.A.cors;
   res.setHeader("Access-Control-Allow-Origin", origins.join(","));
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");

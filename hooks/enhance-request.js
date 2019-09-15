@@ -1,5 +1,6 @@
 const parser = require('url');
 const requestIp = require('request-ip');
+const cookie = require('cookie');
 
 module.exports = function (req) {
   req.url = decodeURIComponent(req.url);
@@ -18,17 +19,28 @@ module.exports = function (req) {
     return string == '' ? 'root' : string;
   }
 
+  // Parse Cookies
+  req.cookies = cookie.parse(req.headers.cookie || '');
+
+  // Parse Operationals
   req.moduleName = correctModuleName(urlParts[start]);
   req.action = correctActionName(urlParts[start + 1]);
-  req.operation = `${req.method}_${req.action}`;
   req.params = urlParts.slice(start + 2);
   req.query = urlParsed.query;
   req.module = req.A.mds[req.moduleName];
+  req.operation = `${req.method}_${req.action}`;
+
   if (req.moduleName == req.app.staticModuleName)
     req.action += `/${req.params.join('/')}`;
-  else if (req.module && !req.module[req.operation]) {
+
+  if (req.module && !req.module[req.operation]) {
     req.params.unshift(req.action);
     req.action = "root";
     req.operation = `${req.method}_${req.action}`;
   }
+
+  const noParamsOpName = `$${req.operation}`
+  if (!req.params.length && req.module && req.module[noParamsOpName])
+    req.operation = noParamsOpName;
+
 }

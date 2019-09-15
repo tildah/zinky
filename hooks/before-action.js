@@ -11,8 +11,8 @@ module.exports = async function (req, res) {
   }
   for (let i = 0; i < beforeHooks.length && !res.finished; i++) {
     var h = beforeHooks[i];
-    await req.A.runORCatch(h.fn, req, res, null, h.module);
+    await req.A.runORCatch(h.fn.bind(h.module), req, res);
   }
   var guardian = req.module && req.module['BEFORE_' + req.operation];
-  if (guardian) await req.A.runORCatch(guardian, req, res, null, req.module);
+  if (guardian) await req.A.runORCatch(guardian.bind(req.module), req, res);
 }

@@ -6,21 +6,23 @@ const allowCors = require("./hooks/allow-cors");
 
 class Zinky {
 
-  constructor(settings) {
-    // Declaring default values
-    settings = settings || {};
-    this.port = settings.port || 3000;
-    this.aliases = settings.aliases || {};
-    this.staticModuleName = settings.staticModuleName || 'file';
-    this.staticFolder = settings.staticFolder || 'public';
-    this.logRequestDate = settings.logRequestDate || false;
-    this.stopPugLayout = settings.stopPugLayout || false;
-    this.logPoweredBy = settings.logPoweredBy || true;
-    this.logRequest = settings.logRequest || true;
-    this.env = settings.env || 'development';
-    if (typeof settings.catcher === "function") this.catcher = settings.catcher;
-    if (typeof settings.render === "function") this.render = settings.render;
-    this.hooks = hooks(settings);
+  get defaultSettings() {
+    return {
+      port: 3000,
+      aliases: {},
+      staticModuleName: "file",
+      staticFolder: "public",
+      logRequestDate: false,
+      stopPugLayout: false,
+      logPoweredBy: true,
+      logRequest: true,
+      env: "development",
+    }
+  }
+
+  constructor(settings = {}) {
+    Object.assign(this, this.defaultSettings, settings);
+    this.hooks = hooks(this);
     if (settings.allowCors) this.addHook(allowCors);
     for (var key in settings) {
       if (settings.hasOwnProperty(key) && !this.hasOwnProperty(key)) {

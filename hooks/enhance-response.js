@@ -7,7 +7,7 @@ module.exports = function (req, res) {
 
   // Setup
   res.setHeader('Content-Type', 'text/html');
-  res.setHeader('x-powered-by', 'ZinkyJS');
+  if(req.A.logPoweredBy) res.setHeader('x-powered-by', 'ZinkyJS');
 
   res.status = (code) => {
     res.statusCode = code;

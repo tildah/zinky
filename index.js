@@ -13,8 +13,10 @@ class Zinky {
     this.aliases = settings.aliases || {};
     this.staticModuleName = settings.staticModuleName || 'file';
     this.staticFolder = settings.staticFolder || 'public';
-    this.logRequestDate = false || settings.logRequestDate;
-    this.stopPugLayout = false || settings.stopPugLayout;
+    this.logRequestDate = settings.logRequestDate || false;
+    this.stopPugLayout = settings.stopPugLayout || false;
+    this.logPoweredBy = settings.logPoweredBy || true;
+    this.logRequest = settings.logRequest || true;
     this.env = settings.env || 'development';
     if (typeof settings.catcher === "function") this.catcher = settings.catcher;
     if (typeof settings.render === "function") this.render = settings.render;

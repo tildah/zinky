@@ -7,5 +7,5 @@ module.exports = function (req) {
   str += (req.A.logRequestDate ? ' [' + new Date() + ']' : ' | ');
   str += ' Module Name: ' + C.cyan(req.moduleName);
   str += ' | Action: ' + C.magenta(req.action);
-  console.log(str);
+  if(req.A.logRequest) console.log(str);
 }

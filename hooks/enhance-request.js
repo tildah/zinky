@@ -19,6 +19,13 @@ module.exports = function (req) {
     return string == '' ? 'root' : string;
   }
 
+  req.resetOpName = () => {
+    req.operation = `${req.method}_${req.action}`;
+    const noParamsOpName = `$${req.operation}`
+    if (!req.params.length && req.module && req.module[noParamsOpName])
+      req.operation = noParamsOpName;
+  }
+
   // Parse Cookies
   req.cookies = cookie.parse(req.headers.cookie || '');
 
@@ -36,11 +43,8 @@ module.exports = function (req) {
   if (req.module && !req.module[req.operation]) {
     req.params.unshift(req.action);
     req.action = "root";
-    req.operation = `${req.method}_${req.action}`;
   }
 
-  const noParamsOpName = `$${req.operation}`
-  if (!req.params.length && req.module && req.module[noParamsOpName])
-    req.operation = noParamsOpName;
+  req.resetOpName();
 
 }

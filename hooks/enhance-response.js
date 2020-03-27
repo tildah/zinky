@@ -23,6 +23,7 @@ module.exports = function (req, res) {
   };
 
   res.send = (msg) => {
+    res.contentData = msg;
     if (typeof msg === "string") res.end(msg);
     else if (typeof msg === "object") res.json(msg);
     else console.warn("Cannot send this type: " + typeof msg)

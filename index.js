@@ -114,7 +114,8 @@ class Zinky {
     const ghostHName = `AFTER_${req.ghostOperation}`;
     if(!req.module[ghostHName]) return;
     const [, ...ghostParams] = req.params;
-    this.runORCatch(req.module[hName].bind(req.module), req, res, ghostParams)
+    const method = req.module[ghostHName];
+    this.runORCatch(method.bind(req.module), req, res, ghostParams)
   }
 
   listen(port) {

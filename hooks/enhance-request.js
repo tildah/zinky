@@ -24,6 +24,7 @@ module.exports = function (req) {
     const noParamsOpName = `$${req.operation}`
     if (!req.params.length && req.module && req.module[noParamsOpName])
       req.operation = noParamsOpName;
+    if(req.ghostAction) req.ghostOperation = `${req.method}_${req.ghostAction}`
   }
 
   // Parse Cookies
@@ -41,6 +42,7 @@ module.exports = function (req) {
     req.action += `/${req.params.join('/')}`;
 
   if (req.module && !req.module[req.operation]) {
+    req.ghostAction = req.action
     req.params.unshift(req.action);
     req.action = "root";
   }

@@ -77,9 +77,9 @@ class Zinky {
     res.deliver(500, 'Internal Server Error');
   }
 
-  async runORCatch(fn, req, res) {
+  async runORCatch(fn, req, res, explicitParams) {
     try {
-      let r = await fn(req, res, ...(req.params || []));
+      let r = await fn(req, res, ...(explicitParams || req.params || []));
       if (r !== undefined) res.send(r);
     } catch (e) {
       req.error = e;
@@ -91,7 +91,7 @@ class Zinky {
     req.app = this;
     req.A = req.app;
     res.on('finish', () => { this.onFinishRequest(req, res); })
-    var index = 0;
+    let index = 0;
     while (index < this.hooks.length && !res.finished) {
       await this.runORCatch(this.hooks[index], req, res);
       index++;
@@ -99,16 +99,22 @@ class Zinky {
   }
 
   async onFinishRequest(req, res) {
-    var hookName = 'AFTER_' + req.moduleName + '_' + req.operation;
+    const hookName = 'AFTER_' + req.moduleName + '_' + req.operation;
     for (var moduleName in req.A.modules) {
       if (req.A.modules[moduleName][hookName]) {
-        var m = req.A.modules[moduleName];
+        let m = req.A.modules[moduleName];
         this.runORCatch(m[hookName].bind(m), req, res)
       }
     }
-    var hName = 'AFTER_' + req.operation;
-    if (req.module && req.module[hName])
-      this.runORCatch(req.module[hName].bind(req.module), req, res)
+    const hName = `AFTER_${req.operation}`;
+    if(!req.module) return;
+    if(req.module[hName])
+        this.runORCatch(req.module[hName].bind(req.module), req, res)
+
+    const ghostHName = `AFTER_${req.ghostOperation}`;
+    if(!req.module[ghostHName]) return;
+    const [, ...ghostParams] = req.params;
+    this.runORCatch(req.module[hName].bind(req.module), req, res, ghostParams)
   }
 
   listen(port) {

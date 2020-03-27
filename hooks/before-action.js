@@ -9,10 +9,24 @@ module.exports = async function (req, res) {
       });
     }
   }
+
   for (let i = 0; i < beforeHooks.length && !res.finished; i++) {
     var h = beforeHooks[i];
     await req.A.runORCatch(h.fn.bind(h.module), req, res);
   }
-  var guardian = req.module && req.module['BEFORE_' + req.operation];
-  if (guardian) await req.A.runORCatch(guardian.bind(req.module), req, res);
+  
+  const guardName = `BEFORE_${req.operation}`;
+  const ghostGuardName = `BEFORE_${req.ghostOperation}`;
+  const $$ghostGuardName = `$$${ghostGuardName}`;
+
+  const guard = req.module && req.module[guardName];
+  const ghostGuard = req.module && req.module[ghostGuardName];
+  const $$ghostGuard = req.module && req.module[$$ghostGuardName];
+  const [, ...ghostParams] = req.params;
+  if (ghostGuard)
+    await req.A.runORCatch(ghostGuard.bind(req.module), req, res, ghostParams);
+  if (guard)
+    await req.A.runORCatch(guard.bind(req.module), req, res);
+  if ($$ghostGuard)
+    await req.A.runORCatch($$ghostGuard.bind(req.module), req, res, ghostParams);
 }

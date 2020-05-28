@@ -56,6 +56,10 @@ class Zinky {
     this.mds = this.modules;
   }
 
+  promisify(fn) {
+    return (req, res) =>  new Promise(done => fn(req,res, () => { done() }))
+  }
+
   addHook(fn) {
     this.hooks.splice(-4, 0, fn);
   }

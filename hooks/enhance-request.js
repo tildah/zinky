@@ -21,10 +21,29 @@ module.exports = function (req) {
 
   req.resetOpName = () => {
     req.operation = `${req.method}_${req.action}`;
+    // When module name is the same as static module join all the path to match
+    // the requested file
+    if (req.moduleName == req.app.staticModuleName)
+      req.action += `/${req.params.join('/')}`;
+    
+    // When operation does not exist, make action as root and keep the requested
+    // action as ghost, to run BEFORE and AFTER as if it was existing
+    if (req.module && !req.module[req.operation]) {
+      req.ghostAction = req.action
+      req.params.unshift(req.action);
+      req.action = "root";
+    }
+  
+    req.operation = `${req.method}_${req.action}`;
+    // When there is no params in the request, look for the action starting with
+    // '$', in order to separate ex: GET users and GET users/<some_id>
     const noParamsOpName = `$${req.operation}`
     if (!req.params.length && req.module && req.module[noParamsOpName])
       req.operation = noParamsOpName;
+
     if(req.ghostAction) req.ghostOperation = `${req.method}_${req.ghostAction}`
+    console.log(req.operation)
+    console.log(req.ghostOperation)
   }
 
   // Parse Cookies
@@ -36,16 +55,6 @@ module.exports = function (req) {
   req.params = urlParts.slice(start + 2);
   req.query = urlParsed.query;
   req.module = req.A.mds[req.moduleName];
-  req.operation = `${req.method}_${req.action}`;
-
-  if (req.moduleName == req.app.staticModuleName)
-    req.action += `/${req.params.join('/')}`;
-
-  if (req.module && !req.module[req.operation]) {
-    req.ghostAction = req.action
-    req.params.unshift(req.action);
-    req.action = "root";
-  }
 
   req.resetOpName();
 

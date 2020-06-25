@@ -25,23 +25,23 @@ module.exports = function (req) {
     // the requested file
     if (req.moduleName == req.app.staticModuleName)
       req.action += `/${req.params.join('/')}`;
-    
-    // When operation does not exist, make action as root and keep the requested
-    // action as ghost, to run BEFORE and AFTER as if it was existing
-    if (req.module && !req.module[req.operation]) {
-      req.ghostAction = req.action
-      req.params.unshift(req.action);
-      req.action = "root";
-    }
-  
-    req.operation = `${req.method}_${req.action}`;
+
     // When there is no params in the request, look for the action starting with
     // '$', in order to separate ex: GET users and GET users/<some_id>
     const noParamsOpName = `$${req.operation}`
     if (!req.params.length && req.module && req.module[noParamsOpName])
       req.operation = noParamsOpName;
 
-    if(req.ghostAction) req.ghostOperation = `${req.method}_${req.ghostAction}`
+    // When operation does not exist, make action as root and keep the requested
+    // action as ghost, to run BEFORE and AFTER as if it was existing
+    if (req.module && !req.module[req.operation]) {
+      req.ghostAction = req.action
+      req.params.unshift(req.action);
+      req.action = "root";
+      req.operation = `${req.method}_${req.action}`;
+    }
+
+    if (req.ghostAction) req.ghostOperation = `${req.method}_${req.ghostAction}`
   }
 
   // Parse Cookies

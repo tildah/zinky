@@ -42,8 +42,6 @@ module.exports = function (req) {
       req.operation = noParamsOpName;
 
     if(req.ghostAction) req.ghostOperation = `${req.method}_${req.ghostAction}`
-    console.log(req.operation)
-    console.log(req.ghostOperation)
   }
 
   // Parse Cookies
